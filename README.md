@@ -15,9 +15,9 @@
 
 ### 🧩 예시
 
-feat: 로그인 기능 추가
-fix: 회원가입 오류 수정
-docs: README 업데이트
-refactor: 중복 코드 리팩토링
-style: 들여쓰기 수정
+feat: 로그인 기능 추가  
+fix: 회원가입 오류 수정  
+docs: README 업데이트  
+refactor: 중복 코드 리팩토링  
+style: 들여쓰기 수정  
 test: 로그인 테스트 코드 추가
