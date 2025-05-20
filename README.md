@@ -12,6 +12,7 @@
 | `refactor` | 코드 리팩토링 (기능 변화 없음) |
 | `style`    | 코드 스타일 수정 (공백, 세미콜론 등) |
 | `test`     | 테스트 코드 추가 및 수정 |
+| `chore`    | 빌드, 패키지 설치, 설정 등 기타 작업 |
 
 ### 🧩 예시
 
@@ -21,3 +22,4 @@ docs: README 업데이트
 refactor: 중복 코드 리팩토링  
 style: 들여쓰기 수정  
 test: 로그인 테스트 코드 추가
+chore: requirements.txt 업데이트
