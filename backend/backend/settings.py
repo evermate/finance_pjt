@@ -10,17 +10,31 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import environ
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# environ 초기화
+env = environ.Env(
+    DEBUG=(bool, True)  # 기본값 True로 설정
+)
+
+# .env 파일 로드
+env_file = os.path.join(BASE_DIR, '.env')
+env.read_env(env_file)
+
+# 환경변수 사용
+DEBUG = env('DEBUG')
+SECRET_KEY = env('SECRET_KEY')
+FSS_API_KEY = env('API_KEY')  # ✅ 원하는 이름으로 추가 사용 가능
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4ix-brdz32s!=0%($1igezkq0jz1ifuowvc8m)kpg1&ba7#7x6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
