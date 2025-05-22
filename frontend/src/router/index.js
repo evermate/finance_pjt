@@ -12,6 +12,7 @@ import MapView from '@/views/MapView.vue'
 import CompareView from '@/views/CompareView.vue'
 import PricesView from '@/views/PricesView.vue'
 import CommunityView from '@/views/CommunityView.vue'
+import SearchView from '@/views/SearchView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
@@ -25,6 +26,7 @@ const routes = [
   { path: '/compare', name: 'compare', component: CompareView },
   { path: '/prices', name: 'prices', component: PricesView },
   { path: '/community', name: 'community', component: CommunityView },
+  { path: '/search', name: 'search', component: SearchView},
 ]
 
 const router = createRouter({
