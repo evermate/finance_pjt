@@ -1,11 +1,14 @@
 <template>
   <header class="nav">
     <RouterLink to="/">Home</RouterLink>
-    <RouterLink v-if="!user" to="/login">로그인</RouterLink>
-    <RouterLink v-if="!user" to="/register">회원가입</RouterLink>
-    <RouterLink v-if="user" to="/mypage">마이페이지</RouterLink>
-    <RouterLink v-if="user" to="/recommend">추천받기</RouterLink>
-    <button v-if="user" @click="logout" class="logout-button">로그아웃</button>
+
+    <div class="nav-right">
+      <RouterLink v-if="!user" to="/login">로그인</RouterLink>
+      <RouterLink v-if="!user" to="/register">회원가입</RouterLink>
+      <RouterLink v-if="user" to="/mypage">마이페이지</RouterLink>
+      <RouterLink v-if="user" to="/recommend">추천받기</RouterLink>
+      <button v-if="user" @click="logout" class="logout-button">로그아웃</button>
+    </div>
   </header>
 </template>
 
@@ -26,11 +29,24 @@ const logout = () => {
 <style scoped>
 .nav {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   border-bottom: 1px solid #ccc;
-  align-items: center;
   background-color: #f9f9f9;
+}
+
+.nav-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* 밑줄 제거 및 색상 조정 */
+.nav a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
 }
 
 .logout-button {
@@ -45,4 +61,5 @@ const logout = () => {
 .logout-button:hover {
   text-decoration: underline;
 }
+
 </style>
