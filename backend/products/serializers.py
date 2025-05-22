@@ -11,7 +11,6 @@ class InterestOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterestOption
         fields = [
-            'id',
             'save_trm',
             'intr_rate_type_nm',
             'intr_rate',
@@ -21,22 +20,15 @@ class InterestOptionSerializer(serializers.ModelSerializer):
 
 
 class DepositProductSerializer(serializers.ModelSerializer):
-    bank = BankSerializer(read_only=True)
-    options = InterestOptionSerializer(many=True, read_only=True)
+    bank_name = serializers.CharField(source='bank.kor_co_nm')
+    options = InterestOptionSerializer(many=True, read_only=True)  # 전체 옵션 포함
 
     class Meta:
         model = DepositProduct
         fields = [
             'fin_prdt_cd',
-            'fin_prdt_nm',
-            'product_type',
-            'bank',
-            'max_limit',
             'dcls_strt_day',
-            'mtrt_int',      # 만기 후 이자율
-            'spcl_cnd',      # 우대조건
-            'join_deny',     # 가입제한
-            'join_way',      # 가입방법
-            'join_member',   # 가입대상
-            'options',
+            'fin_prdt_nm',
+            'bank_name',
+            'options',  # 전체 옵션 포함됨
         ]

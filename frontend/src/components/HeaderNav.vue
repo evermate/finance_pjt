@@ -2,26 +2,27 @@
   <header class="nav">
     <div class="container nav-content">
       <div class="nav-left">
-        <RouterLink to="/">
+        <RouterLink :to="{ name: 'home' }">
           <img src="/image/image.png" alt="Bank Logo" class="logo" />
         </RouterLink>
       </div>
       <div class="nav-right">
         <nav class="nav-menu">
-          <RouterLink class="menu-btn" to="/compare">예적금 금리 비교</RouterLink>
-          <RouterLink class="menu-btn" to="/prices">현물 상품 비교</RouterLink>
-          <RouterLink class="menu-btn" to="/search">관심 종목 검색</RouterLink>
-          <RouterLink class="menu-btn" to="/community">게시판</RouterLink>
+          <RouterLink :to="{ name: 'compare' }" class="menu-btn">예적금 금리 비교</RouterLink>
+          <RouterLink :to="{ name: 'prices' }" class="menu-btn">현물 상품 비교</RouterLink>
+          <RouterLink :to="{ name: 'search' }" class="menu-btn">관심 종목 검색</RouterLink>
+          <RouterLink :to="{ name: 'community' }" class="menu-btn">게시판</RouterLink>
         </nav>
-        <RouterLink v-if="!user" to="/login" class="btn-outline">로그인</RouterLink>
-        <RouterLink v-if="!user" to="/signup" class="btn">회원가입</RouterLink>
-        <RouterLink v-if="user" to="/mypage">마이페이지</RouterLink>
-        <RouterLink v-if="user" to="/recommend">추천받기</RouterLink>
+        <RouterLink v-if="!user" :to="{ name: 'login' }" class="btn-outline">로그인</RouterLink>
+        <RouterLink v-if="!user" :to="{ name: 'signup' }" class="btn">회원가입</RouterLink>
+        <RouterLink v-if="user" :to="{ name: 'mypage' }">마이페이지</RouterLink>
+        <RouterLink v-if="user" :to="{ name: 'recommend' }">추천받기</RouterLink>
         <button v-if="user" @click="logout" class="logout-button">로그아웃</button>
       </div>
     </div>
   </header>
 </template>
+
 
 <script setup>
 import { useRouter } from 'vue-router'
