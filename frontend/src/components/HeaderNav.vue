@@ -1,24 +1,37 @@
 <template>
   <header class="nav">
-    <RouterLink to="/">Home</RouterLink>
-
-    <div class="nav-right">
-      <RouterLink v-if="!user" to="/login">로그인</RouterLink>
-      <RouterLink v-if="!user" to="/register">회원가입</RouterLink>
-      <RouterLink v-if="user" to="/mypage">마이페이지</RouterLink>
-      <RouterLink v-if="user" to="/recommend">추천받기</RouterLink>
-      <button v-if="user" @click="logout" class="logout-button">로그아웃</button>
+    <div class="container nav-content">
+      <div class="nav-left">
+        <RouterLink to="/">
+          <img src="/image/image.png" alt="Bank Logo" class="logo" />
+        </RouterLink>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-menu">
+          <RouterLink class="menu-btn" to="/compare">예적금 금리 비교</RouterLink>
+          <RouterLink class="menu-btn" to="/prices">현물 상품 비교</RouterLink>
+          <RouterLink class="menu-btn" to="/search">관심 종목 검색</RouterLink>
+          <RouterLink class="menu-btn" to="/community">게시판</RouterLink>
+        </nav>
+        <RouterLink v-if="!user" to="/login" class="btn-outline">로그인</RouterLink>
+        <RouterLink v-if="!user" to="/signup" class="btn">회원가입</RouterLink>
+        <RouterLink v-if="user" to="/mypage">마이페이지</RouterLink>
+        <RouterLink v-if="user" to="/recommend">추천받기</RouterLink>
+        <button v-if="user" @click="logout" class="logout-button">로그아웃</button>
+      </div>
     </div>
   </header>
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import { useAccountStore } from '@/stores/accounts'
+import { computed } from 'vue'
 
-const userStore = useUserStore()
+const userStore = useAccountStore()
 const router = useRouter()
-const user = userStore.user
+
+const user = computed(() => userStore.user)
 
 const logout = () => {
   userStore.logout()
@@ -26,40 +39,91 @@ const logout = () => {
 }
 </script>
 
+
 <style scoped>
 .nav {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 1rem 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid #ccc;
-  background-color: #f9f9f9;
+}
+
+.logo {
+  height: 30px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 0.75rem;
+  margin-left: 2rem;
+}
+
+.menu-btn {
+  background-color: #f3f3f3;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #222;
+  font-size: 14px;
 }
 
 .nav-right {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   align-items: center;
 }
 
-/* 밑줄 제거 및 색상 조정 */
-.nav a {
+.btn {
+  padding: 6px 14px;
+  border-radius: 12px;
+  background-color: #111;
+  color: white;
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
   text-decoration: none;
-  color: inherit;
-  font-weight: 500;
+}
+
+.btn-outline {
+  padding: 6px 14px;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #111;
+  border: 1px solid #bbb;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
 }
 
 .logout-button {
   background: none;
   border: none;
-  color: #007bff;
+  color: #2f80ed;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 14px;
   padding: 0;
 }
 
 .logout-button:hover {
   text-decoration: underline;
 }
-
 </style>
