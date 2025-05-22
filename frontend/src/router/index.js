@@ -31,15 +31,16 @@ const router = createRouter({
   routes,
 })
 
-// ✅ 수정된 Navigation Guard
+// Navigation Guard
 router.beforeEach((to, from, next) => {
   const store = useAccountStore()
   if (to.meta.requiresAuth && !store.user) {
     alert('로그인이 필요합니다.')
-    next('/login')
+    next({ name: 'login', query: { redirect: to.fullPath } })
   } else {
     next()
   }
 })
+
 
 export default router

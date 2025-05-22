@@ -60,6 +60,7 @@ export const useAccountStore = defineStore('account', () => {
   const logout = () => {
     token.value = null
     user.value = null
+    router.push('/')
   }
 
   // ✅ 로그인 여부

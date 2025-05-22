@@ -32,21 +32,31 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import { useAccountStore } from '@/stores/accounts.js'
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAccountStore } from '@/stores/accounts.js'
 
-  const accountStore = useAccountStore()
+const route = useRoute()
+const router = useRouter()
+const accountStore = useAccountStore()
 
-  const username = ref('')
-  const password = ref('')
-  const onLogIn = function () {
-    const userInfo = {
-      username: username.value,
-      password: password.value
-    }
-    accountStore.logIn(userInfo)
+const username = ref('')
+const password = ref('')
+
+const onLogIn = async () => {
+  const userInfo = {
+    username: username.value,
+    password: password.value
   }
+  try {
+    await accountStore.logIn(userInfo)
+    router.push(route.query.redirect || '/')
+  } catch (err) {
+    alert('로그인 실패')
+  }
+}
 </script>
+
 
 <style scoped>
 .login-container {
