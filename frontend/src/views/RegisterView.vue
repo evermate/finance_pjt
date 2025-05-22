@@ -30,7 +30,10 @@ const submit = async () => {
     await userStore.register(form.value)
     alert('회원가입 완료')
   } catch (err) {
-    alert('회원가입 실패: ' + JSON.stringify(err.response.data))
+    const errorData = err.response?.data || { error: '알 수 없는 오류 발생' }
+    alert('회원가입 실패: ' + JSON.stringify(errorData))
+    console.error('회원가입 실패 디버그:', err)
   }
 }
+
 </script>
