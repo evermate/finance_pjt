@@ -1,4 +1,6 @@
+// router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores/user'  // ✅ import는 정상 사용 가능
 import HomeView from '@/views/HomeView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -16,6 +18,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const store = useUserStore()
+  if (to.meta.requiresAuth && !store.token) {
+    alert('로그인이 필요합니다.')
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router
