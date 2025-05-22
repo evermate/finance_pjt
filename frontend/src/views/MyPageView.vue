@@ -15,14 +15,15 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import { useUserStore } from '@/stores/user'
+import { useAccountStore } from '@/stores/accounts'  // ✅ store import 수정
 
-const userStore = useUserStore()
+const userStore = useAccountStore()
 const user = userStore.user
 
 onMounted(() => {
   if (!user) {
-    userStore.fetchUser()
+    userStore.fetchUser()  // ✅ fetchUser 메서드 호출
   }
 })
 </script>
+

@@ -3,9 +3,15 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 
 class CustomRegisterSerializer(RegisterSerializer):
-    age = serializers.IntegerField(required=False)  # 선택적으로 설정 (필수로 바꿀 수도 있음)
+    age = serializers.IntegerField(required=True)
 
     def get_cleaned_data(self):
         data = super().get_cleaned_data()
-        data['age'] = self.validated_data.get('age', None)
+        data['age'] = self.validated_data.get('age', '')
         return data
+    
+    def save(self, request):
+        user = super().save(request)
+        user.age = self.validated_data.get('age', '')
+        user.save()
+        return user
