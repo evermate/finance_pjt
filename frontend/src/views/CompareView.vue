@@ -38,6 +38,10 @@
             :class="{ clickable: true, active: selectedTerm === term }"
           >
             {{ term }}개월
+            <span class="sort-icon">
+              <template v-if="selectedTerm === term">▼</template>
+              <template v-else>▽</template>
+            </span>
           </th>
         </tr>
       </thead>
@@ -55,6 +59,7 @@
     </table>
   </section>
 </template>
+
 
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -190,4 +195,5 @@ const getRate = (options, term) => {
   background-color: #007bff;
   color: white;
 }
+
 </style>
