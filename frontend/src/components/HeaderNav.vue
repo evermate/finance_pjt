@@ -14,7 +14,7 @@
           <RouterLink class="menu-btn" to="/community">게시판</RouterLink>
         </nav>
         <RouterLink v-if="!user" to="/login" class="btn-outline">로그인</RouterLink>
-        <RouterLink v-if="!user" to="/register" class="btn">회원가입</RouterLink>
+        <RouterLink v-if="!user" to="/signup" class="btn">회원가입</RouterLink>
         <RouterLink v-if="user" to="/mypage">마이페이지</RouterLink>
         <RouterLink v-if="user" to="/recommend">추천받기</RouterLink>
         <button v-if="user" @click="logout" class="logout-button">로그아웃</button>
@@ -25,17 +25,20 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import { useAccountStore } from '@/stores/accounts'
+import { computed } from 'vue'
 
-const userStore = useUserStore()
+const userStore = useAccountStore()
 const router = useRouter()
-const user = userStore.user
+
+const user = computed(() => userStore.user)
 
 const logout = () => {
   userStore.logout()
   router.push('/login')
 }
 </script>
+
 
 <style scoped>
 .nav {

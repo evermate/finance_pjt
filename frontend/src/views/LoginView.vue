@@ -1,12 +1,13 @@
+<!-- LoginView.vue -->
 <template>
   <div class="login-container">
-    <form @submit.prevent="submit" class="login-form">
+    <form @submit.prevent="onLogIn" class="login-form">
       <label for="username">아이디</label>
       <div class="form-input">
         <input
           id="username"
-          v-model="form.username"
-          placeholder="아이디(이메일)"
+          v-model="username"
+          placeholder="아이디"
           type="text"
         />
       </div>
@@ -15,38 +16,36 @@
       <div class="form-input">
         <input
           id="password"
-          v-model="form.password"
+          v-model="password"
           placeholder="비밀번호"
           type="password"
         />
       </div>
 
       <button type="submit" class="login-btn">로그인</button>
+   </form>
       <hr class="custom-hr" />
-      <RouterLink to="/register" class="register-btn">회원가입</RouterLink>
-    </form>
-
+      <RouterLink to="/signup" class="register-btn">회원가입</RouterLink>
+ 
     
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useUserStore } from '@/stores/user'
-import { RouterLink } from 'vue-router'
+  import { ref } from 'vue'
+  import { useAccountStore } from '@/stores/accounts.js'
 
-const userStore = useUserStore()
-const form = ref({ username: '', password: '' })
+  const accountStore = useAccountStore()
 
-const submit = async () => {
-  try {
-    await userStore.login(form.value)
-    alert('로그인 성공')
-  } catch (err) {
-    alert('로그인 실패: ' + JSON.stringify(err.response?.data || { error: '알 수 없는 오류' }))
-    console.error('로그인 에러:', err)
+  const username = ref('')
+  const password = ref('')
+  const onLogIn = function () {
+    const userInfo = {
+      username: username.value,
+      password: password.value
+    }
+    accountStore.logIn(userInfo)
   }
-}
 </script>
 
 <style scoped>
