@@ -2,21 +2,24 @@
   <div id="app">
     <HeaderNav />
 
-    <main class="container">
-      <RouterView />
+    <main class="main-container">
+      <router-view />
     </main>
   </div>
 </template>
 
 <script setup>
 import HeaderNav from '@/components/HeaderNav.vue'
-import { RouterView } from 'vue-router'
 </script>
 
 <style scoped>
-.container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
+#app {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f7f9fc;
+  min-height: 100vh;
+}
+
+.main-container {
+  padding: 2rem;
 }
 </style>
