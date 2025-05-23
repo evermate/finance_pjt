@@ -7,6 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('api/products/', include('products.urls')),
+    path('api/', include('api.urls')),
 ]
 
 # ✅ 개발 중 이미지 서빙을 위한 static 설정

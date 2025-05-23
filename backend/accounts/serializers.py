@@ -32,11 +32,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_age(self, obj):
         if obj.birth_date:
-            today = date.today()
-            return today.year - obj.birth_date.year - (
-                (today.month, today.day) < (obj.birth_date.month, obj.birth_date.day)
-            )
+            return date.today().year - obj.birth_date.year + 1
         return None
+
 
     class Meta:
         model = User
