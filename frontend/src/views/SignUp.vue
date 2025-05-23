@@ -22,9 +22,23 @@
         <input id="password2" v-model="password2" type="password" placeholder="비밀번호 확인" />
       </div>
 
+      <!-- ✅ 생년월일 select 입력 -->
       <div class="form-group">
-        <label for="age">나이 (선택)</label>
-        <input id="age" v-model="age" type="number" placeholder="나이" />
+        <label>생년월일</label>
+        <div class="birth-selects">
+          <select v-model="birthYear">
+            <option value="">년도</option>
+            <option v-for="y in years" :key="y" :value="y">{{ y }}년</option>
+          </select>
+          <select v-model="birthMonth">
+            <option value="">월</option>
+            <option v-for="m in 12" :key="m" :value="String(m).padStart(2, '0')">{{ m }}월</option>
+          </select>
+          <select v-model="birthDay">
+            <option value="">일</option>
+            <option v-for="d in 31" :key="d" :value="String(d).padStart(2, '0')">{{ d }}일</option>
+          </select>
+        </div>
       </div>
 
       <button type="submit">가입하기</button>
@@ -33,28 +47,39 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue'
-  import { useAccountStore } from '@/stores/accounts.js'
-  
-  const accountStore = useAccountStore()
+import { ref, computed } from 'vue'
+import { useAccountStore } from '@/stores/accounts.js'
 
-  const username = ref('')
-  const age = ref('')
-  const email = ref('')
-  const password1 = ref('')
-  const password2 = ref('')
+const accountStore = useAccountStore()
 
-  const onSignUp = function () {
-    const userInfo = {
-      username: username.value,
-      age: age.value,
-      email: email.value,
-      password1: password1.value,
-      password2: password2.value
-    }
-    accountStore.signUp(userInfo)  
+const username = ref('')
+const email = ref('')
+const password1 = ref('')
+const password2 = ref('')
+
+// 생년월일 관련
+const birthYear = ref('')
+const birthMonth = ref('')
+const birthDay = ref('')
+const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i)
+
+const birth_date = computed(() => {
+  if (birthYear.value && birthMonth.value && birthDay.value) {
+    return `${birthYear.value}-${birthMonth.value}-${birthDay.value}`
   }
-  
+  return ''
+})
+
+const onSignUp = function () {
+  const userInfo = {
+    username: username.value,
+    birth_date: birth_date.value,
+    email: email.value,
+    password1: password1.value,
+    password2: password2.value
+  }
+  accountStore.signUp(userInfo)
+}
 </script>
 
 <style scoped>
@@ -74,9 +99,15 @@
   font-weight: 500;
 }
 
-.signup-form input {
+.signup-form input,
+.signup-form select {
   width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
+}
+
+.birth-selects {
+  display: flex;
+  gap: 0.5rem;
 }
 </style>

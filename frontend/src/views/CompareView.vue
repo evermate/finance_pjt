@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="term-buttons">
+    <!-- <div class="term-buttons">
       <button
         v-for="term in ['6', '12', '24', '36']"
         :key="term"
@@ -23,7 +23,7 @@
       >
         {{ term }}개월
       </button>
-    </div>
+    </div> -->
 
     <table class="rate-table">
       <thead>
