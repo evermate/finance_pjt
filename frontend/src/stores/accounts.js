@@ -13,15 +13,15 @@ export const useAccountStore = defineStore('account', () => {
   const user = ref(null)
 
   // ✅ 회원가입
-  const signUp = ({ username, age, email, password1, password2 }) => {
+  const signUp = ({ username, birth_date, email, password1, password2 }) => {
     axios({
       method: 'POST',
       url: `${ACCOUNT_API_URL}/signup/`,
-      data: { username, age, email, password1, password2 }
+      data: { username, birth_date, email, password1, password2 }
     })
       .then(() => {
-        alert('회원가입이 완료되었습니다!')  // ✅ 사용자 피드백
-        router.push({ name: 'home' })        // ✅ 홈으로 이동
+        alert('회원가입이 완료되었습니다!')
+        router.push({ name: 'home' })
       })
       .catch(err => {
         console.error('회원가입 실패:', err)
@@ -49,7 +49,7 @@ export const useAccountStore = defineStore('account', () => {
   const fetchUser = () => {
     axios({
       method: 'GET',
-      url: `${ACCOUNT_API_URL}/user/`,
+      url: `${ACCOUNT_API_URL}/mypage/`,  // 🔄 수정된 URL
       headers: {
         Authorization: `Token ${token.value}`
       }
