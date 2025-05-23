@@ -7,6 +7,7 @@ import axios from 'axios'
 
 export const useAccountStore = defineStore('account', () => {
   const ACCOUNT_API_URL = 'http://127.0.0.1:8000/accounts'
+  const router = useRouter()
 
   const token = ref(null)
   const user = ref(null)
@@ -19,9 +20,13 @@ export const useAccountStore = defineStore('account', () => {
       data: { username, age, email, password1, password2 }
     })
       .then(() => {
-        console.log('회원가입 성공!')
+        alert('회원가입이 완료되었습니다!')  // ✅ 사용자 피드백
+        router.push({ name: 'home' })        // ✅ 홈으로 이동
       })
-      .catch(err => console.error('회원가입 실패:', err))
+      .catch(err => {
+        console.error('회원가입 실패:', err)
+        alert('회원가입에 실패했습니다. 다시 시도해주세요.')
+      })
   }
 
   // ✅ 로그인
@@ -35,7 +40,7 @@ export const useAccountStore = defineStore('account', () => {
       .then(res => {
         console.log(res)
         token.value = res.data.key
-        fetchUser() 
+        fetchUser()
       })
       .catch(err => console.error('로그인 실패:', err))
   }
