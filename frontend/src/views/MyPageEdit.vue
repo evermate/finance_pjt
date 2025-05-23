@@ -1,65 +1,65 @@
 <template>
-  <div class="signup-container">
-    <h1>회원정보 수정</h1>
-    <form @submit.prevent="submitForm" class="signup-form" enctype="multipart/form-data">
-      <!-- ✅ 프로필 이미지 미리보기 -->
-      <div class="form-group">
-        <label>프로필 이미지</label>
-        <div class="profile-preview">
-          <img
-            v-if="previewImage"
-            :src="previewImage"
-            alt="프로필 미리보기"
-          />
-          <p v-else class="no-image">[프로필 이미지 없음]</p>
-        </div>
-        <input type="file" @change="handleFileChange" />
-      </div>
+  <div class="edit-container">
+    <div class="card header-card">
+      <h1 style="text-align: center;">회원정보 수정</h1>
+      <div class="card detail-card">
+        <form @submit.prevent="submitForm" enctype="multipart/form-data" class="edit-form">
+          <div class="top-section">
+            <!-- 프로필 이미지 -->
+            <div class="image-box">
+              <img
+                v-if="previewImage"
+                :src="previewImage"
+                alt="프로필 이미지"
+              />
+              <p v-else class="no-image">[프로필 이미지 없음]</p>
 
-      <!-- 읽기 전용 필드들 -->
-      <div class="form-group">
-        <label>아이디</label>
-        <input :value="user?.username" disabled />
-      </div>
+              <!-- 파일 선택 -->
+              <input type="file" @change="handleFileChange" class="file-input" />
+            </div>
 
-      <div class="form-group">
-        <label>이메일</label>
-        <input :value="user?.email" disabled />
-      </div>
+            <!-- 읽기 전용 항목 -->
+            <div class="readonly-info">
+              <label>아이디</label>
+              <div class="readonly-box">{{ user?.username }}</div>
 
-      <div class="form-group">
-        <label>나이</label>
-        <input :value="user?.age ?? '미입력'" disabled />
-      </div>
+              <label>이메일</label>
+              <div class="readonly-box">{{ user?.email }}</div>
 
-      <!-- 수정 가능한 필드 -->
-      <div class="form-group">
-        <label>연락처</label>
-        <input v-model="form.phone_number" />
-      </div>
+              <label>나이</label>
+              <div class="readonly-box">{{ user?.age ?? '미입력' }}</div>
+            </div>
+          </div>
 
-      <div class="form-group">
-        <label>생년월일</label>
-        <input type="date" v-model="form.birth_date" />
-      </div>
+          <!-- 수정 가능한 항목 -->
+          <div class="form-group">
+            <label>연락처</label>
+            <input v-model="form.phone_number" class="editable-input" />
+          </div>
 
-      <div class="form-group">
-        <label>성별</label>
-        <select v-model="form.gender">
-          <option value="">선택</option>
-          <option value="M">남성</option>
-          <option value="F">여성</option>
-          <option value="O">기타</option>
-        </select>
-      </div>
+          <div class="form-group">
+            <label>생년월일</label>
+            <input type="date" v-model="form.birth_date" class="editable-input" />
+          </div>
 
-      <div class="form-group">
-        <label>월 수입대</label>
-        <input v-model="form.monthly_income_range" />
-      </div>
+          <div class="form-group">
+            <label>성별</label>
+            <select v-model="form.gender" class="editable-input">
+              <option value="">선택</option>
+              <option value="M">남성</option>
+              <option value="F">여성</option>
+            </select>
+          </div>
 
-      <button type="submit">수정 완료</button>
-    </form>
+          <div class="form-group">
+            <label>월 수입대</label>
+            <input v-model="form.monthly_income_range" class="editable-input" />
+          </div>
+
+          <button type="submit" class="submit-btn">수정 완료</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -124,8 +124,8 @@ const submitForm = async () => {
       }
     })
     alert('수정 완료!')
-    await userStore.fetchUser()  // ✅ store 갱신
-    router.push({ name: 'mypage' })  // ✅ 갱신된 데이터로 마이페이지 이동
+    await userStore.fetchUser()
+    router.push({ name: 'mypage' })
   } catch (err) {
     console.error('수정 실패:', err)
     alert('수정 실패')
@@ -134,44 +134,123 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-.signup-container {
-  max-width: 400px;
+.edit-container {
+  max-width: 720px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem 1rem;
+  font-family: 'Pretendard', sans-serif;
+  background-color: #f8f9fc;
 }
 
-.signup-form .form-group {
-  margin-bottom: 1.2rem;
+.edit-form {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  padding: 2rem;
+  margin-bottom: 2rem;
 }
 
-.signup-form label {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-weight: 500;
+.header-card {
+  background: linear-gradient(to right, #e9f0ff, #f4f9ff);
+  /* text-align: center; */
+}
+.top-section {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
-.signup-form input,
-.signup-form select {
-  width: 100%;
-  padding: 0.5rem;
-  box-sizing: border-box;
+.image-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.profile-preview {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.profile-preview img {
-  width: 120px;
-  height: 120px;
+.image-box img {
+  width: 140px;
+  height: 140px;
   object-fit: cover;
   border-radius: 50%;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
+}
+
+.image-box input[type="file"] {
+  margin-top: 1rem;
 }
 
 .no-image {
-  font-style: italic;
+  width: 140px;
+  height: 140px;
+  background-color: #eee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #999;
+  font-style: italic;
+  border: 2px solid #ccc;
+}
+
+.readonly-info {
+  flex: 1;
+}
+
+.readonly-info label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.readonly-box {
+  background-color: #f3f6fa;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.editable-input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.5rem;
+  font-weight: 600;
+  border: none;
+  background-color: #2f80ed;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submit-btn:hover {
+  background-color: #256fd1;
 }
 </style>
