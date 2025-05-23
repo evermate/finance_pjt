@@ -124,14 +124,21 @@ const submitForm = async () => {
       }
     })
     alert('수정 완료!')
-    await userStore.fetchUser()  // ✅ store 갱신
-    router.push({ name: 'mypage' })  // ✅ 갱신된 데이터로 마이페이지 이동
+    await userStore.fetchUser()  // ✅ 최신 정보 fetch
+
+    // ✅ 새로고침 유도 방식 1: 강제 리로드
+    router.push({ name: 'mypage' }).then(() => router.go())
+
+    // ✅ 대안 방식 2: 쿼리 파라미터로 재마운트 유도 (선택사항)
+    // router.push({ name: 'mypage', query: { updated: Date.now() } })
+
   } catch (err) {
     console.error('수정 실패:', err)
     alert('수정 실패')
   }
 }
 </script>
+
 
 <style scoped>
 .signup-container {
