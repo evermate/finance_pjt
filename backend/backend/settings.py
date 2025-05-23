@@ -31,6 +31,8 @@ DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
 # 금감원 API 키
 FSS_API_KEY = env('FSS_API_KEY') 
+KAKAO_REST_API_KEY = env('KAKAO_REST_API_KEY')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
