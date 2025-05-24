@@ -16,7 +16,7 @@ export const useRecommendStore = defineStore('recommend', () => {
    * @param {number} asset  사용자 자산 (원 단위)
    * @param {number} top_n  추천 개수 (기본값 5)
    */
-  async function fetchByProfile(asset, top_n = 5) {
+  async function fetchByProfile(asset, top_n = 10) {
     loading.value = true
     error.value = null
 
