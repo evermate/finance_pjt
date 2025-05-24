@@ -19,7 +19,7 @@ class RecommendViewSet(viewsets.ModelViewSet):
     )
     def recommend_by_profile(self, request):
         asset_param = request.query_params.get('asset')
-        top_n       = int(request.query_params.get('top_n', 5))
+        top_n       = int(request.query_params.get('top_n', 10))
         if asset_param is None:
             return Response({"error": "asset 파라미터는 필수입니다."}, status=400)
         try:

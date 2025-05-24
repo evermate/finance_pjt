@@ -1,6 +1,6 @@
 // router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAccountStore } from '@/stores/accounts'  // ✅ store 이름 정확히
+import { useAccountStore } from '@/stores/accounts'  
 
 import HomeView from '@/views/HomeView.vue'
 import SignUpView from '@/views/SignUp.vue'
@@ -32,7 +32,8 @@ const routes = [
   { path: '/community/write', name: 'community-write', component: CommunityFormView },
   { path: '/community/:id', name: 'community-detail', component: CommunityDetailView },
   { path: '/community/:id/edit', name: 'community-edit', component: CommunityFormView },
-  { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')}
+  { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')},
+  { path: '/search', name: 'search', component: SearchView },
 ]
 
 const router = createRouter({
