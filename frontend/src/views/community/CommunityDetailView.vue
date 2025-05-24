@@ -33,12 +33,6 @@
             {{ post.like_count }}
         </button>
     </div>
-    <div v-else class="loading">로딩 중...</div>
-    <div v-else class="error">게시글을 불러오는 데 실패했습니다.</div>
-    <div v-if="!post" class="loading">게시글을 불러오는 중...</div>
-    <div v-if="!post" class="error">게시글을 찾을 수 없습니다.</div>
-    <div v-if="!post" class="error">게시글이 존재하지 않습니다.</div>
-    <!-- 댓글 영역 -->
     <!-- 댓글 영역 -->
     <div class="comment-section" v-if="post">
         <h2>댓글</h2>
