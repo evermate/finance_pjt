@@ -1,4 +1,10 @@
 <template>
+  <div class="hero-section">
+    <div class="container">
+      <h1>회원정보 수정</h1>
+      <h2>회원정보를 관리하세요.</h2>
+    </div>
+  </div>
   <div class="edit-container">
     <div class="card header-card">
       <h1 style="text-align: center;">회원정보 수정</h1>
@@ -261,4 +267,29 @@ const submitForm = async () => {
 .submit-btn:hover {
   background-color: #256fd1;
 }
+
+.hero-section {
+  background-image: url('/image/notebook.jpg'); /* ← 여기에 넣고 싶은 이미지 경로 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  height: 300px; /* 필요에 따라 조정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white; /* 이미지 위 텍스트를 흰색으로 */
+}
+
+.container h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.container h2 {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
 </style>

@@ -9,19 +9,19 @@
 
   <div class="cards-wrapper">
     <div class="container cards">
-      <RouterLink to="/map" class="card">
-        <img src="/image/compass.png" alt="은행 검색" />
-        <p>은행 검색</p>
+      <RouterLink to="/compare" class="card">
+        <img src="/image/weighing-scale.png" alt="예적금 금리 비교" />
+        <p>예적금 금리 비교</p>
       </RouterLink>
 
       <RouterLink to="/recommend" class="card">
-        <img src="/image/database.png" alt="금융 상품 추천" />
-        <p>금융 상품 추천</p>
+        <img src="/image/search.png" alt="금융 상품 추천" />
+        <p>금융 상품 추천받기</p>
       </RouterLink>
 
-      <RouterLink to="/search" class="card">
-        <img src="/image/search.png" alt="관심 종목 정보 검색" />
-        <p>관심 종목 정보 검색</p>
+      <RouterLink to="/map" class="card">
+        <img src="/image/compass.png" alt="은행 검색" />
+        <p>은행 검색</p>
       </RouterLink>
     </div>
   </div>

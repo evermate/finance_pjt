@@ -8,16 +8,17 @@
       </div>
       <div class="nav-right">
         <nav class="nav-menu">
-          <RouterLink :to="{ name: 'compare' }" class="menu-btn">예적금 금리 비교</RouterLink>
+          <!-- <RouterLink :to="{ name: 'compare' }" class="menu-btn">예적금 금리 비교</RouterLink> -->
           <RouterLink :to="{ name: 'prices' }" class="menu-btn">현물 상품 비교</RouterLink>
           <RouterLink :to="{ name: 'search' }" class="menu-btn">관심 종목 검색</RouterLink>
           <RouterLink :to="{ name: 'community' }" class="menu-btn">게시판</RouterLink>
         </nav>
         <RouterLink v-if="!user" :to="{ name: 'login' }" class="btn-outline">로그인</RouterLink>
         <RouterLink v-if="!user" :to="{ name: 'signup' }" class="btn">회원가입</RouterLink>
-        <RouterLink v-if="user" :to="{ name: 'mypage' }">마이페이지</RouterLink>
-        <RouterLink v-if="user" :to="{ name: 'recommend' }">추천받기</RouterLink>
-        <button v-if="user" @click="logout" class="logout-button">로그아웃</button>
+        <RouterLink v-if="user" :to="{ name: 'mypage' }"><img src="/image/User.png" alt="User Logo" class="user-icon">
+          <span class="user-name"> {{ user.username }} 님</span></RouterLink>
+        <!-- <RouterLink v-if="user" :to="{ name: 'recommend' }">추천받기</RouterLink> -->
+        <button v-if="user" @click="logout" class="logout-button">Logout</button>
       </div>
     </div>
   </header>
@@ -126,5 +127,21 @@ const logout = () => {
 
 .logout-button:hover {
   text-decoration: underline;
+}
+.user-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 6px;
+}
+
+.user-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #333;
 }
 </style>
