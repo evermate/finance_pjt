@@ -51,7 +51,11 @@ export const useCommunityStore = defineStore('community', () => {
 
   async function deletePost(id) {
     try {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem('authToken')
+      if (!token) {
+        alert('로그인 후 삭제 가능합니다.')
+        return false
+      }
       await axios.delete(`/api/community/posts/${id}/`, {
         headers: { Authorization: `Token ${token}` }
       })

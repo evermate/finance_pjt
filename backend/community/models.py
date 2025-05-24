@@ -14,6 +14,7 @@ class Post(models.Model):
     link = models.URLField(blank=True)  # 뉴스용 (REVIEW/NEWS만 사용 가능)
     rating = models.PositiveSmallIntegerField(null=True, blank=True)  # 리뷰용 (1~5점)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
 
     def __str__(self):
         return f"[{self.get_board_type_display()}] {self.title}"

@@ -4,29 +4,20 @@
 
     <!-- 게시판 종류 선택 -->
     <div class="board-type-select">
-      <button
-        @click="selectBoard('REVIEW')"
-        :class="{ active: boardType === 'REVIEW' }"
-      >
+      <button @click="selectBoard('REVIEW')" :class="{ active: boardType === 'REVIEW' }">
         금융상품 리뷰
       </button>
-      <button
-        @click="selectBoard('NEWS')"
-        :class="{ active: boardType === 'NEWS' }"
-      >
+      <button @click="selectBoard('NEWS')" :class="{ active: boardType === 'NEWS' }">
         금융 뉴스
       </button>
-      <button
-        @click="selectBoard('FREE')"
-        :class="{ active: boardType === 'FREE' }"
-      >
+      <button @click="selectBoard('FREE')" :class="{ active: boardType === 'FREE' }">
         자유 게시판
       </button>
     </div>
 
     <!-- 글쓰기 버튼 -->
     <div class="actions">
-      <button class="write-btn" @click="goWrite">✍️ 글쓰기</button>
+      <button class="write-btn" @click="goWrite">글쓰기</button>
     </div>
 
     <!-- 게시글 목록 -->
@@ -35,7 +26,12 @@
         <li v-for="post in posts" :key="post.id" @click="goDetail(post.id)" class="post-item">
           <span class="badge">{{ boardLabel(post.board_type) }}</span>
           <span class="title">{{ post.title }}</span>
-          <span class="author">- {{ post.author }}</span>
+          <span class="author">
+            -
+            <router-link :to="{ name: 'user-profile', params: { username: post.author } }" class="author-link" @click.stop>
+              {{ post.author }}
+            </router-link>
+          </span>
         </li>
       </ul>
     </div>
@@ -201,8 +197,16 @@ onMounted(() => {
   padding: 0.5rem 0;
   border-bottom: 1px solid #ddd;
 }
+
 .post-item:hover {
   background-color: #f9f9f9;
+}
+.author-link {
+  color: #1e88e5;
+  text-decoration: none;
+}
+.author-link:hover {
+  text-decoration: underline;
 }
 
 </style>

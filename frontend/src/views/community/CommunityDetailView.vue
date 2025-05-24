@@ -3,7 +3,9 @@
         <div class="header">
             <h1 class="title">{{ post.title }}</h1>
             <div class="meta">
-                <span><strong>작성자:</strong> {{ post.author }}</span>
+                <router-link :to="{ name: 'user-profile', params: { username: post.author } }">
+                    {{ post.author }}
+                </router-link>
                 <span><strong>작성일:</strong> {{ formatDate(post.created_at) }}</span>
                 <span><strong>게시판:</strong> {{ boardLabel(post.board_type) }}</span>
             </div>
@@ -19,13 +21,26 @@
         </div>
 
         <div v-if="accountStore.user?.username === post.author" class="author-actions">
-            <button class="edit-btn" @click="goEdit">✏️ 수정</button>
-            <button class="delete-btn" @click="deletePost">🗑️ 삭제</button>
+            <button class="edit-btn" @click="goEdit">수정</button>
+            <button class="delete-btn" @click="deletePost">삭제</button>
         </div>
     </div>
+    <!-- 좋아요 영역 -->
+    <div v-if="post" class="like-area">
+        <button @click="toggleLike">
+            <span v-if="post.is_liked">💖</span>
+            <span v-else>🤍</span>
+            {{ post.like_count }}
+        </button>
+    </div>
+    <div v-else class="loading">로딩 중...</div>
+    <div v-else class="error">게시글을 불러오는 데 실패했습니다.</div>
+    <div v-if="!post" class="loading">게시글을 불러오는 중...</div>
+    <div v-if="!post" class="error">게시글을 찾을 수 없습니다.</div>
+    <div v-if="!post" class="error">게시글이 존재하지 않습니다.</div>
     <!-- 댓글 영역 -->
     <div class="comment-section">
-        <h2>💬 댓글</h2>
+        <h2>댓글</h2>
 
         <!-- 댓글 목록 -->
         <ul v-if="comments.length">
@@ -95,6 +110,27 @@ async function deletePost() {
         alert('삭제 실패')
     }
 }
+
+async function toggleLike() {
+    const token = localStorage.getItem('authToken')
+    if (!token) return alert('로그인 후 이용 가능합니다.')
+
+    const endpoint = post.value.is_liked ? 'unlike' : 'like'
+
+    try {
+        const res = await axios.post(
+            `/api/community/posts/${post.value.id}/${endpoint}/`,
+            {},
+            { headers: { Authorization: `Token ${token}` } }
+        )
+        post.value.is_liked = res.data.liked
+        post.value.like_count = res.data.like_count
+    } catch (err) {
+        alert('요청 실패')
+        console.error(err)
+    }
+}
+
 
 function goEdit() {
     router.push({ name: 'community-edit', params: { id: post.value.id } })
@@ -250,5 +286,31 @@ onMounted(async () => {
 
 .comment-form button:hover {
     background-color: #1565c0;
+}
+
+.like-area {
+    max-width: 720px;
+    margin: 1.5rem auto 0;
+    padding: 1rem 2rem;
+    text-align: right;
+    font-family: 'Pretendard', sans-serif;
+}
+
+.like-area button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.1rem;
+    color: #e53935;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.like-area button:hover {
+    background-color: #ffe5e5;
 }
 </style>

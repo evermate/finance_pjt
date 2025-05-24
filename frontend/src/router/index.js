@@ -32,6 +32,7 @@ const routes = [
   { path: '/community/write', name: 'community-write', component: CommunityFormView },
   { path: '/community/:id', name: 'community-detail', component: CommunityDetailView },
   { path: '/community/:id/edit', name: 'community-edit', component: CommunityFormView },
+  { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')}
 ]
 
 const router = createRouter({

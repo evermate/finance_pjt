@@ -1,6 +1,8 @@
 from rest_framework import viewsets, permissions
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
@@ -18,6 +20,18 @@ class PostViewSet(viewsets.ModelViewSet):
     # 작성자 자동 저장
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def like(self, request, pk=None):
+        post = self.get_object()
+        post.likes.add(request.user)
+        return Response({'liked': True, 'like_count': post.likes.count()})
+
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
+    def unlike(self, request, pk=None):
+        post = self.get_object()
+        post.likes.remove(request.user)
+        return Response({'liked': False, 'like_count': post.likes.count()})
 
 
 class CommentViewSet(viewsets.ModelViewSet):

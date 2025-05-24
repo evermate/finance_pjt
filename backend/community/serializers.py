@@ -3,13 +3,22 @@ from .models import Post, Comment
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.CharField(source='author.username', read_only=True)
+    like_count = serializers.IntegerField(source='likes.count', read_only=True)
+    is_liked = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = [
             'id', 'board_type', 'title', 'content', 'link', 'rating',
-            'author', 'created_at'
+            'author', 'created_at',
+            'like_count', 'is_liked',
         ]
+
+    def get_is_liked(self, obj):
+        user = self.context.get('request').user
+        if user.is_authenticated:
+            return obj.likes.filter(id=user.id).exists()
+        return False
 
 
 class CommentSerializer(serializers.ModelSerializer):
