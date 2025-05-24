@@ -25,7 +25,7 @@ export const useRecommendStore = defineStore('recommend', () => {
       // axios.defaults.headers.common['Authorization'] 은
       // main.js 와 accounts 스토어에서 이미 세팅되어 있다고 가정
       const res = await axios.get(
-        '/api/products/deposits/recommend_by_profile/',
+        '/api/products/recommends/recommend_by_profile/',
         {
           params: { asset, top_n }
         }
