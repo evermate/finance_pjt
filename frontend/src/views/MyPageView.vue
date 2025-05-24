@@ -53,24 +53,48 @@
           <div class="info-box">{{ user.main_bank?.kor_co_nm || '미입력' }}</div>
         </div>
 
-        <router-link to="/mypage/edit">
-          <button class="submit-btn">회원정보 수정</button>
-        </router-link>
+        <!-- <router-link to="/mypage/edit">
+          <button class="submit-btn" >회원정보 수정</button>
+        </router-link> -->
+        <!-- 회원정보 수정 버튼 -->
+        <button class="submit-btn" @click="openPasswordModal">회원정보 수정</button>
+
+        <!-- 비밀번호 확인 모달 -->
+        <div v-if="showModal" class="modal-backdrop">
+          <div class="modal-content">
+            <h2>개인정보 확인</h2>
+            <label>비밀번호 입력</label>
+            <input v-model="password" type="password" placeholder="비밀번호 입력" />
+            <div class="modal-buttons">
+              <button class="confirm-btn" @click="verifyPassword">확인</button>
+              <button class="cancel-btn" @click="showModal = false">닫기</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAccountStore } from '@/stores/accounts'
 import { API_BASE_URL } from '@/constants'
 import { watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import axios from 'axios'
 
 const route = useRoute()
+const router = useRouter()
 const userStore = useAccountStore()
 const user = userStore.user
+
+const showModal = ref(false)
+const password = ref('')
+const openPasswordModal = () => {
+  showModal.value = true
+}
+
 
 watch(() => route.fullPath, () => {
   userStore.fetchUser()
@@ -81,6 +105,18 @@ onMounted(() => {
     userStore.fetchUser()
   }
 })
+
+const verifyPassword = async () => {
+  try {
+    await axios.post(`${API_BASE_URL}/accounts/verify-password/`, {
+      username: user.username,
+      password: password.value,
+    })
+    router.push('/mypage/edit')
+  } catch (error) {
+    alert('비밀번호가 일치하지 않습니다.')
+  }
+}
 </script>
 
 <style scoped>
@@ -192,4 +228,55 @@ onMounted(() => {
   /* 🔴 밑줄 제거 */
   text-decoration: none;
 }
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.modal-content input {
+  width: 90%;
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.confirm-btn {
+  background-color: #0055ff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  padding: 0.5rem 1rem;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 </style>

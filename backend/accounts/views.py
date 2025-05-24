@@ -20,3 +20,11 @@ def update_user(request):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def verify_password(request):
+    password = request.data.get('password')
+    if password and request.user.check_password(password):
+        return Response({'success': True})
+    return Response({'success': False}, status=status.HTTP_400_BAD_REQUEST)
