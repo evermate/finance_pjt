@@ -59,7 +59,7 @@ const asset = ref(0)
 
 // 3) 폼 제출 핸들러
 function onSubmit() {
-  recommendStore.fetchByProfile(asset.value, 5)
+  recommendStore.fetchByProfile(asset.value, 10)
 }
 </script>
 
