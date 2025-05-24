@@ -39,7 +39,8 @@
     <div v-if="!post" class="error">게시글을 찾을 수 없습니다.</div>
     <div v-if="!post" class="error">게시글이 존재하지 않습니다.</div>
     <!-- 댓글 영역 -->
-    <div class="comment-section">
+    <!-- 댓글 영역 -->
+    <div class="comment-section" v-if="post">
         <h2>댓글</h2>
 
         <!-- 댓글 목록 -->
@@ -57,6 +58,7 @@
             <p>로그인 후 댓글을 작성할 수 있습니다.</p>
         </div>
     </div>
+
 
 
 </template>

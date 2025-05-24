@@ -1,7 +1,13 @@
 <template>
   <li class="comment-item">
     <div class="comment-body">
-      <strong>{{ comment.author }}</strong> | {{ formatDate(comment.created_at) }}
+      <router-link
+        :to="authorLink"
+      >
+        <strong>{{ comment.author }}</strong>
+      </router-link>
+      | {{ formatDate(comment.created_at) }}
+
       <p>{{ comment.content }}</p>
 
       <button v-if="isAuthor" @click="onDelete" class="delete-btn">삭제</button>
@@ -16,10 +22,19 @@
 
     <!-- 자식 댓글 재귀 렌더링 -->
     <ul v-if="comment.children?.length" class="nested-comments">
-      <CommentItem v-for="child in comment.children" :key="child.id" :comment="child" :post-id="postId" />
+      <CommentItem
+        v-for="child in comment.children"
+        :key="child.id"
+        :comment="child"
+        :post-id="postId"
+      />
     </ul>
   </li>
 </template>
+
+
+
+
 
 <script setup>
 import { ref, computed } from 'vue'
@@ -29,16 +44,25 @@ import CommentItem from './CommentItem.vue'
 
 const props = defineProps({
   comment: Object,
-  postId: Number
+  postId: Number,
 })
 
 const store = useCommentStore()
 const account = useAccountStore()
-const isReplyAllowed = computed(() => !props.comment.parent)
 
 const isAuthor = computed(() => props.comment.author === account.user?.username)
+const isReplyAllowed = computed(() => !props.comment.parent)
+
 const showReplyForm = ref(false)
 const replyContent = ref('')
+
+
+const authorLink = computed(() => {
+  return isAuthor.value
+    ? { name: 'mypage' }
+    : { name: 'user-profile', params: { username: props.comment.author } }
+})
+
 
 function toggleReply() {
   showReplyForm.value = !showReplyForm.value
@@ -61,6 +85,7 @@ function formatDate(dateStr) {
   return new Date(dateStr).toLocaleString()
 }
 </script>
+
 
 <style scoped>
 .comment-item {
