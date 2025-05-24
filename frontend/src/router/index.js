@@ -26,6 +26,7 @@ const routes = [
   { path: '/community', name: 'community', component: CommunityView },
   { path: '/search', name: 'search', component: SearchView },
   { path: '/mypage/edit', name: 'mypage-edit', component: MyPageEdit },
+  { path: '/search', name: 'search', component: SearchView },
 ]
 
 const router = createRouter({
