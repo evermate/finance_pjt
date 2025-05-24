@@ -5,8 +5,8 @@ from rest_framework.pagination import PageNumberPagination
 from django.db.models import Prefetch, OuterRef, Subquery, FloatField
 from rest_framework.permissions import AllowAny
 
-from .models import Bank, DepositProduct, InterestOption
-from .serializers import BankSerializer, DepositProductSerializer, InterestOptionSerializer
+from ..models import Bank, DepositProduct, InterestOption
+from ..serializers import BankSerializer, DepositProductSerializer, InterestOptionSerializer
 
 
 # 📄 기본 페이지네이션 설정
