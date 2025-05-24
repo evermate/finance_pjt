@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .models import Post
-from .serializers import PostSerializer
+from .models import Post, Comment
+from .serializers import PostSerializer, CommentSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-created_at')
@@ -16,5 +16,21 @@ class PostViewSet(viewsets.ModelViewSet):
         return queryset
 
     # 작성자 자동 저장
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        queryset = Comment.objects.filter(parent=None).order_by('created_at')  # 부모만
+        post_id = self.request.query_params.get('post')
+        if post_id:
+            queryset = queryset.filter(post__id=post_id)
+        return queryset
+
+
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
