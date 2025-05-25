@@ -16,6 +16,7 @@ import CommunityListView from '@/views/community/CommunityListView.vue'
 import CommunityDetailView from '@/views/community/CommunityDetailView.vue'
 import CommunityFormView from '@/views/community/CommunityFormView.vue'
 import DepositDetailView from '@/views/product/DepositDetailView.vue'
+import VideoDetailView from '@/views/VideoDetailView.vue'
 
 
 const routes = [
@@ -41,6 +42,7 @@ const routes = [
   component: DepositDetailView,
   props: true  // URL 파라미터를 props로 전달
 },
+  { path: '/video/:id', name: 'video-detail', component: VideoDetailView },
 ]
 
 const router = createRouter({
