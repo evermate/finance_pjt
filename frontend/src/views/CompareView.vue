@@ -24,6 +24,16 @@
             {{ bank }}
           </option>
         </select>
+        <h4>기간</h4>
+        <select v-model="selectedTerm" class="term-select" @change="fetchSortedProducts(selectedTerm)">
+          <option
+            v-for="term in ['6', '12', '24', '36']"
+            :key="term"
+            :value="term"
+          >
+            {{ term }}개월
+          </option>
+        </select>
       </div>
 
       <!-- 오른쪽: 테이블 -->
@@ -53,10 +63,16 @@
               <td>{{ product.dcls_strt_day }}</td>
               <td>{{ product.bank_name }}</td>
               <td :title="product.fin_prdt_nm">{{ product.fin_prdt_nm }}</td>
-              <td>{{ getRate(product.options, '6') }}</td>
-              <td>{{ getRate(product.options, '12') }}</td>
-              <td>{{ getRate(product.options, '24') }}</td>
-              <td>{{ getRate(product.options, '36') }}</td>
+              <td
+                v-for="(term, idx) in termList"
+                :key="term"
+                :class="getCellClass(idx)">
+                {{ getRate(product.options, term) }}
+              </td>
+              <!-- <td :class="getCellClass('6')">{{ getRate(product.options, '6') }}</td>
+              <td :class="getCellClass('12')">{{ getRate(product.options, '12') }}</td>
+              <td :class="getCellClass('24')">{{ getRate(product.options, '24') }}</td>
+              <td :class="getCellClass('36')">{{ getRate(product.options, '36') }}</td> -->
             </tr>
           </tbody>
         </table>
@@ -75,6 +91,7 @@ const products = ref([])
 const selectedTerm = ref('6')
 const selectedType = ref('saving')
 const selectedBank = ref('전체')
+const termList = ['6', '12', '24', '36']
 
 const fetchSortedProducts = async (term = selectedTerm.value) => {
   selectedTerm.value = term
@@ -116,6 +133,12 @@ const filteredProducts = computed(() => {
   if (selectedBank.value === '전체') return products.value
   return products.value.filter(p => p.bank_name === selectedBank.value)
 })
+
+const getCellClass = (idx) => {
+  return idx === selectedTermIndex.value ? 'highlighted' : 'dimmed'
+}
+
+const selectedTermIndex = computed(() => termList.indexOf(selectedTerm.value))
 </script>
 
 <style scoped>
@@ -133,6 +156,14 @@ const filteredProducts = computed(() => {
 }
 
 .bank-select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+.term-select {
   padding: 0.5rem;
   font-size: 1rem;
   border-radius: 4px;
@@ -198,8 +229,12 @@ const filteredProducts = computed(() => {
 }
 
 .rate-table th {
-  background-color: #f3f3f3;
-  user-select: none;
+  background-color: #f2f6fa;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 0.95rem;
 }
 
 .rate-table th.clickable {
@@ -209,7 +244,10 @@ const filteredProducts = computed(() => {
 .rate-table th.active {
   background-color: #007bff;
   color: white;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
+
 .compare-body {
   display: flex;
   align-items: flex-start;
@@ -217,12 +255,95 @@ const filteredProducts = computed(() => {
 }
 
 .filter-section {
-  min-width: 200px;
+  min-width: 220px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.filter-section h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.3rem;
+}
+
+.bank-select,
+.term-select {
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9fafb;
+  width: 100%;
+  transition: border-color 0.3s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.bank-select:focus,
+.term-select:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #ffffff;
 }
 
 .table-wrapper {
   flex: 1;
   overflow-x: auto;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
 }
 
+.rate-table td {
+  font-size: 0.95rem;
+  color: #222;
+}
+
+.rate-table td:empty::before {
+  content: '-';
+  color: #aaa;
+}
+
+.rate-table td {
+  font-weight: 500;
+}
+
+.rate-table td:nth-child(n+4) {
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: #007bff;
+}
+.rate-table tbody tr:hover {
+  background-color: #f0f8ff;
+  transition: background-color 0.2s;
+}
+
+/* 연한 색상 (선택 안 된 기간용) */
+.rate-table td.dimmed {
+  color: #bbb;
+  font-weight: normal;
+}
+
+/* 강조 색상 (선택된 기간용) */
+.rate-table td.highlighted {
+  color: #df2e5a;
+  font-weight: bold;
+  border-left: 2px solid #007bff;
+  border-right: 2px solid #007bff;
+  background-color: #fffafc;
+  box-shadow: inset 2px 0 0 #007bff, inset -2px 0 0 #007bff;
+}
+
+/* 선택된 열의 테두리 강조 */
+.rate-table td.highlighted {
+  border-left: 2px solid #007bff;
+  border-right: 2px solid #007bff;
+  background-color: #fffdfd;
+}
 </style>
