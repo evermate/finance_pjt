@@ -26,7 +26,10 @@
             {{ term }}개월
           </option>
         </select>
+
+
         <!-- 가입한 상품 목록 -->
+        <!-- 이부분은 MyProductsPanel 버튼이 대체하였습니다 -->
         <!-- <div class="joined-products" v-if="isLoggedIn && accountStore.user?.joined_products?.length">
           <h4>가입한 상품</h4>
           <div class="joined-grid">
@@ -68,7 +71,14 @@
               :class="{ 'joined-row': isJoined(product.fin_prdt_cd) }">
               <td>{{ product.dcls_strt_day }}</td>
               <td>{{ product.bank_name }}</td>
-              <td :title="product.fin_prdt_nm">{{ product.fin_prdt_nm }}</td>
+
+              <td :title="product.fin_prdt_nm">
+                <router-link class="product-link" :to="`/product/${selectedType}/${product.fin_prdt_cd}`">
+                  {{ product.fin_prdt_nm }}
+                </router-link>
+              </td>
+
+
               <td v-for="(term, idx) in termList" :key="term" :class="getCellClass(idx)">
                 {{ getRate(product.options, term) }}
               </td>
@@ -104,15 +114,20 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/accounts'
 import axios from 'axios'
+
+const route = useRoute()
+const router = useRouter()
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api/products/deposits/sorted/'
 const products = ref([])
 const selectedTerm = ref('6')
-const selectedType = ref('saving')
+const selectedType = ref(route.query.type || 'saving')
 const selectedBank = ref('전체')
 const termList = ['6', '12', '24', '36']
+
 
 // 상품 가입
 const accountStore = useAccountStore()
@@ -160,7 +175,16 @@ const changeType = async (type) => {
   selectedType.value = type
   await fetchSortedProducts(selectedTerm.value)
   selectedBank.value = '전체'
+
+  // ✅ URL 쿼리 업데이트 (뒤로가기/새로고침 대응)
+  router.replace({
+    query: {
+      ...route.query,
+      type,
+    },
+  })
 }
+
 
 onMounted(() => {
   fetchSortedProducts()
@@ -508,5 +532,16 @@ watch(joinedIds, (val) => {
   cursor: pointer;
 }
 
+.product-link {
+  color: #333;             /* 일반 텍스트 색상 */
+  text-decoration: none;   /* 밑줄 제거 */
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.product-link:hover {
+  color: #007bff;          /* 마우스 호버 시 파란색 강조 */
+  text-decoration: underline; /* 선택적으로 호버시만 밑줄 */
+}
 
 </style>

@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.db.models import Prefetch, OuterRef, Subquery, FloatField
 from rest_framework.permissions import AllowAny
+from rest_framework.generics import RetrieveAPIView
 
 from ..models import Bank, DepositProduct, InterestOption
 from ..serializers import BankSerializer, DepositProductSerializer, InterestOptionSerializer
@@ -97,3 +98,7 @@ class DepositProductViewSet(viewsets.ModelViewSet):
 class InterestOptionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = InterestOption.objects.select_related('product')
     serializer_class = InterestOptionSerializer
+
+class DepositProductDetailView(RetrieveAPIView):
+    queryset = DepositProduct.objects.all()
+    serializer_class = DepositProductSerializer
