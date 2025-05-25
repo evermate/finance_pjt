@@ -15,6 +15,7 @@ class Post(models.Model):
     rating = models.PositiveSmallIntegerField(null=True, blank=True)  # 리뷰용 (1~5점)
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
+    views = models.PositiveIntegerField(default=0)  # 조회수 필드 추가
 
     def __str__(self):
         return f"[{self.get_board_type_display()}] {self.title}"

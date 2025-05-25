@@ -1,21 +1,90 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { ref } from 'vue'
 
 export const useCommunityStore = defineStore('community', () => {
+  const posts = ref([])
+  const pageInfo = ref({})
   /**
    * 게시글 목록 가져오기
    * @param {string} boardType - 'REVIEW' | 'NEWS' | 'FREE'
    * @returns {Promise<Array>} 게시글 배열
    */
-  async function fetchPosts(boardType) {
+  // async function fetchPosts(boardType) {
+  //   try {
+  //     const response = await axios.get(`/api/community/posts/?board_type=${boardType}`)
+  //     return response.data  // 배열 형태 기대
+  //   } catch (error) {
+  //     console.error('게시글 조회 실패:', error)
+  //     return []
+  //   }
+  // }
+
+//   async function fetchPosts(boardType) {
+//   try {
+//     const url = boardType === 'ALL'
+//       ? '/api/community/posts/'  // 전체 게시글 요청
+//       : `/api/community/posts/?board_type=${boardType}`
+
+//     const response = await axios.get(url)
+//     return response.data
+//   } catch (error) {
+//     console.error('게시글 조회 실패:', error)
+//     return []
+//   }
+// }
+  // async function fetchPosts(boardType = 'ALL', page = 1) {
+  //   try {
+  //     const params = { page }
+  //     if (boardType !== 'ALL') {
+  //       params.board_type = boardType
+  //     }
+
+  //     const response = await axios.get('/api/community/posts/', { params })
+  //     posts.value = response.data.results
+  //     pageInfo.value = {
+  //       count: response.data.count,
+  //       next: response.data.next,
+  //       previous: response.data.previous
+  //     }
+  //     return posts.value
+  //   } catch (error) {
+  //     console.error('게시글 조회 실패:', error)
+  //     posts.value = []
+  //     pageInfo.value = {}
+  //   }
+  // }
+
+  async function fetchPosts(boardType = 'ALL', page = 1, search = '') {
     try {
-      const response = await axios.get(`/api/community/posts/?board_type=${boardType}`)
-      return response.data  // 배열 형태 기대
+      const params = { page }
+      if (boardType !== 'ALL') {
+        params.board_type = boardType
+      }
+      if (search) params.search = search
+
+      const response = await axios.get('/api/community/posts/', { params })
+      posts.value = response.data.results
+      pageInfo.value = {
+        count: response.data.count,
+        next: response.data.next,
+        previous: response.data.previous
+      }
+      return {
+        posts: posts.value,
+        count: response.data.count
+      }
     } catch (error) {
       console.error('게시글 조회 실패:', error)
-      return []
+      posts.value = []
+      pageInfo.value = {}
+      return {
+        posts: [],
+        count: 0
+      }
     }
   }
+
 
   async function createPost(postData) {
     const token = localStorage.getItem('authToken')  
@@ -86,6 +155,8 @@ export const useCommunityStore = defineStore('community', () => {
 
 
   return {
+    posts,
+    pageInfo,
     fetchPosts,
     fetchPost,
     createPost,
