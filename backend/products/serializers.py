@@ -30,5 +30,8 @@ class DepositProductSerializer(serializers.ModelSerializer):
             'dcls_strt_day',
             'fin_prdt_nm',
             'bank_name',
+            'join_member',      # ✅ 가입 대상
+            'join_way',         # ✅ 가입 방법
+            'spcl_cnd',         # ✅ 우대 조건
             'options',  # 전체 옵션 포함됨
         ]

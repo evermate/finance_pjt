@@ -15,6 +15,7 @@ import MyPageEdit from '@/views/MyPageEdit.vue'
 import CommunityListView from '@/views/community/CommunityListView.vue'
 import CommunityDetailView from '@/views/community/CommunityDetailView.vue'
 import CommunityFormView from '@/views/community/CommunityFormView.vue'
+import DepositDetailView from '@/views/product/DepositDetailView.vue'
 import VideoDetailView from '@/views/VideoDetailView.vue'
 
 
@@ -35,6 +36,12 @@ const routes = [
   { path: '/community/:id/edit', name: 'community-edit', component: CommunityFormView },
   { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')},
   { path: '/search', name: 'search', component: SearchView },
+  { 
+  path: '/product/:type/:id', 
+  name: 'product-detail', 
+  component: DepositDetailView,
+  props: true  // URL 파라미터를 props로 전달
+},
   { path: '/video/:id', name: 'video-detail', component: VideoDetailView },
 ]
 

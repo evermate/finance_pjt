@@ -1,8 +1,7 @@
 from django.urls import path, include
-from .views import my_page
-from .views import update_user
-from .views import verify_password
-from .views import user_profile
+from .views import (
+    my_page, update_user, verify_password, user_profile, join_product, leave_product
+)
 
 urlpatterns = [
     path('', include('dj_rest_auth.urls')),  # 로그인, 로그아웃, 비밀번호 변경
@@ -11,4 +10,6 @@ urlpatterns = [
     path('mypage/update/', update_user, name='update_user'),
     path('verify-password/', verify_password, name='verify_password'),
     path('profile/<str:username>/', user_profile, name='user_profile'),
+    path('join-product/', join_product, name='join_product'),
+    path('leave-product/', leave_product, name='leave_product'),
 ]
