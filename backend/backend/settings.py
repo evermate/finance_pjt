@@ -33,6 +33,7 @@ SECRET_KEY = env('SECRET_KEY')
 FSS_API_KEY = env('FSS_API_KEY') 
 KAKAO_REST_API_KEY = env('KAKAO_REST_API_KEY')
 YOUTUBE_API_KEY = env('YOUTUBE_API_KEY')
+OPENAI_API_KEY = env('OPENAI_API_KEY')
 
 
 # Quick-start development settings - unsuitable for production
