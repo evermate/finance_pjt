@@ -1,5 +1,4 @@
 # backend/products/views/ai_recommendation.py
-
 from datetime import date
 from rest_framework.views import APIView
 from rest_framework.response import Response

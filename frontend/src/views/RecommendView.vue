@@ -1,9 +1,10 @@
+<!-- src/views/RecommendView.vue -->
 <template>
   <section class="p-6">
     <!-- 제목 -->
     <h1 class="text-2xl font-semibold mb-4">맞춤 예금/적금 상품 추천</h1>
 
-    <!-- 자산 입력 폼 + 버튼들 -->
+    <!-- 자산 입력 폼 + 버튼 -->
     <div class="flex items-center mb-6 space-x-4">
       <!-- 기존 추천 폼 -->
       <form @submit.prevent="onSubmit" class="flex items-center space-x-2">
@@ -34,7 +35,7 @@
       </button>
     </div>
 
-    <!-- (1) AI 분석 리포트: 기본 추천 리스트 위에 렌더 -->
+    <!-- AI 분석 리포트 (3개 카드) -->
     <AiReport v-if="aiRecs.length" :recs="aiRecs" />
 
     <!-- 기존 추천 에러 -->
@@ -45,11 +46,8 @@
     <!-- 기존 추천 로딩 스피너 -->
     <LoadingSpinner v-if="recommendStore.loading" class="mx-auto my-4" />
 
-    <!-- 기존 추천 10개 결과 -->
-    <div
-      v-if="recommendStore.recommendations.length && !recommendStore.loading"
-      class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"
-    >
+    <!-- 기존 추천 10개 결과 (세로 나열 카드) -->
+    <div v-if="recommendStore.recommendations.length && !recommendStore.loading">
       <ProductCard
         v-for="rec in recommendStore.recommendations"
         :key="rec.option_id"
