@@ -10,7 +10,7 @@ export const useAccountStore = defineStore('account', () => {
 
   // 1) state
   const token = ref(localStorage.getItem('authToken') || null)
-  const user  = ref(null)
+  const user = ref(null)
   const isLoggedIn = computed(() => !!token.value)
 
   // 2) 회원가입
@@ -54,10 +54,32 @@ export const useAccountStore = defineStore('account', () => {
     }
   }
 
+  // ✅ 4-1) 금융상품 가입 함수
+  const joinProduct = async (productId) => {
+    try {
+      await axios.post(`${ACCOUNT_API_URL}/join-product/`, {
+        product_id: productId
+      }, {
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      })
+      alert('가입이 완료되었습니다.')
+      await fetchUser()  // 가입 목록 갱신
+    } catch (err) {
+      if (err.response?.status === 404) {
+        alert('상품을 찾을 수 없습니다.')
+      } else {
+        alert('가입 처리 중 오류가 발생했습니다.')
+      }
+      console.error(err)
+    }
+  }
+
   // 5) 로그아웃
   const logout = () => {
     token.value = null
-    user.value  = null
+    user.value = null
     localStorage.removeItem('authToken')
     delete axios.defaults.headers.common['Authorization']
     router.push({ name: 'login' })
@@ -82,6 +104,7 @@ export const useAccountStore = defineStore('account', () => {
     logIn,
     fetchUser,
     logout,
+    joinProduct,
   }
 }, {
   persist: true,

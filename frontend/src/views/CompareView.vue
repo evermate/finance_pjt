@@ -16,21 +16,13 @@
         <h4>금융회사</h4>
         <select v-model="selectedBank" class="bank-select">
           <option value="전체">전체</option>
-          <option
-            v-for="bank in bankList"
-            :key="bank"
-            :value="bank"
-          >
+          <option v-for="bank in bankList" :key="bank" :value="bank">
             {{ bank }}
           </option>
         </select>
         <h4>기간</h4>
         <select v-model="selectedTerm" class="term-select" @change="fetchSortedProducts(selectedTerm)">
-          <option
-            v-for="term in ['6', '12', '24', '36']"
-            :key="term"
-            :value="term"
-          >
+          <option v-for="term in ['6', '12', '24', '36']" :key="term" :value="term">
             {{ term }}개월
           </option>
         </select>
@@ -44,30 +36,44 @@
               <th>공시월</th>
               <th>금융회사</th>
               <th>상품명</th>
-              <th
-                v-for="term in ['6', '12', '24', '36']"
-                :key="term"
-                @click="fetchSortedProducts(term)"
-                :class="{ clickable: true, active: selectedTerm === term }"
-              >
+              <th v-for="term in ['6', '12', '24', '36']" :key="term" @click="fetchSortedProducts(term)"
+                :class="{ clickable: true, active: selectedTerm === term }">
                 {{ term }}개월
                 <span class="sort-icon">
                   <template v-if="selectedTerm === term">▼</template>
                   <template v-else>▽</template>
                 </span>
               </th>
+              <!-- ✅ 버튼 칼럼 헤더 -->
+              <th>가입</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="product in filteredProducts" :key="product.fin_prdt_cd">
+            <tr 
+            v-for="product in filteredProducts" 
+            :key="product.fin_prdt_cd" 
+            :class="{ 'joined-row': isJoined(product.fin_prdt_cd) }"
+            >
               <td>{{ product.dcls_strt_day }}</td>
               <td>{{ product.bank_name }}</td>
               <td :title="product.fin_prdt_nm">{{ product.fin_prdt_nm }}</td>
-              <td
-                v-for="(term, idx) in termList"
-                :key="term"
-                :class="getCellClass(idx)">
+              <td v-for="(term, idx) in termList" :key="term" :class="getCellClass(idx)">
                 {{ getRate(product.options, term) }}
+              </td>
+              <!-- 가입 버튼 열 -->
+              <td>
+                <template v-if="isLoggedIn">
+                  <button
+                    @click="joinProduct(product.fin_prdt_cd)"
+                    :disabled="isJoined(product.fin_prdt_cd)"
+                    class="join-btn"
+                  >
+                    {{ isJoined(product.fin_prdt_cd) ? '가입완료' : '가입하기' }}
+                  </button>
+                </template>
+                <template v-else>
+                  <span class="login-required">로그인</span>
+                </template>
               </td>
               <!-- <td :class="getCellClass('6')">{{ getRate(product.options, '6') }}</td>
               <td :class="getCellClass('12')">{{ getRate(product.options, '12') }}</td>
@@ -75,6 +81,7 @@
               <td :class="getCellClass('36')">{{ getRate(product.options, '36') }}</td> -->
             </tr>
           </tbody>
+
         </table>
       </div>
     </div>
@@ -83,7 +90,8 @@
 
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { useAccountStore } from '@/stores/accounts'
 import axios from 'axios'
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api/products/deposits/sorted/'
@@ -92,6 +100,21 @@ const selectedTerm = ref('6')
 const selectedType = ref('saving')
 const selectedBank = ref('전체')
 const termList = ['6', '12', '24', '36']
+
+// 상품 가입
+const accountStore = useAccountStore()
+const isLoggedIn = computed(() => !!accountStore.user)
+
+// 유저가 가입한 상품 목록
+const joinedIds = computed(() => {
+  return accountStore.user?.joined_products?.map(p => p.fin_prdt_cd) || []
+})
+
+const joinProduct = (id) => {
+  accountStore.joinProduct(id)
+}
+
+const isJoined = (id) => joinedIds.value.includes(id)
 
 const fetchSortedProducts = async (term = selectedTerm.value) => {
   selectedTerm.value = term
@@ -139,6 +162,10 @@ const getCellClass = (idx) => {
 }
 
 const selectedTermIndex = computed(() => termList.indexOf(selectedTerm.value))
+
+watch(joinedIds, (val) => {
+  console.log('🔄 joinedIds 변경됨:', val)
+})
 </script>
 
 <style scoped>
@@ -319,6 +346,7 @@ const selectedTermIndex = computed(() => termList.indexOf(selectedTerm.value))
   font-weight: bold;
   color: #007bff;
 }
+
 .rate-table tbody tr:hover {
   background-color: #f0f8ff;
   transition: background-color 0.2s;
@@ -346,4 +374,30 @@ const selectedTermIndex = computed(() => termList.indexOf(selectedTerm.value))
   border-right: 2px solid #007bff;
   background-color: #fffdfd;
 }
+
+.join-btn {
+  padding: 0.3rem 0.6rem;
+  background-color: #007bff;
+  color: white;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.join-btn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+/* 가입 완료된 행 강조 */
+.joined-row {
+  background-color: #f5f8fb;
+}
+
+/* 로그인 안내 텍스트 */
+.login-required {
+  font-size: 0.8rem;
+  color: #999;
+}
+
 </style>

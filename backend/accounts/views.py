@@ -40,3 +40,20 @@ def user_profile(request, username):
     
     serializer = UserSerializer(user)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def join_product(request):
+    product_id = request.data.get('product_id')
+    if not product_id:
+        return Response({'error': '상품 ID가 필요합니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    from products.models import DepositProduct  # 지연 import: 순환 참조 방지
+
+    try:
+        product = DepositProduct.objects.get(fin_prdt_cd=product_id)
+        request.user.joined_products.add(product)  # ManyToManyField에 추가
+        return Response({'message': '가입이 완료되었습니다.'})
+    except DepositProduct.DoesNotExist:
+        return Response({'error': '해당 상품을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
