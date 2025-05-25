@@ -26,7 +26,22 @@
             {{ term }}개월
           </option>
         </select>
+        <!-- 가입한 상품 목록 -->
+        <!-- <div class="joined-products" v-if="isLoggedIn && accountStore.user?.joined_products?.length">
+          <h4>가입한 상품</h4>
+          <div class="joined-grid">
+            <div class="joined-card" v-for="item in accountStore.user.joined_products" :key="item.fin_prdt_cd">
+              <div class="card-title">{{ item.fin_prdt_nm }}</div>
+              <div class="card-subtitle">{{ item.bank_name }}</div>
+              <button class="leave-icon" @click="leaveProduct(item.fin_prdt_cd)">✕</button>
+            </div>
+          </div>
+        </div> -->
+
       </div>
+      <!-- 필터 섹션 끝 -->
+
+
 
       <!-- 오른쪽: 테이블 -->
       <div class="table-wrapper">
@@ -49,11 +64,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr 
-            v-for="product in filteredProducts" 
-            :key="product.fin_prdt_cd" 
-            :class="{ 'joined-row': isJoined(product.fin_prdt_cd) }"
-            >
+            <tr v-for="product in filteredProducts" :key="product.fin_prdt_cd"
+              :class="{ 'joined-row': isJoined(product.fin_prdt_cd) }">
               <td>{{ product.dcls_strt_day }}</td>
               <td>{{ product.bank_name }}</td>
               <td :title="product.fin_prdt_nm">{{ product.fin_prdt_nm }}</td>
@@ -63,18 +75,17 @@
               <!-- 가입 버튼 열 -->
               <td>
                 <template v-if="isLoggedIn">
-                  <button
-                    @click="joinProduct(product.fin_prdt_cd)"
-                    :disabled="isJoined(product.fin_prdt_cd)"
-                    class="join-btn"
-                  >
+                  <button @click="toggleProduct(product.fin_prdt_cd)"
+                    :class="['join-btn', { joined: isJoined(product.fin_prdt_cd) }]">
                     {{ isJoined(product.fin_prdt_cd) ? '가입완료' : '가입하기' }}
                   </button>
+
                 </template>
                 <template v-else>
                   <span class="login-required">로그인</span>
                 </template>
               </td>
+
               <!-- <td :class="getCellClass('6')">{{ getRate(product.options, '6') }}</td>
               <td :class="getCellClass('12')">{{ getRate(product.options, '12') }}</td>
               <td :class="getCellClass('24')">{{ getRate(product.options, '24') }}</td>
@@ -86,6 +97,8 @@
       </div>
     </div>
   </section>
+
+
 </template>
 
 
@@ -115,6 +128,18 @@ const joinProduct = (id) => {
 }
 
 const isJoined = (id) => joinedIds.value.includes(id)
+
+const leaveProduct = async (id) => {
+  await accountStore.leaveProduct(id)
+}
+
+const toggleProduct = async (id) => {
+  if (isJoined(id)) {
+    await accountStore.leaveProduct(id)
+  } else {
+    await accountStore.joinProduct(id)
+  }
+}
 
 const fetchSortedProducts = async (term = selectedTerm.value) => {
   selectedTerm.value = term
@@ -282,7 +307,7 @@ watch(joinedIds, (val) => {
 }
 
 .filter-section {
-  min-width: 220px;
+  width: 250px;
   background-color: #ffffff;
   border-radius: 12px;
   padding: 1.5rem;
@@ -383,12 +408,19 @@ watch(joinedIds, (val) => {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.join-btn.joined {
+  background-color: #aaa;
+  color: #fff;
 }
 
 .join-btn:disabled {
   background-color: #aaa;
   cursor: not-allowed;
 }
+
 /* 가입 완료된 행 강조 */
 .joined-row {
   background-color: #f5f8fb;
@@ -399,5 +431,82 @@ watch(joinedIds, (val) => {
   font-size: 0.8rem;
   color: #999;
 }
+
+.joined-products {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.joined-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.joined-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.joined-name {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.leave-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.joined-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.joined-card {
+  position: relative;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+}
+
+.joined-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.card-subtitle {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.leave-icon {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 
 </style>

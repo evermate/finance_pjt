@@ -64,14 +64,33 @@ export const useAccountStore = defineStore('account', () => {
           Authorization: `Token ${token.value}`
         }
       })
-      alert('가입이 완료되었습니다.')
+      // alert('가입이 완료되었습니다.')
       await fetchUser()  // 가입 목록 갱신
     } catch (err) {
-      if (err.response?.status === 404) {
+      if (err.response?.status === 403) {
+        alert('가입 가능한 상품은 최대 5개입니다.')
+      } else if (err.response?.status === 404) {
         alert('상품을 찾을 수 없습니다.')
       } else {
         alert('가입 처리 중 오류가 발생했습니다.')
       }
+      console.error(err)
+    }
+  }
+
+  // ✅ 4-2) 금융상품 탈퇴 함수
+  const leaveProduct = async (productId) => {
+    try {
+      await axios.delete(`${ACCOUNT_API_URL}/leave-product/`, {
+        data: { product_id: productId },  // axios에서 DELETE 시 body에 data로 전달해야 함
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      })
+      // alert('가입이 취소되었습니다.')
+      await fetchUser()
+    } catch (err) {
+      alert('가입 취소 중 오류 발생')
       console.error(err)
     }
   }
@@ -105,6 +124,7 @@ export const useAccountStore = defineStore('account', () => {
     fetchUser,
     logout,
     joinProduct,
+    leaveProduct,
   }
 }, {
   persist: true,

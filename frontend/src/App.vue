@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <HeaderNav />
+    <MyProductsPanel />
 
     <main class="main-container">
       <router-view />
@@ -10,6 +11,7 @@
 
 <script setup>
 import HeaderNav from '@/components/HeaderNav.vue'
+import MyProductsPanel from '@/components/MyProductsPanel.vue'
 </script>
 
 <style scoped>

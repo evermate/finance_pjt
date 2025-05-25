@@ -27,9 +27,10 @@ class BankSerializer(serializers.ModelSerializer):
 
 # ✅ 상품 요약용 시리얼라이저 추가
 class DepositProductSimpleSerializer(serializers.ModelSerializer):
+    bank_name = serializers.CharField(source='bank.kor_co_nm', read_only=True)
     class Meta:
         model = DepositProduct
-        fields = ['fin_prdt_cd', 'fin_prdt_nm', 'product_type']
+        fields = ['fin_prdt_cd', 'fin_prdt_nm', 'product_type', 'bank_name']
 
 # ✅ 마이페이지 및 유저 정보 출력용
 class UserSerializer(serializers.ModelSerializer):

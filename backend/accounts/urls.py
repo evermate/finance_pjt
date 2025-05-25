@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import (
-    my_page, update_user, verify_password, user_profile, join_product
+    my_page, update_user, verify_password, user_profile, join_product, leave_product
 )
 
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path('verify-password/', verify_password, name='verify_password'),
     path('profile/<str:username>/', user_profile, name='user_profile'),
     path('join-product/', join_product, name='join_product'),
+    path('leave-product/', leave_product, name='leave_product'),
 ]

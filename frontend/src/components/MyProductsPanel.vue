@@ -3,13 +3,13 @@
     <div class="fab-wrapper" ref="wrapper" :style="{ top: `${position.top}px`, left: `${position.left}px` }"
         @mousedown="startDrag" @touchstart.prevent="startDrag">
         <button v-if="accountStore.user" class="fab-btn" @click="handleClick">
-            가입한 상품 ({{ accountStore.user?.joined_products?.length || 0 }})
+            가입한 상품 ({{ accountStore.user?.joined_products?.length || 0 }} / 5)
         </button>
 
         <transition name="slide-down">
             <div v-if="isOpen" class="fab-panel" ref="panel">
                 <div class="panel-header">
-                    <span>가입한 상품</span>
+                    <span>가입한 상품 ({{ accountStore.user?.joined_products?.length || 0 }} / 5)</span>
                     <div class="panel-tools">
                         <!-- ✅ SVG 압정 -->
                         <button class="pin-btn" @click="isFixed = !isFixed" :title="isFixed ? '고정됨' : '고정 해제'">
@@ -84,7 +84,7 @@ const stopDrag = (e) => {
     setTimeout(() => {
         wasDragged.value = false  // 클릭보다 뒤에 실행되도록
     }, 0)
-    
+
     const clientX = e.clientX || e.changedTouches?.[0]?.clientX
     const clientY = e.clientY || e.changedTouches?.[0]?.clientY
     mouseUpPosition.value = { x: clientX, y: clientY }  // ✅ 드래그 종료 위치 기록
