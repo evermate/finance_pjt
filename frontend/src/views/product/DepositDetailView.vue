@@ -1,7 +1,7 @@
 <template>
   <div v-if="product" class="product-detail">
     <div class="back-button">
-      <button @click="goBack">← 목록으로 돌아가기</button>
+      <button @click="goBack">← 이전 페이지로 돌아가기</button>
     </div>
 
     <h1 class="title">{{ typeLabel }} 상세</h1>
@@ -50,15 +50,11 @@
       </table>
     </div>
 
-    <div class="action-section">
-      <button
-        class="join-btn"
-        :class="{ joined: isJoined }"
-        @click="toggleJoin"
-        :disabled="!isLoggedIn"
-      >
+    <div class="tooltip-wrapper" @mouseenter="showTooltip = !isLoggedIn" @mouseleave="showTooltip = false">
+      <button class="join-btn" :class="{ joined: isJoined }" @click="toggleJoin" :disabled="!isLoggedIn">
         {{ isJoined ? '가입완료' : '가입하기' }}
       </button>
+      <div v-if="showTooltip" class="tooltip">로그인이 필요합니다</div>
     </div>
   </div>
 
@@ -68,22 +64,20 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/accounts'
 import axios from 'axios'
 
 const route = useRoute()
 const router = useRouter()
-const type = route.params.type
-const id = route.params.id
-const product = ref(null)
 
+const showTooltip = ref(false)
+const product = ref(null)
 const accountStore = useAccountStore()
 const isLoggedIn = computed(() => !!accountStore.user)
 
 const goBack = () => {
-  // 브라우저 뒤로가기가 없으면 기본값으로 /compare 이동
   if (window.history.length > 1) {
     router.back()
   } else {
@@ -92,23 +86,35 @@ const goBack = () => {
 }
 
 const typeLabel = computed(() => {
-  return type === 'saving' ? '정기적금' : '정기예금'
+  return route.params.type === 'saving' ? '정기적금' : '정기예금'
 })
 
 const isJoined = computed(() => {
-  return accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === id)
+  return accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === route.params.id)
 })
 
-onMounted(async () => {
+// ✅ 상품 상세 데이터 요청 함수 (id가 바뀔 때마다 호출)
+const fetchProductDetail = async (id) => {
   try {
     const res = await axios.get(`/api/products/deposits/${id}/`)
     product.value = res.data
   } catch (err) {
     console.error('상품 정보를 불러오지 못했습니다:', err)
   }
+}
+
+onMounted(() => {
+  fetchProductDetail(route.params.id)
+})
+
+watch(() => route.params.id, (newId, oldId) => {
+  if (newId !== oldId) {
+    fetchProductDetail(newId)
+  }
 })
 
 const toggleJoin = async () => {
+  const id = route.params.id
   if (!isLoggedIn.value) {
     alert('로그인이 필요합니다.')
     return
@@ -181,10 +187,6 @@ const toggleJoin = async () => {
   font-weight: 600;
 }
 
-.action-section {
-  text-align: right;
-}
-
 .join-btn {
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
@@ -227,4 +229,32 @@ const toggleJoin = async () => {
   color: #0056b3;
 }
 
+.tooltip-wrapper {
+  position: relative;
+  text-align: right;
+}
+
+.tooltip {
+  position: absolute;
+  top: -35px;
+  right: 0;
+  background: #333;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
 </style>

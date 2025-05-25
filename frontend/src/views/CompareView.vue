@@ -92,7 +92,7 @@
 
                 </template>
                 <template v-else>
-                  <span class="login-required">로그인</span>
+                  <span class="login-required">로그인 필요</span>
                 </template>
               </td>
 

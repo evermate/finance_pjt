@@ -1,12 +1,8 @@
 <template>
     <div class="fab-wrapper" ref="wrapper" :style="{ top: `${position.top}px`, left: `${position.left}px` }"
         @mousedown="startDrag" @touchstart.prevent="startDrag">
-        <button
-            v-if="accountStore.user"
-            class="fab-btn"
-            @click="handleClick"
-            :class="{ added: addedEffect, removed: removedEffect }"
-        >
+        <button v-if="accountStore.user" class="fab-btn" @click="handleClick"
+            :class="{ added: addedEffect, removed: removedEffect }">
             가입한 상품 ({{ joinedCount }} / 5)
             <span v-if="addedEffect" class="effect-badge add">+1</span>
             <span v-if="removedEffect" class="effect-badge remove">-1</span>
@@ -32,11 +28,17 @@
                 <ul class="panel-list">
                     <li v-for="item in accountStore.user?.joined_products || []" :key="item.fin_prdt_cd"
                         class="panel-item">
-                        <div class="product-name">{{ item.fin_prdt_nm }}</div>
+                        <router-link class="product-name" :to="{
+                            name: 'product-detail',
+                            params: {
+                                type: item.product_type,
+                                id: item.fin_prdt_cd
+                            }
+                        }">
+                            {{ item.fin_prdt_nm }}
+                        </router-link>
                         <div class="bank-name">{{ item.bank_name }}</div>
-                        <button class="leave-btn" @click="leaveAndEffect(item.fin_prdt_cd)">
-                            X
-                        </button>
+                        <button class="leave-btn" @click="leaveAndEffect(item.fin_prdt_cd)">X</button>
                     </li>
                 </ul>
             </div>
@@ -215,6 +217,7 @@ onBeforeUnmount(() => {
     transform: scale(1.09);
     z-index: 10;
 }
+
 .fab-btn.removed {
     box-shadow: 0 0 16px 4px #df2e5a, 0 0 24px 10px #f6bbc6;
     transform: scale(1.09) rotate(-3deg);
@@ -230,15 +233,17 @@ onBeforeUnmount(() => {
     font-size: 0.95rem;
     padding: 0.13em 0.7em;
     pointer-events: none;
-    box-shadow: 0 2px 10px rgba(49,210,242,0.4);
-    animation: pop-in 0.7s cubic-bezier(0.5,1.8,0.6,1.1);
+    box-shadow: 0 2px 10px rgba(49, 210, 242, 0.4);
+    animation: pop-in 0.7s cubic-bezier(0.5, 1.8, 0.6, 1.1);
     opacity: 0;
 }
+
 .effect-badge.add {
     background: #31d2f2;
     color: white;
     opacity: 1;
 }
+
 .effect-badge.remove {
     background: #df2e5a;
     color: white;
@@ -250,14 +255,17 @@ onBeforeUnmount(() => {
         transform: scale(0.7) translateY(-10px);
         opacity: 0.1;
     }
+
     30% {
         transform: scale(1.1) translateY(-8px);
         opacity: 1;
     }
+
     70% {
         transform: scale(1.09) translateY(-4px);
         opacity: 1;
     }
+
     100% {
         transform: scale(1) translateY(0);
         opacity: 0;
@@ -329,7 +337,14 @@ onBeforeUnmount(() => {
 }
 
 .product-name {
+    color: #2a67cc;
+    text-decoration: none;
     font-weight: bold;
+    font-weight: 500;
+}
+
+.product-name:hover {
+    text-decoration: underline;
 }
 
 .bank-name {

@@ -4,6 +4,7 @@ from datetime import date
 from rest_framework import serializers
 from .models import User
 from products.models import Bank, DepositProduct
+from products.serializers import DepositProductFullSerializer 
 
 class CustomRegisterSerializer(RegisterSerializer):
     birth_date = serializers.DateField(required=True)
@@ -36,7 +37,7 @@ class DepositProductSimpleSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     main_bank = BankSerializer(read_only=True)
     age = serializers.SerializerMethodField()
-    joined_products = DepositProductSimpleSerializer(many=True, read_only=True)
+    joined_products = DepositProductFullSerializer(many=True, read_only=True)
 
     def get_age(self, obj):
         if obj.birth_date:

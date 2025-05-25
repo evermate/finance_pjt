@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <HeaderNav />
-    <MyProductsPanel />
+    <!-- 아래 주석 버튼을 조건부 렌더링 할때 필요함 지우지 말것  -->
+    <!-- <MyProductsPanel v-if="route.meta.showProductsPanel" /> -->
+    <MyProductsPanel/>
 
     <main class="main-container">
       <router-view />
@@ -12,6 +14,8 @@
 <script setup>
 import HeaderNav from '@/components/HeaderNav.vue'
 import MyProductsPanel from '@/components/MyProductsPanel.vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
 </script>
 
 <style scoped>

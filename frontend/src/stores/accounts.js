@@ -49,6 +49,7 @@ export const useAccountStore = defineStore('account', () => {
     try {
       const res = await axios.get(`${ACCOUNT_API_URL}/mypage/`)
       user.value = res.data
+      console.log('유저 정보:', user.value)
     } catch (err) {
       console.error('유저 정보 불러오기 실패:', err)
     }
@@ -95,6 +96,14 @@ export const useAccountStore = defineStore('account', () => {
     }
   }
 
+  // ✅ 4-3) 가입한 금융상품 목록
+  // 이 computed 속성은 user가 로드된 후에만 유효합니다.
+  // 따라서 user가 null이 아닐 때만 접근해야 합니다.
+  // 만약 user가 null이라면 빈 배열을 반환합니다.
+  const joinedProducts = computed(() => {
+    return user.value?.joined_products || []
+  })
+
   // 5) 로그아웃
   const logout = () => {
     token.value = null
@@ -125,6 +134,7 @@ export const useAccountStore = defineStore('account', () => {
     logout,
     joinProduct,
     leaveProduct,
+    joinedProducts, 
   }
 }, {
   persist: true,
