@@ -15,6 +15,7 @@ import MyPageEdit from '@/views/MyPageEdit.vue'
 import CommunityListView from '@/views/community/CommunityListView.vue'
 import CommunityDetailView from '@/views/community/CommunityDetailView.vue'
 import CommunityFormView from '@/views/community/CommunityFormView.vue'
+import VideoDetailView from '@/views/VideoDetailView.vue'
 
 
 const routes = [
@@ -34,6 +35,7 @@ const routes = [
   { path: '/community/:id/edit', name: 'community-edit', component: CommunityFormView },
   { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')},
   { path: '/search', name: 'search', component: SearchView },
+  { path: '/video/:id', name: 'video-detail', component: VideoDetailView },
 ]
 
 const router = createRouter({
