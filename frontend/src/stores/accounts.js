@@ -10,7 +10,7 @@ export const useAccountStore = defineStore('account', () => {
 
   // 1) state
   const token = ref(localStorage.getItem('authToken') || null)
-  const user  = ref(null)
+  const user = ref(null)
   const isLoggedIn = computed(() => !!token.value)
 
   // 2) 회원가입
@@ -49,15 +49,71 @@ export const useAccountStore = defineStore('account', () => {
     try {
       const res = await axios.get(`${ACCOUNT_API_URL}/mypage/`)
       user.value = res.data
+      console.log('유저 정보:', user.value)
     } catch (err) {
       console.error('유저 정보 불러오기 실패:', err)
     }
   }
 
+  // ✅ 4-1) 금융상품 가입 함수
+  const joinProduct = async (productId, productName = '') => {
+    const confirmJoin = window.confirm(`정말 "${productName}" 상품에 가입하시겠습니까?`)
+    if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
+
+    try {
+      await axios.post(`${ACCOUNT_API_URL}/join-product/`, {
+        product_id: productId
+      }, {
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      })
+      // alert('가입이 완료되었습니다.')
+      await fetchUser()
+    } catch (err) {
+      if (err.response?.status === 403) {
+        alert('가입 가능한 상품은 최대 5개입니다.')
+      } else if (err.response?.status === 404) {
+        alert('상품을 찾을 수 없습니다.')
+      } else {
+        alert('가입 처리 중 오류가 발생했습니다.')
+      }
+      console.error(err)
+    }
+  }
+
+
+  // ✅ 4-2) 금융상품 탈퇴 함수
+  const leaveProduct = async (productId, productName = '') => {
+    const confirmJoin = window.confirm(`정말 "${productName}" 상품 가입을 취소하시겠습니까?`)
+    if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
+    try {
+      await axios.delete(`${ACCOUNT_API_URL}/leave-product/`, {
+        data: { product_id: productId },  // axios에서 DELETE 시 body에 data로 전달해야 함
+        headers: {
+          Authorization: `Token ${token.value}`
+        }
+      })
+      // alert('가입이 취소되었습니다.')
+      await fetchUser()
+    } catch (err) {
+      alert('가입 취소 중 오류 발생')
+      console.error(err)
+    }
+  }
+
+  // ✅ 4-3) 가입한 금융상품 목록
+  // 이 computed 속성은 user가 로드된 후에만 유효합니다.
+  // 따라서 user가 null이 아닐 때만 접근해야 합니다.
+  // 만약 user가 null이라면 빈 배열을 반환합니다.
+  const joinedProducts = computed(() => {
+    return user.value?.joined_products || []
+  })
+
   // 5) 로그아웃
   const logout = () => {
     token.value = null
-    user.value  = null
+    user.value = null
     localStorage.removeItem('authToken')
     delete axios.defaults.headers.common['Authorization']
     router.push({ name: 'login' })
@@ -82,6 +138,9 @@ export const useAccountStore = defineStore('account', () => {
     logIn,
     fetchUser,
     logout,
+    joinProduct,
+    leaveProduct,
+    joinedProducts,
   }
 }, {
   persist: true,

@@ -89,17 +89,96 @@ function formatDate(dateStr) {
 
 <style scoped>
 .comment-item {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.comment-body {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+.comment-body strong {
+  color: #1976d2;
+}
+
+.comment-body p {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.comment-body .meta {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.reply-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.reply-btn {
+  color: #1e88e5;
+}
+
+.reply-btn:hover {
+  background-color: #e3f2fd;
+}
+
+.delete-btn {
+  color: #e53935;
+}
+
+.delete-btn:hover {
+  background-color: #ffebee;
+}
+
+.reply-form {
+  margin-top: 0.75rem;
 }
 
 .reply-form textarea {
   width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  resize: vertical;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.reply-form button {
   margin-top: 0.5rem;
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reply-form button:hover {
+  background-color: #1565c0;
 }
 
 .nested-comments {
-  margin-left: 1rem;
-  border-left: 1px solid #ddd;
+  margin-left: 1.5rem;
+  border-left: 2px solid #e0e0e0;
   padding-left: 1rem;
+  margin-top: 1rem;
 }
 </style>
+

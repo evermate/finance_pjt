@@ -5,12 +5,13 @@ class PostSerializer(serializers.ModelSerializer):
     author = serializers.CharField(source='author.username', read_only=True)
     like_count = serializers.IntegerField(source='likes.count', read_only=True)
     is_liked = serializers.SerializerMethodField()
+    views = serializers.IntegerField(read_only=True)    # 조회수 필드 추가
 
     class Meta:
         model = Post
         fields = [
             'id', 'board_type', 'title', 'content', 'link', 'rating',
-            'author', 'created_at',
+            'author', 'created_at', 'views',    # 조회수 포함
             'like_count', 'is_liked',
         ]
 

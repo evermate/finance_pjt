@@ -58,6 +58,9 @@
         </router-link> -->
         <!-- 회원정보 수정 버튼 -->
         <button class="submit-btn" @click="openPasswordModal">회원정보 수정</button>
+        <br>
+        <hr>
+        <JoinedProductsChart />
 
         <!-- 비밀번호 확인 모달 -->
         <div v-if="showModal" class="modal-backdrop">
@@ -83,6 +86,7 @@ import { API_BASE_URL } from '@/constants'
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
+import JoinedProductsChart from '@/components/JoinedProductsChart.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -121,7 +125,7 @@ const verifyPassword = async () => {
 
 <style scoped>
 .mypage-container {
-  max-width: 720px;
+  max-width: 840px;
   margin: 0 auto;
   padding: 2rem 1rem;
   background-color: #f5f7fb;

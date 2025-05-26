@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from products.models import Bank  # ✅ 이미 존재하는 Bank 모델 사용
+from products.models import Bank, DepositProduct  # ✅ 이미 존재하는 Bank 모델 사용
 
 class User(AbstractUser): 
     phone_number = models.CharField(max_length=20, blank=True, null=True)
@@ -9,6 +9,8 @@ class User(AbstractUser):
     main_bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, blank=True, null=True)
     monthly_income_range = models.CharField(max_length=50, blank=True, null=True)
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)  # ✅ 프로필 사진
+
+    joined_products = models.ManyToManyField(DepositProduct, blank=True, related_name='joined_users')
 
     def __str__(self):
         return self.username

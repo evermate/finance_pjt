@@ -34,9 +34,9 @@
           :to="{ name: 'video-detail', params: { id: item.id.videoId } }"
           class="video-card-link"
         >
-  <img :src="item.snippet.thumbnails.medium.url" />
-  <h3>{{ item.snippet.title }}</h3>
-</RouterLink>
+          <img :src="item.snippet.thumbnails.medium.url" />
+          <h3>{{ item.snippet.title }}</h3>
+        </RouterLink>
 
         <p class="channel">{{ item.snippet.channelTitle }}</p>
         <p class="date">{{ item.snippet.publishedAt.slice(0,10) }}</p>

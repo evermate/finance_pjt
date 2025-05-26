@@ -15,6 +15,7 @@ import MyPageEdit from '@/views/MyPageEdit.vue'
 import CommunityListView from '@/views/community/CommunityListView.vue'
 import CommunityDetailView from '@/views/community/CommunityDetailView.vue'
 import CommunityFormView from '@/views/community/CommunityFormView.vue'
+import DepositDetailView from '@/views/product/DepositDetailView.vue'
 import VideoDetailView from '@/views/VideoDetailView.vue'
 import SimulationView from '@/views/SimulationView.vue'
 
@@ -24,11 +25,11 @@ const routes = [
   { path: '/', name: 'home', component: HomeView },
   { path: '/signup', name: 'signup', component: SignUpView },
   { path: '/login', name: 'login', component: LoginView },
-  { path: '/mypage', name: 'mypage', component: MyPageView, meta: { requiresAuth: true } },
+  { path: '/mypage', name: 'mypage', component: MyPageView, meta: { requiresAuth: true , showProductsPanel: true} },
   { path: '/mypage/edit', name: 'mypage-edit', component: MyPageEdit },
   { path: '/recommend', name: 'recommend', component: RecommendView, meta: { requiresAuth: true } },
   { path: '/map', name: 'map', component: MapView },
-  { path: '/compare', name: 'compare', component: CompareView },
+  { path: '/compare', name: 'compare', component: CompareView, meta: { showProductsPanel: true } },
   { path: '/prices', name: 'prices', component: PricesView },
   { path: '/search', name: 'search', component: SearchView },
   { path: '/community', name: 'community', component: CommunityListView },
@@ -37,8 +38,14 @@ const routes = [
   { path: '/community/:id/edit', name: 'community-edit', component: CommunityFormView },
   { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')},
   { path: '/search', name: 'search', component: SearchView },
-  { path: '/search', name: 'search', component: SearchView },
   { path: '/simulation', name: 'simulation', component: SimulationView },
+  { 
+  path: '/product/:type/:id', 
+  name: 'product-detail', 
+  component: DepositDetailView,
+  meta: { showProductsPanel: true },
+  props: true  // URL 파라미터를 props로 전달
+},
   { path: '/video/:id', name: 'video-detail', component: VideoDetailView },
 ]
 
