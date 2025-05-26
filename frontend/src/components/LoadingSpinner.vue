@@ -11,7 +11,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const props = defineProps({
   message: {
     type: String,
-    default: '추천 결과 생성 중입니다...'
+    default: '결과 생성 중입니다.'
   }
 })
 
