@@ -2,9 +2,9 @@
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from datetime import date 
 from rest_framework import serializers
-from .models import User
+from .models import User, JoinedProduct
 from products.models import Bank, DepositProduct
-from products.serializers import DepositProductFullSerializer 
+from products.serializers import DepositProductFullSerializer, InterestOptionSerializer
 
 class CustomRegisterSerializer(RegisterSerializer):
     birth_date = serializers.DateField(required=True)
@@ -33,11 +33,22 @@ class DepositProductSimpleSerializer(serializers.ModelSerializer):
         model = DepositProduct
         fields = ['fin_prdt_cd', 'fin_prdt_nm', 'product_type', 'bank_name']
 
+
+class JoinedProductSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.fin_prdt_nm', read_only=True)
+    product_type = serializers.CharField(source='product.product_type', read_only=True)
+    option = InterestOptionSerializer(read_only=True)
+
+    class Meta:
+        model = JoinedProduct
+        fields = ['id', 'product_name', 'product_type', 'option', 'joined_at']
+
+
 # ✅ 마이페이지 및 유저 정보 출력용
 class UserSerializer(serializers.ModelSerializer):
     main_bank = BankSerializer(read_only=True)
     age = serializers.SerializerMethodField()
-    joined_products = DepositProductFullSerializer(many=True, read_only=True)
+    joined_products = JoinedProductSerializer(source='joinedproduct_set', many=True, read_only=True)
 
     def get_age(self, obj):
         if obj.birth_date:
@@ -65,4 +76,3 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'monthly_income_range',
             'profile_image',
         ]
-

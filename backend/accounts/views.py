@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, UserUpdateSerializer
 from rest_framework import status  # 🔁 status.HTTP_400_BAD_REQUEST용
 from products.models import DepositProduct
+from .models import JoinedProduct, InterestOption 
+
 
 
 User = get_user_model()
@@ -48,38 +50,38 @@ def user_profile(request, username):
 @permission_classes([IsAuthenticated])
 def join_product(request):
     product_id = request.data.get('product_id')
-    if not product_id:
-        return Response({'error': '상품 ID가 필요합니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    option_id = request.data.get('option_id')
 
-    # ✅ 현재 가입한 상품 수가 5개 이상이면 거부
-    if request.user.joined_products.count() >= 5:
-        return Response({'error': '가입 가능한 최대 상품 수(5개)를 초과했습니다.'}, status=status.HTTP_403_FORBIDDEN)
+    if not product_id or not option_id:
+        return Response({'error': '상품 ID와 옵션 ID가 필요합니다.'}, status=400)
+
+    if request.user.joinedproduct_set.count() >= 5:
+        return Response({'error': '최대 5개까지만 가입 가능합니다.'}, status=403)
 
     try:
         product = DepositProduct.objects.get(fin_prdt_cd=product_id)
-    except DepositProduct.DoesNotExist:
-        return Response({'error': '해당 상품을 찾을 수 없습니다.'}, status=status.HTTP_404_NOT_FOUND)
+        option = InterestOption.objects.get(id=option_id, product=product)
+    except (DepositProduct.DoesNotExist, InterestOption.DoesNotExist):
+        return Response({'error': '상품 또는 옵션을 찾을 수 없습니다.'}, status=404)
 
-    # 이미 가입한 경우 중복 방지
-    if request.user.joined_products.filter(fin_prdt_cd=product_id).exists():
-        return Response({'message': '이미 가입한 상품입니다.'})
+    # 중복 가입 방지
+    if JoinedProduct.objects.filter(user=request.user, option=option).exists():
+        return Response({'message': '이미 해당 조건으로 가입한 상품입니다.'})
 
-    request.user.joined_products.add(product)
-    return Response({'message': '가입이 완료되었습니다.'})
+    JoinedProduct.objects.create(user=request.user, product=product, option=option)
+    return Response({'message': '가입 완료'})
+
 
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def leave_product(request):
-    product_id = request.data.get('product_id')
-
-    if not product_id:
-        return Response({'error': '상품 ID가 필요합니다.'}, status=400)
+    option_id = request.data.get('option_id')
 
     try:
-        product = DepositProduct.objects.get(fin_prdt_cd=product_id)
-    except DepositProduct.DoesNotExist:
-        return Response({'error': '해당 상품이 존재하지 않습니다.'}, status=404)
+        joined = JoinedProduct.objects.get(user=request.user, option_id=option_id)
+        joined.delete()
+        return Response({'message': '가입 취소 완료'})
+    except JoinedProduct.DoesNotExist:
+        return Response({'error': '가입 내역이 없습니다.'}, status=404)
 
-    request.user.joined_products.remove(product)
-    return Response({'message': '가입 취소 완료'})
