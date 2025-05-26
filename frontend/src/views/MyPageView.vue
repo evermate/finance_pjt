@@ -67,7 +67,7 @@
           <div class="modal-content">
             <h2>개인정보 확인</h2>
             <label>비밀번호 입력</label>
-            <input v-model="password" type="password" placeholder="비밀번호 입력" />
+            <input v-model="password" type="password" placeholder="비밀번호 입력" @keyup.enter="verifyPassword"/>
             <div class="modal-buttons">
               <button class="confirm-btn" @click="verifyPassword">확인</button>
               <button class="cancel-btn" @click="showModal = false">닫기</button>
