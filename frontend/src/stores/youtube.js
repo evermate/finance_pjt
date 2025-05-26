@@ -16,7 +16,9 @@ export const useYoutubeStore = defineStore('youtube', () => {
     try {
       const res = await axios.get('/api/youtube/search/', { params: { q: query } })
       // YouTube Search API의 items 배열을 담습니다
-      videos.value = res.data.items || []
+      videos.value = (res.data.items || []).filter(
+        item => item.id && item.id.kind === 'youtube#video' && item.id.videoId
+      )
     } catch (err) {
       error.value  = err
       videos.value = []
