@@ -1,5 +1,13 @@
 <template>
   <section class="compare-container">
+    <!-- ✅ 상단 배너 추가 -->
+    <div class="banner-section">
+      <img src="/image/compare_pic3.jpg" alt="금융 비교 배너" class="banner-img" />
+      <div class="banner-text">
+        <h2>쉽고 빠른 금융상품 비교</h2>
+        <p>금리 높은 예적금 상품을 한눈에 비교하고 간편하게 가입하세요</p>
+      </div>
+    </div>
     <!-- 헤더 및 탭 -->
     <div class="compare-header">
       <h1>{{ selectedType === 'saving' ? '정기적금' : '정기예금' }} 비교</h1>
@@ -730,6 +738,43 @@ watch(joinedIds, (val) => {
   background-color: #e9ecef;
   color: #212529;
   border-color: #adb5bd;
+}
+
+.banner-section {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.banner-text p {
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 
 </style>
