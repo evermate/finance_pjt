@@ -9,9 +9,20 @@
       <div class="nav-right">
         <nav class="nav-menu">
           <!-- <RouterLink :to="{ name: 'compare' }" class="menu-btn">예적금 금리 비교</RouterLink> -->
-          <RouterLink :to="{ name: 'prices' }" class="menu-btn">현물 상품 비교</RouterLink>
-          <RouterLink :to="{ name: 'search' }" class="menu-btn">관심 종목 검색</RouterLink>
-          <RouterLink :to="{ name: 'community' }" class="menu-btn">게시판</RouterLink>
+          <!-- 예·적금 금리 비교 -->
+         <RouterLink :to="{ name: 'compare' }" class="menu-btn">예·적금 금리 비교</RouterLink>
+         <!-- 현물 상품(금/은) 시세 비교 -->
+         <RouterLink :to="{ name: 'prices' }" class="menu-btn">현물 상품 비교</RouterLink>
+         <!-- 금융 상품 추천 -->
+         <RouterLink :to="{ name: 'recommend' }" class="menu-btn">금융 상품 추천</RouterLink>
+         <!-- 은행 검색 (카카오 API) -->
+         <RouterLink :to="{ name: 'map' }" class="menu-btn">은행 검색</RouterLink>
+         <!-- 관심 종목(유튜브) 검색 -->
+         <RouterLink :to="{ name: 'search' }" class="menu-btn">관심 종목 검색</RouterLink>
+         <!-- 은퇴 자산 시뮬레이션 -->
+         <RouterLink :to="{ name: 'simulation' }" class="menu-btn">은퇴 자산 시뮬레이션</RouterLink>
+         <!-- 커뮤니티 -->
+         <RouterLink :to="{ name: 'community' }" class="menu-btn">게시판</RouterLink>
         </nav>
         <RouterLink v-if="!user" :to="{ name: 'login' }" class="btn-outline">로그인</RouterLink>
         <RouterLink v-if="!user" :to="{ name: 'signup' }" class="btn">회원가입</RouterLink>

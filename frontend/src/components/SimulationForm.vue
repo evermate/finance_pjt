@@ -162,19 +162,44 @@ onMounted(() => {
   form.n_simulations       = 1000
 })
 
-function submit() {
-  store.run({
-    start_age:           Number(form.start_age),
-    retirement_age:      Number(form.retirement_age),
-    end_age:             Number(form.end_age),
-    initial_assets:      Number(form.initial_assets),
-    initial_savings:     Number(form.initial_savings),
-    savings_growth_rate: Number(form.savings_growth_rate),
-    mean_return:         Number(form.mean_return),
-    annual_expense:      Number(form.annual_expense),
-    n_simulations:       Number(form.n_simulations),
-  })
-}
+ function submit() {
+   // 1) 빈 값 검증
+   const keys = [
+     'start_age','retirement_age','end_age',
+     'initial_assets','initial_savings',
+     'savings_growth_rate','mean_return',
+     'annual_expense','n_simulations'
+   ]
+   for (const k of keys) {
+     if (form[k] === '' || isNaN(Number(form[k]))) {
+       alert('모든 항목을 입력해주세요.')
+       return
+     }
+   }
+
+   // 2) 논리적 순서 검증 (옵션)
+   if (Number(form.start_age) >= Number(form.retirement_age)) {
+     alert('은퇴 나이는 시작 나이보다 커야 합니다.')
+     return
+   }
+   if (Number(form.retirement_age) >= Number(form.end_age)) {
+     alert('종료 나이는 은퇴 나이보다 커야 합니다.')
+     return
+   }
+
+   // 3) 모두 통과했으면 API 호출
+   store.run({
+     start_age:           Number(form.start_age),
+     retirement_age:      Number(form.retirement_age),
+     end_age:             Number(form.end_age),
+     initial_assets:      Number(form.initial_assets),
+     initial_savings:     Number(form.initial_savings),
+     savings_growth_rate: Number(form.savings_growth_rate),
+     mean_return:         Number(form.mean_return),
+     annual_expense:      Number(form.annual_expense),
+     n_simulations:       Number(form.n_simulations),
+   })
+ }
 </script>
 
 <style scoped>
