@@ -1,3 +1,4 @@
+<!-- src/views/HomeView.vue -->
 <template>
   <div class="hero-section">
     <div class="container">
@@ -30,6 +31,9 @@
       </RouterLink>
     </div>
   </div>
+
+  <!-- ── 여기에 인포그래픽 섹션 추가 ── -->
+  <InfographicSection />
 
   <footer class="footer">
     <div class="container footer-grid">
@@ -75,6 +79,12 @@
     </div>
   </footer>
 </template>
+
+
+<script setup>
+// 기존 임포트들...
+import InfographicSection from '@/components/Eda/InfographicSection.vue'
+</script>
 
 <style scoped>
 .hero-section {

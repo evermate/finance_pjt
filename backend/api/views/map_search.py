@@ -1,4 +1,4 @@
-# backend/api/views.py
+# backend/api/views/map_search.py 
 import requests
 from django.conf import settings
 from rest_framework.decorators import api_view, permission_classes
