@@ -1,7 +1,5 @@
-<!-- RecommendView.vue -->
 <template>
   <section class="recommend-wrapper">
-    <!-- 허용 하드키 용어 -->
     <div class="hero-section">
       <div class="overlay"></div>
       <div class="container">
@@ -9,12 +7,11 @@
         <h2>고객님을 위한 추천 시스템</h2>
       </div>
     </div>
+
     <div class="recommend-card">
       <h1 class="title">평가되는 패널과 카드 아이콘을 골라요</h1>
-      <p class="subtitle">협업 금융 AI를 활용해 고객에게 차례적인 상품을 제시합니다.
-      </p>
+      <p class="subtitle">협업 금융 AI를 활용해 고객에게 차례적인 상품을 제시합니다.</p>
 
-      <!-- 자사입력 + AI 버튼 -->
       <div class="action-area">
         <form @submit.prevent="onSubmit" class="input-area">
           <label>자산</label>
@@ -23,69 +20,63 @@
             {{ recommendStore.loading ? '로딩 중...' : '일반 추천' }}
           </button>
         </form>
-        <button @click="onAiRecommend" class="ai-button" :disabled="aiLoading">
-          {{ aiLoading ? 'AI 추천 중...' : 'AI 다양도 고도화 추천' }}
+
+        <button @click="onAiRecommend" class="ai-button" :disabled="recommendStore.aiLoading">
+          {{ recommendStore.aiLoading ? 'AI 추천 중...' : 'AI 다양도 고도화 추천' }}
+        </button>
+
+        <!-- ✅ 리셋 버튼 -->
+        <button @click="onReset" class="reset-button">
+          리셋
         </button>
       </div>
     </div>
 
-    <!-- AI 추천 결과 영역 -->
-    <AiReport v-if="aiRecs.length && !aiLoading" :recs="aiRecs" />
+    <!-- AI 추천 결과 -->
+    <AiReport v-if="recommendStore.aiRecs.length && !recommendStore.aiLoading" :recs="recommendStore.aiRecs" />
+    <LoadingSpinner v-else-if="recommendStore.aiLoading" message="AI 추천을 생성 중입니다..." />
+    <p v-else-if="recommendStore.aiError" class="error-msg">AI 추천 실패: {{ recommendStore.aiError.message }}</p>
 
-    <!-- 🔽 로딩 중일 때 스피너 표시 -->
-    <LoadingSpinner v-else-if="aiLoading" message="AI 추천을 생성 중입니다..." />
-
-    <!-- AI 추천 실패 -->
-    <p v-else-if="aiError" class="error-msg">AI 추천 실패: {{ aiError.message }}</p>
-
-
+    <!-- 일반 추천 결과 -->
     <LoadingSpinner v-if="recommendStore.loading" class="mx-auto my-4" />
-
     <div v-if="recommendStore.recommendations.length && !recommendStore.loading">
       <ProductCard v-for="rec in recommendStore.recommendations" :key="rec.option_id" :product="rec" />
     </div>
-
-    <p v-else-if="aiError" class="error-msg">AI 추천 실패: {{ aiError.message }}</p>
-
-    <p v-else-if="!recommendStore.recommendations.length && !recommendStore.loading && !aiLoading" class="no-result">
+    <p v-else-if="!recommendStore.recommendations.length && !recommendStore.loading && !recommendStore.aiLoading"
+      class="no-result">
       아직 추천 결과가 없습니다.
     </p>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
+import { computed } from 'vue'
 import { useRecommendStore } from '@/stores/recommend.js'
 import ProductCard from '@/components/ProductCard.vue'
 import AiReport from '@/components/AiReport.vue'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const recommendStore = useRecommendStore()
-const asset = ref(0)
-const aiRecs = ref([])
-const aiLoading = ref(false)
-const aiError = ref(null)
+
+// ✅ 스토어와 연결된 반응형 자산 입력
+const asset = computed({
+  get: () => recommendStore.aiAsset,
+  set: (val) => (recommendStore.aiAsset = val),
+})
 
 function onSubmit() {
   recommendStore.fetchByProfile(asset.value, 10)
 }
 
-async function onAiRecommend() {
-  aiLoading.value = true
-  aiError.value = null
-  try {
-    const res = await axios.get('/api/products/ai-recommend/', {
-      params: { asset: asset.value },
-    })
-    aiRecs.value = res.data
-  } catch (err) {
-    aiError.value = err
-  } finally {
-    aiLoading.value = false
-  }
+function onAiRecommend() {
+  recommendStore.fetchAiRecommend()
+}
+
+function onReset() {
+  recommendStore.resetAll()
 }
 </script>
+
 
 <style scoped>
 .recommend-wrapper {
@@ -224,15 +215,32 @@ async function onAiRecommend() {
   align-items: center;
   justify-content: center;
 
-  min-height: 300px; /* 카드 영역 크기 비슷하게 */
+  min-height: 300px;
+  /* 카드 영역 크기 비슷하게 */
   margin-top: 1rem;
 }
 
 .loading-image {
-  width: 240px;  /* 카드 가로 크기와 비슷하게 */
+  width: 240px;
+  /* 카드 가로 크기와 비슷하게 */
   height: auto;
   margin-top: 1rem;
   animation: fadeIn 0.5s ease-in-out;
+}
+
+.reset-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #ff5858;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-button:hover {
+  background-color: #ff0000;
 }
 
 </style>

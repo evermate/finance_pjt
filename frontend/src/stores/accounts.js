@@ -3,6 +3,7 @@ import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { useModalStore } from '@/stores/modal'
 
 export const useAccountStore = defineStore('account', () => {
   const ACCOUNT_API_URL = '/accounts'
@@ -12,6 +13,7 @@ export const useAccountStore = defineStore('account', () => {
   const token = ref(localStorage.getItem('authToken') || null)
   const user = ref(null)
   const isLoggedIn = computed(() => !!token.value)
+  const modal = useModalStore()
 
   // 2) 회원가입
   const signUp = async ({ username, birth_date, email, password1, password2 }) => {
@@ -58,8 +60,14 @@ export const useAccountStore = defineStore('account', () => {
   // ✅ 4-1) 금융상품 가입 함수
   const joinProduct = async (productId, optionId, productName = '') => {
     console.log('joinProduct called with:', productId, optionId)
-    const confirmJoin = window.confirm(`정말 "${productName}" 상품에 가입하시겠습니까?`)
-    if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
+
+    const confirmJoin = await modal.open({
+      title: `${productName}`,
+      description: '이 상품에 가입할까요?',
+      confirmText: '지금 가입',
+      cancelText: '돌아가기',
+    })
+    if (!confirmJoin) return  // 사용자가 취소한 경우
 
     try {
       await axios.post(`${ACCOUNT_API_URL}/join-product/`, {
@@ -70,15 +78,29 @@ export const useAccountStore = defineStore('account', () => {
           Authorization: `Token ${token.value}`
         }
       })
-      // alert('가입이 완료되었습니다.')
       await fetchUser()
     } catch (err) {
       if (err.response?.status === 403) {
-        alert('가입 가능한 상품은 최대 5개입니다.')
+        await modal.open({
+          title: '제한 초과',
+          description: '가입 가능한 상품은 최대 5개입니다.',
+          confirmText: '확인',
+          cancelText: null,
+        })
       } else if (err.response?.status === 404) {
-        alert('상품을 찾을 수 없습니다.')
+        await modal.open({
+          title: '상품 없음',
+          description: '상품을 찾을 수 없습니다.',
+          confirmText: '확인',
+          cancelText: null,
+        })
       } else {
-        alert('가입 처리 중 오류가 발생했습니다.')
+        await modal.open({
+          title: '가입 오류',
+          description: '가입 처리 중 오류가 발생했습니다.',
+          confirmText: '확인',
+          cancelText: null,
+        })
       }
       console.error(err)
     }
@@ -87,19 +109,29 @@ export const useAccountStore = defineStore('account', () => {
 
   // ✅ 4-2) 금융상품 탈퇴 함수
   const leaveProduct = async (productId, optionId, productName = '') => {
-    const confirmJoin = window.confirm(`정말 "${productName}" 상품 가입을 취소하시겠습니까?`)
-    if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
+    const confirmLeave = await modal.open({
+      title: `${productName}`,
+      description: '이 상품의 가입을 취소할까요?',
+      confirmText: '가입 취소',
+      cancelText: '계속 유지',
+    })
+    if (!confirmLeave) return  // 사용자가 취소한 경우
+
     try {
       await axios.delete(`${ACCOUNT_API_URL}/leave-product/`, {
-        data: { product_id: productId, option_id: optionId },  // axios에서 DELETE 시 body에 data로 전달해야 함
+        data: { product_id: productId, option_id: optionId },
         headers: {
           Authorization: `Token ${token.value}`
         }
       })
-      // alert('가입이 취소되었습니다.')
       await fetchUser()
     } catch (err) {
-      alert('가입 취소 중 오류 발생')
+      await modal.open({
+        title: '취소 실패',
+        description: '가입 취소 중 오류가 발생했습니다.',
+        confirmText: '확인',
+        cancelText: null,
+      })
       console.error(err)
     }
   }

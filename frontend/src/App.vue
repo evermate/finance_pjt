@@ -9,12 +9,23 @@
       <router-view />
     </main>
   </div>
+   <!-- 전역 모달 -->
+  <ConfirmModal
+    v-if="modal.show"
+    :message="modal.message"
+    @confirm="modal.confirm"
+    @cancel="modal.cancel"
+  />
 </template>
 
 <script setup>
 import HeaderNav from '@/components/HeaderNav.vue'
 import MyProductsPanel from '@/components/MyProductsPanel.vue'
 import { useRoute } from 'vue-router'
+import { useModalStore } from '@/stores/modal'
+import ConfirmModal from '@/components/ConfirmModal.vue'
+
+const modal = useModalStore()
 const route = useRoute()
 </script>
 

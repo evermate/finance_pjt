@@ -4,33 +4,32 @@ import axios from 'axios'
 import { ref } from 'vue'
 
 export const useRecommendStore = defineStore('recommend', () => {
-  // 추천 결과 목록
+  // ✅ 일반 추천 상태
   const recommendations = ref([])
-  // 로딩 상태
   const loading = ref(false)
-  // 에러 객체
   const error = ref(null)
+
+  // ✅ AI 추천 상태 (추가)
+  const aiAsset = ref(0)
+  const aiRecs = ref([])
+  const aiLoading = ref(false)
+  const aiError = ref(null)
 
   /**
    * 로그인 사용자 프로필 기반 금리 추천 API 호출
    * @param {number} asset  사용자 자산 (원 단위)
-   * @param {number} top_n  추천 개수 (기본값 5)
+   * @param {number} top_n  추천 개수 (기본값 10)
    */
   async function fetchByProfile(asset, top_n = 10) {
     loading.value = true
     error.value = null
-
     try {
-      // axios.defaults.baseURL 과
-      // axios.defaults.headers.common['Authorization'] 은
-      // main.js 와 accounts 스토어에서 이미 세팅되어 있다고 가정
       const res = await axios.get(
         '/api/products/recommends/recommend_by_profile/',
-        {
-          params: { asset, top_n }
-        }
+        { params: { asset, top_n } }
       )
       recommendations.value = res.data
+      console.log('추천 결과:', recommendations.value)
     } catch (err) {
       error.value = err
       recommendations.value = []
@@ -39,10 +38,46 @@ export const useRecommendStore = defineStore('recommend', () => {
     }
   }
 
+  /**
+   * ✅ AI 추천 API 호출
+   */
+  async function fetchAiRecommend() {
+    aiLoading.value = true
+    aiError.value = null
+    try {
+      const res = await axios.get('/api/products/ai-recommend/', {
+        params: { asset: aiAsset.value }
+      })
+      aiRecs.value = res.data
+    } catch (err) {
+      aiError.value = err
+      aiRecs.value = []
+    } finally {
+      aiLoading.value = false
+    }
+  }
+
+  function resetAll() {
+  recommendations.value = []
+  error.value = null
+  aiAsset.value = 0
+  aiRecs.value = []
+  aiError.value = null
+}
+
   return {
+    // 일반 추천 관련
     recommendations,
     loading,
     error,
-    fetchByProfile
+    fetchByProfile,
+
+    // ✅ AI 추천 관련
+    aiAsset,
+    aiRecs,
+    aiLoading,
+    aiError,
+    fetchAiRecommend,
+    resetAll
   }
 })

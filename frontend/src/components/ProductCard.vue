@@ -1,24 +1,24 @@
-<!-- ProductCard.vue -->
 <template>
   <div class="prod-card mb-2">
     <img :src="getBankIcon(product.bank.kor_co_nm)" alt="은행 로고" class="prod-logo" />
-    <span class="prod-name" :title="product.fin_prdt_nm">
+    <router-link class="prod-name-link" :to="`/product/${product.product_type || 'saving'}/${product.fin_prdt_cd}`"
+      :title="product.fin_prdt_nm">
       {{ product.fin_prdt_nm }}
-    </span>
+    </router-link>
     <span class="prod-bank">{{ product.bank.kor_co_nm }}</span>
     <span class="prod-term">{{ product.save_trm }}개월</span>
     <span class="prod-rate">{{ product.intr_rate }}%</span>
+
     <!-- 가입 버튼 -->
-    <button class="prod-btn" :class="{ joined: isJoined(product.fin_prdt_cd) }"
-      @click="toggleProduct(product.fin_prdt_cd, product.fin_prdt_nm)">
-      {{ isJoined(product.fin_prdt_cd) ? '가입 완료' : '상품 가입' }}
+    <button class="prod-btn" :class="{ joined: isJoined(product.fin_prdt_cd, product.option_id) }"
+      @click="toggleProduct(product.fin_prdt_cd, product.option_id, product.fin_prdt_nm)">
+      {{ isJoined(product.fin_prdt_cd, product.option_id) ? '가입 완료' : '상품 가입' }}
     </button>
   </div>
 </template>
 
-
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
 import { useAccountStore } from '@/stores/accounts'
 import { getBankIcon } from '@/utils/bankIconMap'
 
@@ -29,21 +29,22 @@ const props = defineProps({
   }
 })
 
-const isJoined = (id) => {
-  return accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === id)
+const accountStore = useAccountStore()
+
+const isJoined = (productId, optionId) => {
+  return accountStore.user?.joined_products?.some(p =>
+    p.option?.product === productId && p.option?.id === optionId
+  )
 }
 
-const toggleProduct = async (id, name) => {
-  if (isJoined(id)) {
-    await accountStore.leaveProduct(id, name)
+const toggleProduct = async (productId, optionId, productName) => {
+  if (isJoined(productId, optionId)) {
+    await accountStore.leaveProduct(productId, optionId, productName)
   } else {
-    await accountStore.joinProduct(id, name)
+    await accountStore.joinProduct(productId, optionId, productName)
   }
 }
-
-const accountStore = useAccountStore()
 </script>
-
 
 <style scoped>
 .prod-card {
@@ -63,17 +64,6 @@ const accountStore = useAccountStore()
   height: 40px;
   object-fit: contain;
 }
-
-.prod-name {
-  flex: 1.5;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: default;
-}
-
-
 
 .prod-bank,
 .prod-term,
@@ -100,6 +90,29 @@ const accountStore = useAccountStore()
 
 .prod-btn.joined {
   background-color: #aaa;
-  cursor: default;
 }
+
+.prod-btn.joined:hover {
+  background-color: #797979;
+}
+
+.prod-name-link {
+  color: #333;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+  flex: 1.5;
+}
+
+.prod-name-link:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+
 </style>
