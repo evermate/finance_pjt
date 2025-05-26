@@ -42,7 +42,7 @@
 // (기존 스크립트 유지, 단 searchResults 추가)
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { KAKAO_API_KEY, API_BASE_URL} from '@/constants'
+import { KAKAO_API_KEY, API_BASE_URL, KAKAO_MOBILITY_KEY } from '@/constants'
 import data from '@/assets/data'
 
 const selectedSido = ref('')

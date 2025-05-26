@@ -271,10 +271,73 @@ watch(joinedIds, (val) => {
 <style scoped>
 .compare-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e9ecef;
 }
+
+.compare-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #212529;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.compare-header h1::before {
+  content: "💰";
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.type-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.type-tabs button {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid #d0d7de;
+  border-radius: 9999px; /* pill 형태 */
+  background-color: #ffffff;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+.type-tabs button.active {
+  background-color: #007bff;
+  color: #ffffff;
+  border: 1px solid #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* 포커스 느낌 */
+  font-weight: 600;
+}
+.type-tabs button:hover {
+  background-color: #f1f3f5;
+  color: #212529;
+}
+.type-tabs button.active:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+.type-tabs button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.35);
+}
+.type-tabs button:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed;
+  border-color: #dee2e6;
+}
+
 
 .left-section {
   display: flex;
@@ -317,22 +380,50 @@ watch(joinedIds, (val) => {
   font-weight: bold;
 }
 
+/* 📊 테이블 전체 */
 .rate-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  border-spacing: 0 0.75rem;
   table-layout: fixed;
-  margin-top: 1rem;
+  font-size: 0.95rem;
 }
 
-.rate-table th,
-.rate-table td {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
+/* 📌 헤더 셀 */
+.rate-table thead th {
+  background-color: #f8f9fa;
+  color: #343a40;
+  font-weight: 600;
+  padding: 0.9rem 0.5rem;
   text-align: center;
+  border-bottom: 2px solid #dee2e6;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+/* 📄 행 */
+.rate-table tbody tr {
+  background-color: #ffffff;
+  border-radius: 12px;
+  border-bottom: 1px solid #e9ecef;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.2s ease;
+}
+
+/* 🖱️ 행 hover 효과 */
+.rate-table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* 🔢 셀 */
+.rate-table td {
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #212529;
+  font-weight: 500;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .rate-table th:nth-child(1),
@@ -355,14 +446,7 @@ watch(joinedIds, (val) => {
   width: 80px;
 }
 
-.rate-table th {
-  background-color: #f2f6fa;
-  font-weight: 600;
-  color: #333;
-  border-bottom: 2px solid #ddd;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 0.95rem;
-}
+
 
 .rate-table th.clickable {
   cursor: pointer;
@@ -393,23 +477,31 @@ watch(joinedIds, (val) => {
 }
 
 .filter-section h4 {
-  font-size: 1rem;
+  font-size: 0.95rem;
+  color: #495057;
+  margin-bottom: 0.4rem;
   font-weight: 600;
-  color: #333;
-  margin-bottom: 0.3rem;
+  letter-spacing: -0.3px;
 }
+
 
 .bank-select,
 .term-select {
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #f9fafb;
   width: 100%;
-  transition: border-color 0.3s ease;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  appearance: none;
+  padding: 0.65rem 0.8rem;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  border: 1px solid #ced4da;
+  background-color: #f8f9fa;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="gray" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414L10 13.414l-4.707-4.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1rem;
 }
+
 
 .bank-select:focus,
 .term-select:focus {
@@ -427,24 +519,32 @@ watch(joinedIds, (val) => {
   padding: 1rem;
 }
 
+/* 🔢 셀 */
 .rate-table td {
+  padding: 0.75rem;
+  text-align: center;
   font-size: 0.95rem;
-  color: #222;
+  color: #212529;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .rate-table td:empty::before {
   content: '-';
-  color: #aaa;
+  color: #ccc;
 }
 
 .rate-table td {
   font-weight: 500;
 }
 
-.rate-table td:nth-child(n+4) {
+/* 📈 금리 강조 셀 */
+.rate-table td:nth-child(n+4):not(:last-child) {
   font-size: 1.05rem;
-  font-weight: bold;
-  color: #007bff;
+  font-weight: 600;
+  color: #2b66f6;
 }
 
 .rate-table tbody tr:hover {
@@ -454,45 +554,58 @@ watch(joinedIds, (val) => {
 
 /* 연한 색상 (선택 안 된 기간용) */
 .rate-table td.dimmed {
-  color: #bbb;
+  color: #adb5bd;
   font-weight: normal;
 }
-
-/* 강조 색상 (선택된 기간용) */
+/* 📌 선택된 열 강조 */
 .rate-table td.highlighted {
-  color: #df2e5a;
-  font-weight: bold;
-  border-left: 2px solid #007bff;
-  border-right: 2px solid #007bff;
-  background-color: #fffafc;
-  box-shadow: inset 2px 0 0 #007bff, inset -2px 0 0 #007bff;
+  background-color: #ffe0e0;  /* ✅ 더 진한 분홍/다홍색 */
+  color: #c92a2a;
+  font-weight: 700;
+  border-left: 2px solid #fa5252;
+  border-right: 2px solid #fa5252;
 }
+
 
 /* 선택된 열의 테두리 강조 */
 .rate-table td.highlighted {
-  border-left: 2px solid #007bff;
-  border-right: 2px solid #007bff;
-  background-color: #fffdfd;
+  border-left: 0.5px solid #007bff;
+  border-right: 0.5px solid #007bff;
+  background-color: #fff1f0;
+}
+.rate-table tbody tr:last-child td.highlighted {
+  border-bottom: 0.5px solid #007bff;
 }
 
+/* ✅ 가입 버튼 */
 .join-btn {
-  padding: 0.3rem 0.6rem;
-  background-color: #007bff;
+  display: inline-block;
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   color: white;
-  font-size: 0.8rem;
+  background-color: #2b66f6;
   border: none;
   border-radius: 6px;
+  white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.join-btn:hover {
+  background-color: #1f4fd4;
 }
 
 .join-btn.joined {
-  background-color: #aaa;
-  color: #fff;
+  background-color: #adb5bd;
+  color: white;
+  cursor: default;
 }
 
 .join-btn:disabled {
-  background-color: #aaa;
+  background-color: #dee2e6;
+  color: #adb5bd;
   cursor: not-allowed;
 }
 
@@ -600,17 +713,23 @@ watch(joinedIds, (val) => {
 }
 
 .reset-btn {
-  padding: 0.5rem 0.8rem;
-  background-color: #f5f5f5;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  width: 100%;  /* ✅ 셀렉트 박스와 통일 */
+  padding: 0.65rem 1rem;
+  background-color: #f1f3f5;
+  border: 1px solid #ced4da;
+  color: #495057;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
+
 
 .reset-btn:hover {
   background-color: #e9ecef;
+  color: #212529;
+  border-color: #adb5bd;
 }
+
 </style>
