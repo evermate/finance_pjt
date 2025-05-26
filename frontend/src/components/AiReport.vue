@@ -1,4 +1,4 @@
-<!-- src/components/AiReport.vue -->
+<!-- AiReport.vue -->
 <template>
   <section class="ai-report mb-8">
     <h2 class="text-xl font-semibold mb-4">AI 분석 리포트</h2>
@@ -8,27 +8,38 @@
         :key="rec.fin_prdt_cd"
         class="prod-card"
       >
-        <!-- 은행 로고 -->
+        <!-- ✅ 은행 이름 기반 로고 적용 -->
         <img
-          :src="getBankLogo(rec.bank.fin_co_no)"
+          :src="getBankIcon(rec.bank.kor_co_nm)"
           alt="은행 로고"
           class="prod-card-thumb"
         />
+
         <div class="prod-card-body">
           <h3 class="prod-card-title">{{ rec.fin_prdt_nm }}</h3>
           <p class="prod-card-meta">은행: {{ rec.bank.kor_co_nm }}</p>
           <p class="prod-card-meta">기간: {{ rec.save_trm }}개월</p>
           <p class="prod-card-meta">금리: {{ rec.intr_rate }}%</p>
           <p class="prod-card-desc">{{ rec.reason }}</p>
-          <button class="prod-card-btn">상품 가입</button>
+          <button
+  class="prod-card-btn"
+  :class="{ joined: isJoined(rec.fin_prdt_cd) }"
+  @click="toggleProduct(rec.fin_prdt_cd, rec.fin_prdt_nm)"
+>
+  {{ isJoined(rec.fin_prdt_cd) ? '가입 완료' : '가입하기' }}
+</button>
+
         </div>
       </div>
     </div>
   </section>
+  <br>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
+import { useAccountStore } from '@/stores/accounts'
+import { getBankIcon } from '@/utils/bankIconMap'
 
 const props = defineProps({
   recs: {
@@ -37,10 +48,23 @@ const props = defineProps({
   }
 })
 
-function getBankLogo(finCoNo) {
-  return `/images/banks/${finCoNo}.png`
+const accountStore = useAccountStore()
+
+const joinedIds = computed(() =>
+  accountStore.user?.joined_products?.map(p => p.fin_prdt_cd) || []
+)
+
+const isJoined = (id) => joinedIds.value.includes(id)
+
+const toggleProduct = async (id, name) => {
+  if (isJoined(id)) {
+    await accountStore.leaveProduct(id, name)
+  } else {
+    await accountStore.joinProduct(id, name)
+  }
 }
 </script>
+
 
 <style scoped>
 .ai-report {
@@ -117,4 +141,9 @@ function getBankLogo(finCoNo) {
 .prod-card-btn:hover {
   background-color: #005ecc;
 }
+
+.prod-card-btn.joined {
+  background-color: #aaa;
+}
+
 </style>

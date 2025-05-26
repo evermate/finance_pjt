@@ -1,25 +1,26 @@
+<!-- ProductCard.vue -->
 <template>
-  <div class="prod-card mb-4">
-    <!-- 은행 로고 -->
-    <img
-      :src="getBankLogo(product.bank.fin_co_no)"
-      alt="은행 로고"
-      class="prod-card-thumb mb-2"
-    />
-    <div class="prod-card-body">
-      <h3 class="prod-card-title">{{ product.fin_prdt_nm }}</h3>
-      <p class="prod-card-meta">은행: {{ product.bank.kor_co_nm }}</p>
-      <p class="prod-card-meta">기간: {{ product.save_trm }}개월 | 금리: {{ product.intr_rate }}%</p>
-      <!-- AI 추천인 경우 reason이 있을 수 있으니 조건부로 렌더 -->
-      <p v-if="product.reason" class="prod-card-desc mt-2">{{ product.reason }}</p>
-      <!-- 가입 버튼 -->
-      <button class="prod-card-btn mt-4">상품 가입</button>
-    </div>
+  <div class="prod-card mb-2">
+    <img :src="getBankIcon(product.bank.kor_co_nm)" alt="은행 로고" class="prod-logo" />
+    <span class="prod-name" :title="product.fin_prdt_nm">
+      {{ product.fin_prdt_nm }}
+    </span>
+    <span class="prod-bank">{{ product.bank.kor_co_nm }}</span>
+    <span class="prod-term">{{ product.save_trm }}개월</span>
+    <span class="prod-rate">{{ product.intr_rate }}%</span>
+    <!-- 가입 버튼 -->
+    <button class="prod-btn" :class="{ joined: isJoined(product.fin_prdt_cd) }"
+      @click="toggleProduct(product.fin_prdt_cd, product.fin_prdt_nm)">
+      {{ isJoined(product.fin_prdt_cd) ? '가입 완료' : '상품 가입' }}
+    </button>
   </div>
 </template>
 
+
 <script setup>
 import { defineProps } from 'vue'
+import { useAccountStore } from '@/stores/accounts'
+import { getBankIcon } from '@/utils/bankIconMap'
 
 const props = defineProps({
   product: {
@@ -28,58 +29,77 @@ const props = defineProps({
   }
 })
 
-// fin_co_no 기반 은행 로고 경로 생성
-function getBankLogo(finCoNo) {
-  return `/images/banks/${finCoNo}.png`
+const isJoined = (id) => {
+  return accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === id)
 }
+
+const toggleProduct = async (id, name) => {
+  if (isJoined(id)) {
+    await accountStore.leaveProduct(id, name)
+  } else {
+    await accountStore.joinProduct(id, name)
+  }
+}
+
+const accountStore = useAccountStore()
 </script>
+
 
 <style scoped>
 .prod-card {
   display: flex;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  overflow: hidden;
-  padding: 1rem;
   align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
 }
-.prod-card-thumb {
-  width: 64px;
-  height: 64px;
+
+.prod-logo {
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  margin-right: 1rem;
 }
-.prod-card-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-.prod-card-title {
-  font-size: 1.1rem;
+
+.prod-name {
+  flex: 1.5;
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: default;
 }
-.prod-card-meta {
-  font-size: 0.9rem;
-  color: #555;
+
+
+
+.prod-bank,
+.prod-term,
+.prod-rate {
+  flex: 1;
+  color: #444;
+  text-align: center;
 }
-.prod-card-desc {
-  font-size: 0.9rem;
-  color: #666;
-}
-.prod-card-btn {
-  align-self: flex-start;
-  margin-top: auto;
-  padding: 0.5rem 1rem;
+
+.prod-btn {
+  flex-shrink: 0;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  border: none;
   background-color: #0074ff;
   color: white;
-  border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color .2s;
 }
-.prod-card-btn:hover {
+
+.prod-btn:hover {
   background-color: #005ecc;
+}
+
+.prod-btn.joined {
+  background-color: #aaa;
+  cursor: default;
 }
 </style>
