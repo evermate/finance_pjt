@@ -1,50 +1,47 @@
-<!-- src/views/SimulationView.vue -->
 <template>
-  <section class="simulation">
-    <!-- 헤더 배너 -->
-    <div class="simulation-header">
-      <h1>은퇴 자산 시뮬레이션</h1>
-      <p>나만의 은퇴 계획을 미리 확인해보세요</p>
-    </div>
+  <section class="simulation-page">
+    <!-- 페이지 타이틀 -->
+    <h1 class="page-title">은퇴 자산 시뮬레이션</h1>
 
-    <!-- 입력 폼 카드 -->
-    <div class="simulation-form-card">
-      <h2>시뮬레이션 파라미터 입력</h2>
-      <SimulationForm />
-    </div>
+    <!-- flex 레이아웃: 좌측(폼+차트) / 우측(카드 리스트) -->
+    <div class="layout">
+      <!-- 좌측 -->
+      <div class="left-panel">
+        <div class="panel">
+          <SimulationForm />
+        </div>
+        <div v-if="store.data" class="panel">
+          <SimulationChart :results="store.data" />
+        </div>
+      </div>
 
-    <!-- 10년 단위 예상 자산 카드 그리드 -->
-    <div v-if="decadeSummary.length" class="cards">
-      <div
-        v-for="item in decadeSummary"
-        :key="item.age"
-        class="card"
-      >
-        <div class="badge">{{ item.age }}세</div>
-        <p class="amount">{{ formatNumber(item.asset) }}원</p>
-        <p class="unit">{{ toKoreanUnit(item.asset) }}</p>
+      <!-- 우측 -->
+      <div class="right-panel">
+        <h2 class="section-title">10년 단위 예상 자산</h2>
+        <div class="card-list">
+          <div v-for="item in decadeSummary" :key="item.age" class="card">
+            <span class="badge">{{ item.age }}세</span>
+            <p class="amount">{{ formatNumber(item.asset) }}원</p>
+            <p class="unit">{{ toKoreanUnit(item.asset) }}</p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 차트 -->
-    <div v-if="store.data" class="chart-wrapper">
-      <SimulationChart :results="store.data" />
-    </div>
-
-    <!-- 에러 -->
-    <p v-if="store.error" class="error">{{ store.error.message }}</p>
+    <p v-if="store.error" class="error">
+      에러 발생: {{ store.error.message }}
+    </p>
   </section>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import SimulationForm  from '@/components/SimulationForm.vue'
+import SimulationForm from '@/components/SimulationForm.vue'
 import SimulationChart from '@/components/SimulationChart.vue'
 import { useSimulationStore } from '@/stores/simulation.js'
 
 const store = useSimulationStore()
 
-// 10년 단위 요약 계산
 const decadeSummary = computed(() => {
   if (!store.data) return []
   const { age, median_assets } = store.data
@@ -54,12 +51,10 @@ const decadeSummary = computed(() => {
     .filter(item => item.age >= firstDecade && item.age % 10 === 0)
 })
 
-// 숫자 천 단위 콤마
 function formatNumber(x) {
   return x.toLocaleString('ko-KR', { maximumFractionDigits: 0 })
 }
 
-// 억/조/경/만 단위 변환 (띄어쓰기 포함)
 function toKoreanUnit(x) {
   const val = BigInt(Math.floor(x))
   const GYEONG = 10n ** 16n
@@ -86,112 +81,116 @@ function toKoreanUnit(x) {
 </script>
 
 <style scoped>
-/* 전체 섹션 배경 & 패딩 */
-.simulation {
-  background: #f0f4f8;
-  padding: 2rem 1rem;
+/* ─── 페이지 전체 ─── */
+.simulation-page {
+  padding: 1.5rem;
+  background-color: #f7f9fc;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-/* 헤더 배너 */
-.simulation-header {
-  max-width: 600px;
-  margin: 0 auto 2rem;
+/* ─── 타이틀 ─── */
+.page-title {
+  font-size: 1.875rem;   /* 30px */
+  font-weight: 800;
+  margin-bottom: 2rem;
   text-align: center;
 }
-.simulation-header h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #1e3a8a;
-  letter-spacing: 0.5px;
+
+/* ─── 레이아웃 ─── */
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
-.simulation-header p {
-  margin-top: 0.5rem;
-  color: #475569;
-  font-size: 1.125rem;
+@media (min-width: 1024px) {
+  .layout {
+    flex-direction: row;
+  }
 }
 
-/* 입력 폼 카드 */
-.simulation-form-card {
-  max-width: 720px;
-  margin: 0 auto 3rem;
+/* ─── 좌측 패널 ─── */
+.left-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+/* 공통 패널 스타일 (폼/차트 박스) */
+.panel {
   background: #ffffff;
-  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-.simulation-form-card h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #334155;
-  margin-bottom: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px rgba(0,0,0,0.1);
 }
 
-/* 카드 그리드 */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+/* ─── 우측 패널 ─── */
+.right-panel {
+  width: 100%;
+}
+@media (min-width: 1024px) {
+  .right-panel {
+    width: 33.3333%;
+  }
+}
+
+.section-title {
+  font-size: 1.875rem;  /* 30px */
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* ─── 카드 리스트 ─── */
+.card-list {
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  margin-bottom: 3rem;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-/* 카드 기본 스타일 */
+/* ─── 개별 카드 ─── */
 .card {
   background: #ffffff;
-  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  transition: box-shadow .2s, transform .2s;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: box-shadow .2s;
 }
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-/* 나이 배지 */
+/* ─── 나이 배지 ─── */
 .badge {
   display: inline-block;
-  background: #e0f2fe;
-  color: #0369a1;
-  padding: 0.25rem 0.75rem;
+  background-color: #3b82f6;
+  color: #ffffff;
   border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 1rem;
 }
 
-/* 금액 텍스트 */
+/* ─── 금액 텍스트 ─── */
 .amount {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #1f2937;
+  font-size: 2.25rem;  /* 36px */
+  font-weight: 800;
+  color: #111827;
   margin: 0.5rem 0;
 }
 
-/* 한글 단위 텍스트 */
+/* ─── 한글 단위 텍스트 ─── */
 .unit {
-  color: #64748b;
   font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
 }
 
-/* 차트 래퍼 (가로 중앙 & 적당한 여백) */
-.chart-wrapper {
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  background: #ffffff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-
-/* 에러 텍스트 */
+/* ─── 에러 메시지 ─── */
 .error {
-  max-width: 600px;
-  margin: 1rem auto;
   color: #dc2626;
+  margin-top: 1.5rem;
   text-align: center;
-  font-weight: 500;
 }
 </style>
