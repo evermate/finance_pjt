@@ -1,35 +1,26 @@
 <template>
   <div v-if="product" class="product-detail">
     <div class="back-button">
-      <button @click="goBack">← 이전 페이지로 돌아가기</button>
+      <button @click="goBack" class="back-link">
+        <i class="fas fa-arrow-left"></i>
+        <span>이전 페이지로 돌아가기</span>
+      </button>
     </div>
 
-    <h1 class="title">{{ typeLabel }} 상세</h1>
+    <div class="product-header">
+      <h1 class="title">{{ product.fin_prdt_nm }}</h1>
+      <p class="subtitle">{{ product.bank_name }} | {{ typeLabel }}</p>
+    </div>
 
-    <div class="info-card">
-      <div class="info-grid">
-        <div class="label">공시 제출월</div>
-        <div class="value">{{ product.dcls_strt_day }}</div>
-
-        <div class="label">금융회사명</div>
-        <div class="value">{{ product.bank_name }}</div>
-
-        <div class="label">상품명</div>
-        <div class="value">{{ product.fin_prdt_nm }}</div>
-
-        <div class="label">가입 대상</div>
-        <div class="value">{{ product.join_member }}</div>
-
-        <div class="label">가입 방법</div>
-        <div class="value">{{ product.join_way }}</div>
-
-        <div class="label">우대 조건</div>
-        <div class="value">{{ product.spcl_cnd }}</div>
+    <div class="card detail-card">
+      <div class="detail-item" v-for="(value, label) in summaryMap" :key="label">
+        <span class="item-label">{{ label }}</span>
+        <span class="item-value" v-html="formatValue(label, value)"></span>
       </div>
     </div>
 
-    <div class="options-card">
-      <h2>금리 옵션</h2>
+    <div class="card option-card">
+      <h2 class="section-title">금리 옵션</h2>
       <table class="options-table">
         <thead>
           <tr>
@@ -50,11 +41,11 @@
       </table>
     </div>
 
-    <div class="tooltip-wrapper" @mouseenter="showTooltip = !isLoggedIn" @mouseleave="showTooltip = false">
+    <div class="action-wrapper">
       <button class="join-btn" :class="{ joined: isJoined }" @click="toggleJoin" :disabled="!isLoggedIn">
         {{ isJoined ? '가입완료' : '가입하기' }}
       </button>
-      <div v-if="showTooltip" class="tooltip">로그인이 필요합니다</div>
+      <span v-if="!isLoggedIn" class="tooltip">로그인이 필요합니다</span>
     </div>
   </div>
 
@@ -71,29 +62,31 @@ import axios from 'axios'
 
 const route = useRoute()
 const router = useRouter()
-
-const showTooltip = ref(false)
 const product = ref(null)
 const accountStore = useAccountStore()
 const isLoggedIn = computed(() => !!accountStore.user)
 
+const typeLabel = computed(() =>
+  route.params.type === 'saving' ? '정기적금' : '정기예금'
+)
+
+const isJoined = computed(() =>
+  accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === route.params.id)
+)
+
+const summaryMap = computed(() => ({
+  '공시 제출월': product.value?.dcls_strt_day,
+  '금융회사명': product.value?.bank_name,
+  '가입 대상': product.value?.join_member,
+  '가입 방법': product.value?.join_way,
+  '우대 조건': product.value?.spcl_cnd,
+}))
+
 const goBack = () => {
-  if (window.history.length > 1) {
-    router.back()
-  } else {
-    router.push({ name: 'compare' })
-  }
+  if (window.history.length > 1) router.back()
+  else router.push({ name: 'compare' })
 }
 
-const typeLabel = computed(() => {
-  return route.params.type === 'saving' ? '정기적금' : '정기예금'
-})
-
-const isJoined = computed(() => {
-  return accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === route.params.id)
-})
-
-// ✅ 상품 상세 데이터 요청 함수 (id가 바뀔 때마다 호출)
 const fetchProductDetail = async (id) => {
   try {
     const res = await axios.get(`/api/products/deposits/${id}/`)
@@ -103,158 +96,180 @@ const fetchProductDetail = async (id) => {
   }
 }
 
-onMounted(() => {
-  fetchProductDetail(route.params.id)
-})
+onMounted(() => fetchProductDetail(route.params.id))
 
 watch(() => route.params.id, (newId, oldId) => {
-  if (newId !== oldId) {
-    fetchProductDetail(newId)
-  }
+  if (newId !== oldId) fetchProductDetail(newId)
 })
 
 const toggleJoin = async () => {
-  const id = route.params.id
   if (!isLoggedIn.value) {
     alert('로그인이 필요합니다.')
     return
   }
 
   try {
+    const optionId = product.value.options[0]?.id
+    const productId = route.params.id
+    const productName = product.value.fin_prdt_nm
+
     if (isJoined.value) {
-      await accountStore.leaveProduct(id)
+      await accountStore.leaveProduct(productId, optionId, productName)
     } else {
-      await accountStore.joinProduct(id)
+      await accountStore.joinProduct(productId, optionId, productName)
     }
   } catch (err) {
     console.error('가입 상태 변경 실패:', err)
   }
 }
+
+const formatValue = (label, value) => {
+  if (label === '우대 조건') {
+    const bolded = value.replace(/(\d+\)?[^\n]+)/g, '<strong>$1</strong>')
+    return bolded.replace(/\n/g, '<br>')
+  }
+  return value
+}
 </script>
 
 <style scoped>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
 .product-detail {
-  max-width: 800px;
+  max-width: 768px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1rem;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
-.title {
-  font-size: 1.8rem;
-  font-weight: bold;
+.back-button {
   margin-bottom: 1.5rem;
 }
 
-.info-card,
-.options-card {
-  background: #f9f9f9;
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #2b66f6;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #1a4dcc;
+  text-decoration: underline;
+}
+
+.back-link i {
+  font-size: 1rem;
+}
+
+.product-header {
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: #868e96;
+}
+
+.card {
+  background: white;
   border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: 150px 1fr;
-  row-gap: 1rem;
-  column-gap: 1rem;
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f1f3f5;
+  font-size: 0.95rem;
 }
 
-.label {
-  font-weight: bold;
-  color: #333;
+.item-label {
+  font-weight: 400;
+  color: #495057;
+  white-space: nowrap;
 }
 
-.value {
-  color: #444;
+.item-value {
+  text-align: right;
+  color: #343a40;
+  max-width: 70%;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #212529;
 }
 
 .options-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 0.95rem;
 }
 
 .options-table th,
 .options-table td {
-  padding: 0.6rem;
-  border-bottom: 1px solid #ddd;
   text-align: center;
+  padding: 0.6rem;
+  border-bottom: 1px solid #dee2e6;
 }
 
 .options-table th {
-  background-color: #f0f4f8;
+  background-color: #f8f9fa;
+  color: #495057;
   font-weight: 600;
 }
 
+.action-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
 .join-btn {
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
-  font-weight: bold;
+  background-color: #2b66f6;
+  color: white;
+  padding: 0.6rem 1.4rem;
   border: none;
   border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.3s;
-  color: white;
-  background-color: #007bff;
+}
+
+.join-btn:hover {
+  background-color: #1f4fd4;
 }
 
 .join-btn.joined {
-  background-color: #aaa;
-  cursor: pointer;
-}
-
-.join-btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-.back-button {
-  margin-bottom: 1rem;
-}
-
-.back-button button {
-  background: none;
-  border: none;
-  color: #007bff;
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: 500;
-  padding: 0;
-  transition: color 0.2s;
-}
-
-.back-button button:hover {
-  text-decoration: underline;
-  color: #0056b3;
-}
-
-.tooltip-wrapper {
-  position: relative;
-  text-align: right;
+  background-color: #adb5bd;
+  cursor: default;
 }
 
 .tooltip {
-  position: absolute;
-  top: -35px;
-  right: 0;
-  background: #333;
-  color: #fff;
-  font-size: 0.75rem;
-  padding: 6px 10px;
-  border-radius: 6px;
-  white-space: nowrap;
-  z-index: 10;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.tooltip::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  right: 10px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: #333 transparent transparent transparent;
+  font-size: 0.8rem;
+  color: #868e96;
 }
 </style>
