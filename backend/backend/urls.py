@@ -11,6 +11,7 @@ urlpatterns = [
     path('api/products/', include('products.urls')),
     path('api/community/', include('community.urls')),
     path('api/', include('api.urls')),
+    path('api/simulation/', include('simulation.urls')),
 ]
 
 # ✅ 개발 중 이미지 서빙을 위한 static 설정
