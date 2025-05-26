@@ -17,6 +17,8 @@ import CommunityDetailView from '@/views/community/CommunityDetailView.vue'
 import CommunityFormView from '@/views/community/CommunityFormView.vue'
 import DepositDetailView from '@/views/product/DepositDetailView.vue'
 import VideoDetailView from '@/views/VideoDetailView.vue'
+import SimulationView from '@/views/SimulationView.vue'
+
 
 
 const routes = [
@@ -36,6 +38,7 @@ const routes = [
   { path: '/community/:id/edit', name: 'community-edit', component: CommunityFormView },
   { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')},
   { path: '/search', name: 'search', component: SearchView },
+  { path: '/simulation', name: 'simulation', component: SimulationView },
   { 
   path: '/product/:type/:id', 
   name: 'product-detail', 

@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'community',
     'products',
     'accounts',
+    'simulation',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',

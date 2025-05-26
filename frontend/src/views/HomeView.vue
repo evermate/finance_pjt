@@ -23,6 +23,11 @@
         <img src="/image/compass.png" alt="은행 검색" />
         <p>은행 검색</p>
       </RouterLink>
+      <!-- 여기 자산 시뮬레이션 카드 추가 -->
+      <RouterLink to="/simulation" class="card">
+         <!-- <img src="/image/simulation-icon.png" alt="자산 시뮬레이션" /> -->
+        <p>은퇴 자산 시뮬레이션</p>
+      </RouterLink>
     </div>
   </div>
 
