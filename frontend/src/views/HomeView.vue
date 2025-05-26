@@ -25,7 +25,7 @@
       </RouterLink>
       <!-- 여기 자산 시뮬레이션 카드 추가 -->
       <RouterLink to="/simulation" class="card">
-         <!-- <img src="/image/simulation-icon.png" alt="자산 시뮬레이션" /> -->
+         <img src="/image/wealth_simulation.png" alt="자산 시뮬레이션" />
         <p>은퇴 자산 시뮬레이션</p>
       </RouterLink>
     </div>
