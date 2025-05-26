@@ -125,7 +125,7 @@ const verifyPassword = async () => {
 
 <style scoped>
 .mypage-container {
-  max-width: 720px;
+  max-width: 840px;
   margin: 0 auto;
   padding: 2rem 1rem;
   background-color: #f5f7fb;

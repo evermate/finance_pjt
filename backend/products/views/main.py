@@ -41,11 +41,11 @@ class DepositProductViewSet(viewsets.ModelViewSet):
         recs = []
         for prod in products:
             for opt in prod.options.all():
-                if not opt.save_trm or not opt.intr_rate:
+                if not opt.save_trm or not opt.intr_rate2:
                     continue
                 try:
                     term = int(opt.save_trm)
-                    rate = float(opt.intr_rate)
+                    rate = float(opt.intr_rate2)
                 except (TypeError, ValueError):
                     continue
                 if min_term and term < int(min_term):
@@ -62,7 +62,7 @@ class DepositProductViewSet(viewsets.ModelViewSet):
                     },
                     'option_id': opt.id,
                     'save_trm': term,
-                    'intr_rate': rate,
+                    'intr_rate2': rate,
                     'annualized_rate': round(annualized, 4),
                     'score': round(annualized, 4),
                 })
@@ -81,12 +81,11 @@ class DepositProductViewSet(viewsets.ModelViewSet):
         rate_subquery = InterestOption.objects.filter(
             product=OuterRef('pk'),
             save_trm=term,
-            intr_rate__isnull=False
-        ).order_by('-intr_rate').values('intr_rate')[:1]
+            intr_rate2__isnull=False
+        ).order_by('-intr_rate2').values('intr_rate2')[:1]
     
         products = DepositProduct.objects.filter(product_type=product_type) \
             .annotate(top_rate=Subquery(rate_subquery, output_field=FloatField())) \
-            .filter(top_rate__isnull=False) \
             .order_by('-top_rate') \
             .prefetch_related('options', 'bank')
     

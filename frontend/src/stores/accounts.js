@@ -56,7 +56,10 @@ export const useAccountStore = defineStore('account', () => {
   }
 
   // ✅ 4-1) 금융상품 가입 함수
-  const joinProduct = async (productId) => {
+  const joinProduct = async (productId, productName = '') => {
+    const confirmJoin = window.confirm(`정말 "${productName}" 상품에 가입하시겠습니까?`)
+    if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
+
     try {
       await axios.post(`${ACCOUNT_API_URL}/join-product/`, {
         product_id: productId
@@ -66,7 +69,7 @@ export const useAccountStore = defineStore('account', () => {
         }
       })
       // alert('가입이 완료되었습니다.')
-      await fetchUser()  // 가입 목록 갱신
+      await fetchUser()
     } catch (err) {
       if (err.response?.status === 403) {
         alert('가입 가능한 상품은 최대 5개입니다.')
@@ -79,8 +82,11 @@ export const useAccountStore = defineStore('account', () => {
     }
   }
 
+
   // ✅ 4-2) 금융상품 탈퇴 함수
-  const leaveProduct = async (productId) => {
+  const leaveProduct = async (productId, productName = '') => {
+    const confirmJoin = window.confirm(`정말 "${productName}" 상품 가입을 취소하시겠습니까?`)
+    if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
     try {
       await axios.delete(`${ACCOUNT_API_URL}/leave-product/`, {
         data: { product_id: productId },  // axios에서 DELETE 시 body에 data로 전달해야 함
@@ -134,7 +140,7 @@ export const useAccountStore = defineStore('account', () => {
     logout,
     joinProduct,
     leaveProduct,
-    joinedProducts, 
+    joinedProducts,
   }
 }, {
   persist: true,

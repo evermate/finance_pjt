@@ -69,7 +69,7 @@ const renderChart = () => {
             labels: joinedProducts.value.map(p => p.fin_prdt_nm),
             datasets: [
                 {
-                    label: '저축 금리',
+                    label: '기본 금리',
                     data: joinedProducts.value.map(p => {
                         const rates = p.options?.map(o => o.intr_rate ?? 0)
                         return rates?.length ? Math.max(...rates) : null
@@ -77,7 +77,7 @@ const renderChart = () => {
                     backgroundColor: 'rgba(54, 162, 235, 0.6)', // 파랑
                 },
                 {
-                    label: '최고 우대금리 금리',
+                    label: '최고 우대금리',
                     data: joinedProducts.value.map(p => {
                         const rates = p.options?.map(o => o.intr_rate2 ?? 0)
                         return rates?.length ? Math.max(...rates) : null
