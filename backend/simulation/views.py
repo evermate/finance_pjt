@@ -14,7 +14,14 @@ class SimulationAPIView(APIView):
     def post(self, request):
         serializer = SimulationSerializer(data=request.data)
         if not serializer.is_valid():
-            return Response(serializer.errors, status=400)
+            # 필수항목이 하나라도 빠졌을 때
+            return Response({
+                'error': '모든 입력 항목을 채워주세요!',
+                'details': serializer.errors
+            },
+            status=400
+            )
+
         data = serializer.validated_data
 
         # 고정 파라미터
