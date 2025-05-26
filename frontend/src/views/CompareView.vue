@@ -13,8 +13,9 @@
     <div class="compare-body">
       <!-- 왼쪽: 필터 -->
       <div class="filter-section">
+        <button class="reset-btn" @click="resetFilters">카테고리 초기화</button>
         <h4>금융회사</h4>
-        <select v-model="selectedBank" class="bank-select">
+        <select v-model="selectedBank" class="bank-select" @change="updateQuery">
           <option value="전체">전체</option>
           <option v-for="bank in bankList" :key="bank" :value="bank">
             {{ bank }}
@@ -26,6 +27,7 @@
             {{ term }}개월
           </option>
         </select>
+
 
 
         <!-- 가입한 상품 목록 -->
@@ -85,7 +87,7 @@
               <!-- 가입 버튼 열 -->
               <td>
                 <template v-if="isLoggedIn">
-                  <button @click="toggleProduct(product.fin_prdt_cd)"
+                  <button @click="toggleProduct(product.fin_prdt_cd, product.fin_prdt_nm)"
                     :class="['join-btn', { joined: isJoined(product.fin_prdt_cd) }]">
                     {{ isJoined(product.fin_prdt_cd) ? '가입완료' : '가입하기' }}
                   </button>
@@ -123,9 +125,9 @@ const router = useRouter()
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api/products/deposits/sorted/'
 const products = ref([])
-const selectedTerm = ref('6')
 const selectedType = ref(route.query.type || 'saving')
-const selectedBank = ref('전체')
+const selectedBank = ref(route.query.bank || '전체')
+const selectedTerm = ref(route.query.term || '6')
 const termList = ['6', '12', '24', '36']
 
 
@@ -138,33 +140,45 @@ const joinedIds = computed(() => {
   return accountStore.user?.joined_products?.map(p => p.fin_prdt_cd) || []
 })
 
-const joinProduct = (id) => {
-  accountStore.joinProduct(id)
+const joinProduct = (id, name) => {
+  accountStore.joinProduct(id, name)
 }
 
 const isJoined = (id) => joinedIds.value.includes(id)
 
-const leaveProduct = async (id) => {
-  await accountStore.leaveProduct(id)
+const leaveProduct = async (id, name) => {
+  await accountStore.leaveProduct(id, name)
 }
 
-const toggleProduct = async (id) => {
+const toggleProduct = async (id, name) => {
   if (isJoined(id)) {
-    await accountStore.leaveProduct(id)
+    await accountStore.leaveProduct(id, name)
   } else {
-    await accountStore.joinProduct(id)
+    await accountStore.joinProduct(id, name)  // 상품 이름 같이 전달
   }
 }
 
 const fetchSortedProducts = async (term = selectedTerm.value) => {
   selectedTerm.value = term
+
   try {
     const params = new URLSearchParams({
       type: selectedType.value,
-      term: term
+      term,
     })
+
     const res = await axios.get(`${API_BASE_URL}?${params.toString()}`)
     products.value = res.data ?? []
+
+    // ✅ URL 쿼리 반영
+    router.replace({
+      query: {
+        ...route.query,
+        type: selectedType.value,
+        bank: selectedBank.value,
+        term: term,
+      }
+    })
   } catch (err) {
     console.error('불러오기 실패:', err)
     products.value = []
@@ -173,18 +187,44 @@ const fetchSortedProducts = async (term = selectedTerm.value) => {
 
 const changeType = async (type) => {
   selectedType.value = type
+  selectedBank.value = '전체'  // 탭 바꾸면 은행 필터 초기화
   await fetchSortedProducts(selectedTerm.value)
-  selectedBank.value = '전체'
 
-  // ✅ URL 쿼리 업데이트 (뒤로가기/새로고침 대응)
   router.replace({
     query: {
       ...route.query,
       type,
+      bank: selectedBank.value,
+      term: selectedTerm.value,
     },
   })
 }
 
+const updateQuery = () => {
+  router.replace({
+    query: {
+      ...route.query,
+      type: selectedType.value,
+      bank: selectedBank.value,
+      term: selectedTerm.value,
+    }
+  })
+}
+
+const resetFilters = async () => {
+  selectedType.value = 'saving'
+  selectedBank.value = '전체'
+  selectedTerm.value = '6'
+  await fetchSortedProducts('6')
+
+  router.replace({
+    query: {
+      type: 'saving',
+      bank: '전체',
+      term: '6'
+    }
+  })
+}
 
 onMounted(() => {
   fetchSortedProducts()
@@ -193,7 +233,7 @@ onMounted(() => {
 const getRate = (options, term) => {
   if (!Array.isArray(options)) return '-'
   const opt = options.find(o => o.save_trm === term)
-  return opt?.intr_rate !== null && opt?.intr_rate !== undefined ? `${opt.intr_rate}%` : '-'
+  return opt?.intr_rate2 !== null && opt?.intr_rate2 !== undefined ? `${opt.intr_rate2}%` : '-'
 }
 
 const bankList = computed(() => {
@@ -533,15 +573,33 @@ watch(joinedIds, (val) => {
 }
 
 .product-link {
-  color: #333;             /* 일반 텍스트 색상 */
-  text-decoration: none;   /* 밑줄 제거 */
+  color: #333;
+  /* 일반 텍스트 색상 */
+  text-decoration: none;
+  /* 밑줄 제거 */
   font-weight: 500;
   transition: color 0.2s;
 }
 
 .product-link:hover {
-  color: #007bff;          /* 마우스 호버 시 파란색 강조 */
-  text-decoration: underline; /* 선택적으로 호버시만 밑줄 */
+  color: #007bff;
+  /* 마우스 호버 시 파란색 강조 */
+  text-decoration: underline;
+  /* 선택적으로 호버시만 밑줄 */
 }
 
+.reset-btn {
+  padding: 0.5rem 0.8rem;
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.reset-btn:hover {
+  background-color: #e9ecef;
+}
 </style>

@@ -38,7 +38,7 @@
                             {{ item.fin_prdt_nm }}
                         </router-link>
                         <div class="bank-name">{{ item.bank_name }}</div>
-                        <button class="leave-btn" @click="leaveAndEffect(item.fin_prdt_cd)">X</button>
+                        <button class="leave-btn" @click="leaveAndEffect(item.fin_prdt_cd, item.fin_prdt_nm)">X</button>
                     </li>
                 </ul>
             </div>
@@ -130,10 +130,9 @@ const handleClickOutside = (e) => {
 }
 
 // "X"버튼 클릭 시 -> 계정 스토어 leave 호출
-const leaveAndEffect = async (fin_prdt_cd) => {
+const leaveAndEffect = async (fin_prdt_cd, fin_prdt_nm = '이 상품') => {
     prevCount = accountStore.user?.joined_products?.length || 0
-    await accountStore.leaveProduct(fin_prdt_cd)
-    // fetchUser 이후 watch에서 이펙트/패널 자동 동작 처리
+    await accountStore.leaveProduct(fin_prdt_cd, fin_prdt_nm)
 }
 
 onMounted(() => {
