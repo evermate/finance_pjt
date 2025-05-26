@@ -1,3 +1,4 @@
+<!-- RecommendView.vue -->
 <template>
   <section class="recommend-wrapper">
     <!-- 허용 하드키 용어 -->
@@ -17,11 +18,7 @@
       <div class="action-area">
         <form @submit.prevent="onSubmit" class="input-area">
           <label>자산</label>
-          <input
-            v-model.number="asset"
-            type="number"
-            placeholder="예) 1000000"
-          />
+          <input v-model.number="asset" type="number" min="0" placeholder="예) 1000000" />
           <button :disabled="recommendStore.loading">
             {{ recommendStore.loading ? '로딩 중...' : '일반 추천' }}
           </button>
@@ -32,22 +29,20 @@
       </div>
     </div>
 
-    <!-- AI 볼리시 -->
-    <AiReport v-if="aiRecs.length" :recs="aiRecs" />
+    <!-- AI 추천 결과 영역 -->
+    <AiReport v-if="aiRecs.length && !aiLoading" :recs="aiRecs" />
 
-    <!-- 여발시 -->
-    <p v-if="recommendStore.error" class="error-msg">
-      오류 발생: {{ recommendStore.error.message }}
-    </p>
+    <!-- 🔽 로딩 중일 때 스피너 표시 -->
+    <LoadingSpinner v-else-if="aiLoading" message="AI 추천을 생성 중입니다..." />
+
+    <!-- AI 추천 실패 -->
+    <p v-else-if="aiError" class="error-msg">AI 추천 실패: {{ aiError.message }}</p>
+
 
     <LoadingSpinner v-if="recommendStore.loading" class="mx-auto my-4" />
 
     <div v-if="recommendStore.recommendations.length && !recommendStore.loading">
-      <ProductCard
-        v-for="rec in recommendStore.recommendations"
-        :key="rec.option_id"
-        :product="rec"
-      />
+      <ProductCard v-for="rec in recommendStore.recommendations" :key="rec.option_id" :product="rec" />
     </div>
 
     <p v-else-if="aiError" class="error-msg">AI 추천 실패: {{ aiError.message }}</p>
@@ -99,6 +94,7 @@ async function onAiRecommend() {
   padding: 2rem 1rem;
   font-family: 'Pretendard', sans-serif;
 }
+
 .recommend-card {
   background-color: #f9fbff;
   padding: 2rem;
@@ -107,16 +103,19 @@ async function onAiRecommend() {
   margin-bottom: 2rem;
   text-align: center;
 }
+
 .title {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1a237e;
   margin-bottom: 0.5rem;
 }
+
 .subtitle {
   color: #555;
   margin-bottom: 1.5rem;
 }
+
 .action-area {
   display: flex;
   flex-wrap: wrap;
@@ -124,17 +123,20 @@ async function onAiRecommend() {
   justify-content: center;
   align-items: center;
 }
+
 .input-area {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
+
 .input-area input {
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   width: 160px;
 }
+
 .input-area button,
 .ai-button {
   padding: 0.5rem 1rem;
@@ -146,30 +148,37 @@ async function onAiRecommend() {
   cursor: pointer;
   transition: background-color 0.2s;
 }
+
 .input-area button:hover,
 .ai-button:hover {
   background-color: #1565c0;
 }
+
 .ai-button {
   background-color: #43a047;
 }
+
 .ai-button:hover {
   background-color: #2e7d32;
 }
+
 .error-msg {
   color: #c00;
   text-align: center;
   margin: 1rem 0;
 }
+
 .no-result {
   text-align: center;
   color: #777;
   margin-top: 2rem;
   font-style: italic;
 }
+
 .hero-section {
   position: relative;
-  background-image: url('/image/4.jpg'); /* ← 여기에 넣고 싶은 이미지 경로 */
+  background-image: url('/image/4.jpg');
+  /* ← 여기에 넣고 싶은 이미지 경로 */
   background-size: cover;
   background-position: center;
   height: 300px;
@@ -179,19 +188,22 @@ async function onAiRecommend() {
   text-align: center;
   color: white;
 }
+
 .container {
   color: white;
   font-size: 1.8rem;
   font-weight: bold;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
+
 .hero-section .overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* ✅ 어두운 반투명 오버레이 */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* ✅ 어두운 반투명 오버레이 */
   z-index: 1;
 }
 
@@ -200,7 +212,27 @@ async function onAiRecommend() {
   z-index: 2;
 }
 
-.hero-section h1, .hero-section h2 {
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7); /* ✅ 추가 가독성 */
+.hero-section h1,
+.hero-section h2 {
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  /* ✅ 추가 가독성 */
 }
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 300px; /* 카드 영역 크기 비슷하게 */
+  margin-top: 1rem;
+}
+
+.loading-image {
+  width: 240px;  /* 카드 가로 크기와 비슷하게 */
+  height: auto;
+  margin-top: 1rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
 </style>
