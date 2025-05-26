@@ -87,7 +87,8 @@
               <!-- 가입 버튼 열 -->
               <td>
                 <template v-if="isLoggedIn">
-                  <button @click="toggleProduct(product.fin_prdt_cd, product.fin_prdt_nm)"
+                  <!-- 가입 버튼 -->
+                  <button @click="toggleProduct(product.fin_prdt_cd, product.fin_prdt_nm, product.options)"
                     :class="['join-btn', { joined: isJoined(product.fin_prdt_cd) }]">
                     {{ isJoined(product.fin_prdt_cd) ? '가입완료' : '가입하기' }}
                   </button>
@@ -137,8 +138,9 @@ const isLoggedIn = computed(() => !!accountStore.user)
 
 // 유저가 가입한 상품 목록
 const joinedIds = computed(() => {
-  return accountStore.user?.joined_products?.map(p => p.fin_prdt_cd) || []
+  return accountStore.user?.joined_products?.map(p => p.option.product) || []
 })
+
 
 const joinProduct = (id, name) => {
   accountStore.joinProduct(id, name)
@@ -150,11 +152,20 @@ const leaveProduct = async (id, name) => {
   await accountStore.leaveProduct(id, name)
 }
 
-const toggleProduct = async (id, name) => {
-  if (isJoined(id)) {
-    await accountStore.leaveProduct(id, name)
+const toggleProduct = async (productId, productName, options) => {
+  const term = selectedTerm.value
+  const matchedOption = options.find(opt => opt.save_trm === term)
+  if (!matchedOption) {
+    alert(`${term}개월 옵션이 존재하지 않습니다.`)
+    return
+  }
+
+  const optionId = matchedOption.id
+
+  if (isJoined(productId)) {
+    await accountStore.leaveProduct(productId, optionId, productName)  // ✅ productId + optionId
   } else {
-    await accountStore.joinProduct(id, name)  // 상품 이름 같이 전달
+    await accountStore.joinProduct(productId, optionId, productName)
   }
 }
 

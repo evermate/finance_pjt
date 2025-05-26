@@ -56,13 +56,15 @@ export const useAccountStore = defineStore('account', () => {
   }
 
   // ✅ 4-1) 금융상품 가입 함수
-  const joinProduct = async (productId, productName = '') => {
+  const joinProduct = async (productId, optionId, productName = '') => {
+    console.log('joinProduct called with:', productId, optionId)
     const confirmJoin = window.confirm(`정말 "${productName}" 상품에 가입하시겠습니까?`)
     if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
 
     try {
       await axios.post(`${ACCOUNT_API_URL}/join-product/`, {
-        product_id: productId
+        product_id: productId,
+        option_id: optionId
       }, {
         headers: {
           Authorization: `Token ${token.value}`
@@ -84,12 +86,12 @@ export const useAccountStore = defineStore('account', () => {
 
 
   // ✅ 4-2) 금융상품 탈퇴 함수
-  const leaveProduct = async (productId, productName = '') => {
+  const leaveProduct = async (productId, optionId, productName = '') => {
     const confirmJoin = window.confirm(`정말 "${productName}" 상품 가입을 취소하시겠습니까?`)
     if (!confirmJoin) return  // 사용자가 '아니오' 선택 시 중단
     try {
       await axios.delete(`${ACCOUNT_API_URL}/leave-product/`, {
-        data: { product_id: productId },  // axios에서 DELETE 시 body에 data로 전달해야 함
+        data: { product_id: productId, option_id: optionId },  // axios에서 DELETE 시 body에 data로 전달해야 함
         headers: {
           Authorization: `Token ${token.value}`
         }

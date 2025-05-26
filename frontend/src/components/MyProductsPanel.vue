@@ -26,19 +26,19 @@
                 </div>
 
                 <ul class="panel-list">
-                    <li v-for="item in accountStore.user?.joined_products || []" :key="item.fin_prdt_cd"
+                    <li v-for="item in accountStore.user?.joined_products || []" :key="item.option.id"
                         class="panel-item">
                         <router-link class="product-name" :to="{
                             name: 'product-detail',
                             params: {
                                 type: item.product_type,
-                                id: item.fin_prdt_cd
+                                id: item.option.product
                             }
                         }">
-                            {{ item.fin_prdt_nm }}
+                            {{ item.product_name }}
                         </router-link>
-                        <div class="bank-name">{{ item.bank_name }}</div>
-                        <button class="leave-btn" @click="leaveAndEffect(item.fin_prdt_cd, item.fin_prdt_nm)">X</button>
+                        <div class="bank-name">{{ item.option.save_trm }}개월 / {{ item.option.intr_rate_type_nm }}</div>
+                        <button class="leave-btn" @click="leaveAndEffect(item.option.product, item.option.id, item.product_name)">X</button>
                     </li>
                 </ul>
             </div>
@@ -130,12 +130,13 @@ const handleClickOutside = (e) => {
 }
 
 // "X"버튼 클릭 시 -> 계정 스토어 leave 호출
-const leaveAndEffect = async (fin_prdt_cd, fin_prdt_nm = '이 상품') => {
-    prevCount = accountStore.user?.joined_products?.length || 0
-    await accountStore.leaveProduct(fin_prdt_cd, fin_prdt_nm)
+const leaveAndEffect = async (productId, optionId, productName = '이 상품') => {
+  prevCount = accountStore.user?.joined_products?.length || 0
+  await accountStore.leaveProduct(productId, optionId, productName)
 }
 
 onMounted(() => {
+    
     const saved = localStorage.getItem('fabPosition')
     if (saved) position.value = JSON.parse(saved)
     document.addEventListener('click', handleClickOutside)

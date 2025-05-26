@@ -8,14 +8,14 @@
                     {{ idx + 1 }} :
                     ({{ product.product_type === 'deposit' ? '정기예금' : '정기적금' }})
                     {{ product.bank_name }} -
-                    <router-link :to="{
+                    <router-link v-if="product.option?.product" :to="{
                         name: 'product-detail',
                         params: {
                             type: product.product_type,
-                            id: product.fin_prdt_cd
+                            id: product.option.product
                         }
                     }" class="product-link">
-                        {{ product.fin_prdt_nm }}
+                        {{ product.product_name }}
                     </router-link>
                 </li>
 
@@ -66,22 +66,16 @@ const renderChart = () => {
     chartInstance = new Chart(chart.value, {
         type: 'bar',
         data: {
-            labels: joinedProducts.value.map(p => p.fin_prdt_nm),
+            labels: joinedProducts.value.map(p => p.product_name),
             datasets: [
                 {
                     label: '기본 금리',
-                    data: joinedProducts.value.map(p => {
-                        const rates = p.options?.map(o => o.intr_rate ?? 0)
-                        return rates?.length ? Math.max(...rates) : null
-                    }),
+                    data: joinedProducts.value.map(p => p.option?.intr_rate ?? null),
                     backgroundColor: 'rgba(54, 162, 235, 0.6)', // 파랑
                 },
                 {
                     label: '최고 우대금리',
-                    data: joinedProducts.value.map(p => {
-                        const rates = p.options?.map(o => o.intr_rate2 ?? 0)
-                        return rates?.length ? Math.max(...rates) : null
-                    }),
+                    data: joinedProducts.value.map(p => p.option?.intr_rate2 ?? null),
                     backgroundColor: 'rgba(75, 192, 75, 0.6)', // 초록
                 },
             ]
