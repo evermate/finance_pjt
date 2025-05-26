@@ -21,7 +21,7 @@
                          0 01-.707-1.707l2.121-2.121-1.586-1.586a1 1 0 010-1.414L9.293 2.293z" />
                             </svg>
                         </button>
-                        <button class="close-btn" @click="isOpen = false">✕</button>
+                        <!-- <button class="close-btn" @click="isOpen = false">✕</button> -->
                     </div>
                 </div>
 

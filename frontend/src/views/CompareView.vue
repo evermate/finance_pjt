@@ -36,21 +36,6 @@
           </option>
         </select>
 
-
-
-        <!-- 가입한 상품 목록 -->
-        <!-- 이부분은 MyProductsPanel 버튼이 대체하였습니다 -->
-        <!-- <div class="joined-products" v-if="isLoggedIn && accountStore.user?.joined_products?.length">
-          <h4>가입한 상품</h4>
-          <div class="joined-grid">
-            <div class="joined-card" v-for="item in accountStore.user.joined_products" :key="item.fin_prdt_cd">
-              <div class="card-title">{{ item.fin_prdt_nm }}</div>
-              <div class="card-subtitle">{{ item.bank_name }}</div>
-              <button class="leave-icon" @click="leaveProduct(item.fin_prdt_cd)">✕</button>
-            </div>
-          </div>
-        </div> -->
-
       </div>
       <!-- 필터 섹션 끝 -->
 
@@ -80,7 +65,10 @@
             <tr v-for="product in filteredProducts" :key="product.fin_prdt_cd"
               :class="{ 'joined-row': isJoined(product.fin_prdt_cd) }">
               <td>{{ product.dcls_strt_day }}</td>
-              <td>{{ product.bank_name }}</td>
+              <td>
+                <img :src="getBankIcon(product.bank_name)" alt="은행 로고" class="bank-logo" />
+                {{ product.bank_name }}
+              </td>
 
               <td :title="product.fin_prdt_nm">
                 <router-link class="product-link" :to="`/product/${selectedType}/${product.fin_prdt_cd}`">
@@ -128,6 +116,7 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/accounts'
 import axios from 'axios'
+import { getBankIcon } from '@/utils/bankIconMap'
 
 const route = useRoute()
 const router = useRouter()
@@ -608,7 +597,6 @@ watch(joinedIds, (val) => {
 .join-btn.joined {
   background-color: #adb5bd;
   color: white;
-  cursor: default;
 }
 
 .join-btn:disabled {
@@ -739,6 +727,12 @@ watch(joinedIds, (val) => {
   color: #212529;
   border-color: #adb5bd;
 }
+
+
+.bank-logo {
+  height: 1.6em;               /* 텍스트 높이에 맞춤 */
+  vertical-align: middle;   /* 텍스트 중앙 정렬 */
+  margin-right: 0.4em;       /* 텍스트와 간격 */
 
 .banner-section {
   position: relative;
