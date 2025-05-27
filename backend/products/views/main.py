@@ -91,6 +91,36 @@ class DepositProductViewSet(viewsets.ModelViewSet):
     
         serializer = self.get_serializer(products, many=True)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'], url_path='slider')
+    def slider(self, request):
+        banks_param = request.query_params.get('banks')
+        banks = banks_param.split(',') if banks_param else ["국민은행","하나은행","신한은행","우리은행"]
+        limit = int(request.query_params.get('limit', 2))
+
+        result = []
+        for bank_name in banks:
+            qs = self.queryset.filter(bank__kor_co_nm=bank_name)
+            qs = qs.prefetch_related('options')
+            best_per_product = []
+            for prod in qs:
+                opts = [o for o in prod.options.all() if o.intr_rate is not None]
+                if not opts:
+                    continue
+                best = max(opts, key=lambda o: o.intr_rate)
+                best_per_product.append((prod, best))
+            top_n = sorted(best_per_product, key=lambda x: x[1].intr_rate, reverse=True)[:limit]
+            for prod, opt in top_n:
+                result.append({
+                    'fin_prdt_cd': prod.fin_prdt_cd,
+                    'fin_prdt_nm': prod.fin_prdt_nm,
+                    'bank':        {'kor_co_nm': prod.bank.kor_co_nm},
+                    'option_id':   opt.id,
+                    'save_trm':    int(opt.save_trm),
+                    'intr_rate':   opt.intr_rate,
+                })
+
+        return Response(result)
 
 
 # 📄 금리 옵션 API

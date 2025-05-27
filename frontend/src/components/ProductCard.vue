@@ -52,17 +52,25 @@ const toggleProduct = async (productId, optionId, productName) => {
   align-items: center;
   gap: 1rem;
   padding: 0.75rem 1rem;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   font-size: 0.95rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.prod-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #f9fafb;
+  transform: translateY(-2px);
 }
 
 .prod-logo {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .prod-bank,
@@ -75,17 +83,18 @@ const toggleProduct = async (productId, optionId, productName) => {
 
 .prod-btn {
   flex-shrink: 0;
-  padding: 0.4rem 0.75rem;
+  padding: 0.4rem 0.85rem;
   font-size: 0.85rem;
   border: none;
-  background-color: #0074ff;
+  background-color: #3182f6;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .prod-btn:hover {
-  background-color: #005ecc;
+  background-color: #1a73e8;
 }
 
 .prod-btn.joined {
@@ -94,10 +103,16 @@ const toggleProduct = async (productId, optionId, productName) => {
 
 .prod-btn.joined:hover {
   background-color: #e63946;
+  background-color: #cbd5e1;
+  color: #374151;
+}
+
+.prod-btn.joined:hover {
+  background-color: #94a3b8;
 }
 
 .prod-name-link {
-  color: #333;
+  color: #1e293b;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s;
@@ -110,7 +125,7 @@ const toggleProduct = async (productId, optionId, productName) => {
 }
 
 .prod-name-link:hover {
-  color: #007bff;
+  color: #2563eb;
   text-decoration: underline;
 }
 

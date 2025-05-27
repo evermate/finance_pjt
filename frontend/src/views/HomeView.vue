@@ -4,7 +4,7 @@
     <div class="container">
       <h1>Elevate Your Financial Management</h1>
       <h2>Bank</h2>
-      <RouterLink to="/compare" class="cta">지금 금리 비교 시작</RouterLink>
+      <!-- <RouterLink to="/compare" class="cta">지금 금리 비교 시작</RouterLink> -->
     </div>
   </div>
 
@@ -22,7 +22,7 @@
 
       <RouterLink to="/map" class="card">
         <img src="/image/compass.png" alt="은행 검색" />
-        <p>은행 검색</p>
+        <p>주변 은행 검색</p>
       </RouterLink>
       <!-- 여기 자산 시뮬레이션 카드 추가 -->
       <RouterLink to="/simulation" class="card">
@@ -32,6 +32,7 @@
     </div>
   </div>
 
+  <ProductSlider :limit="2" title="주목할만한 금융상품" />
   <!-- ── 여기에 인포그래픽 섹션 추가 ── -->
   <InfographicSection />
 
@@ -69,7 +70,7 @@
       <div>
         <p class="footer-title">고객센터</p>
         <ul>
-          <li>전화: 9705-7535</li>
+          <li>전화: 1588-1111</li>
           <li>이메일(고객전용): support@bank</li>
           <li>이메일(외부기관전용): middle@bank</li>
           <li>민원 접수</li>
@@ -83,6 +84,7 @@
 
 <script setup>
 // 기존 임포트들...
+import ProductSlider from '@/components/ProductSlider.vue'
 import InfographicSection from '@/components/Eda/InfographicSection.vue'
 </script>
 
@@ -142,9 +144,13 @@ import InfographicSection from '@/components/Eda/InfographicSection.vue'
   justify-content: center;
   gap: 2rem;
   flex-wrap: wrap;
+  height: 200px;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+    justify-content: center;  /* 세로 중앙 정렬 */
+  align-items: center;      /* 가로 중앙 정렬 */
+  gap: 0.75rem;             /* 이미지와 텍스트 사이 간격 */
 }
 
 .card {
@@ -167,6 +173,7 @@ import InfographicSection from '@/components/Eda/InfographicSection.vue'
   width: 60px;
   height: 60px;
   margin-bottom: 0.5rem;
+  /* object-fit: contain; */
 }
 
 .card p {
