@@ -58,7 +58,7 @@ class AIRecommendAPIView(APIView):
             if not bd:
                 return Response({'error': '생년월일 정보가 없습니다.'}, status=400)
             today = date.today()
-            age = today.year - bd.year - ((today.month, today.day) < (bd.month, bd.day))
+            age = today.year - bd.year +1
             gender = getattr(user, 'gender', 'O')
 
             # 3) 기존 추천 10개 가져오기
