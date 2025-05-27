@@ -50,74 +50,82 @@ const onLogIn = async () => {
     toast.error('로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.')
   }
 }
-</script>
 
+</script>
 
 <style scoped>
 .login-container {
   max-width: 360px;
-  margin: 60px auto 30px;
-  padding: 1rem;
+  margin: 60px auto;
+  padding: 2rem;
+  background-color: #f9fbfd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   font-family: sans-serif;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
 }
 
-.form-input {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  background-color: #fafafa;
+label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
 }
 
 input {
-  border: none;
-  outline: none;
   width: 100%;
-  background: transparent;
-  font-size: 14px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  background-color: #fff;
 }
 
 .login-btn {
+  width: 100%;
   background-color: #0074ff;
   color: white;
   border: none;
-  padding: 12px 0;
-  border-radius: 4px;
-  font-weight: bold;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #0066d9;
 }
 
 .register-btn {
   display: block;
+  width: 100%;
   text-align: center;
   border: 1px solid #ccc;
   background-color: white;
   color: #333;
-  padding: 12px 0;
-  border-radius: 4px;
-  text-decoration: none;
+  padding: 0.7rem;
+  border-radius: 6px;
+  font-size: 1rem;
   font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s;
 }
 
-.footer {
-  text-align: center;
-  font-size: 12px;
-  color: #999;
-  margin-top: 1.5rem;
+.register-btn:hover {
+  background-color: #f2f2f2;
 }
 
 .custom-hr {
   border: none;
   height: 1px;
   background-color: #ccc;
-  margin: 20px 0;
+  margin: 1.5rem 0;
 }
 </style>

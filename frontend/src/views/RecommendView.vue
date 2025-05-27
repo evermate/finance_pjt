@@ -13,13 +13,22 @@
       <p class="subtitle">AI 분석으로 나에게 맞는 금융 상품을 찾아드립니다</p>
 
       <div class="action-area">
-        <form @submit.prevent="onSubmit" class="input-area">
-          <label>자산</label>
-          <input v-model.number="asset" type="number" min="0" placeholder="예) 1000000" />
+        <form @submit.prevent="onSubmit" class="input-area slider-mode">
+          <label for="asset">자산</label>
+
+          <!-- 슬라이더 -->
+          <input id="asset" type="range" min="0" max="1000000000" step="1000000" v-model.number="asset"
+            class="slider" />
+
+          <!-- 숫자 입력창 -->
+          <input type="text" :value="formattedAsset" @input="updateAsset($event.target.value)" class="asset-display"
+            placeholder="자산 입력" />
+
           <button :disabled="recommendStore.loading">
             {{ recommendStore.loading ? '로딩 중...' : '일반 추천' }}
           </button>
         </form>
+
 
         <button @click="onAiRecommend" class="ai-button" :disabled="recommendStore.aiLoading">
           {{ recommendStore.aiLoading ? 'AI 추천 중...' : 'AI 분석 추천' }}
@@ -51,7 +60,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRecommendStore } from '@/stores/recommend.js'
 import ProductCard from '@/components/ProductCard.vue'
 import AiReport from '@/components/AiReport.vue'
@@ -63,6 +72,15 @@ const asset = computed({
   get: () => recommendStore.aiAsset,
   set: (val) => (recommendStore.aiAsset = val),
 })
+
+const formattedAsset = computed(() =>
+  asset.value?.toLocaleString('ko-KR') ?? '0'
+)
+
+function updateAsset(val) {
+  const clean = val.replace(/[^\d]/g, '')
+  asset.value = Number(clean)
+}
 
 function onSubmit() {
   recommendStore.fetchByProfile(asset.value, 10)
@@ -139,23 +157,27 @@ function onReset() {
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
 }
 
 /* 일반 추천: 토스 블루 계열 */
 .input-area button {
-  background-color: #3182f6;  /* 연한 하늘색 계열 */
+  background-color: #3182f6;
+  /* 연한 하늘색 계열 */
   color: #fff;
 }
+
 .input-area button:hover {
   background-color: #1a73e8;
 }
 
 /* AI 추천: 토스 그린 계열 */
 .ai-button {
-  background-color: #2dd7a4;  /* 연한 민트 */
+  background-color: #2dd7a4;
+  /* 연한 민트 */
   color: #fff;
 }
+
 .ai-button:hover {
   background-color: #1ac89a;
 }
@@ -166,6 +188,7 @@ function onReset() {
   color: #374151;
   text-align: right;
 }
+
 .reset-button:hover {
   background-color: #e5e7eb;
 }
@@ -173,8 +196,10 @@ function onReset() {
 .product-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.4rem; /* ✅ 간격 줄이기 (기존 1.25rem → 0.75rem) */
+  gap: 0.4rem;
+  /* ✅ 간격 줄이기 (기존 1.25rem → 0.75rem) */
 }
+
 .error-msg {
   color: #c00;
   text-align: center;
@@ -232,5 +257,4 @@ function onReset() {
   margin-bottom: 1.5rem;
   color: #1e293b;
 }
-
 </style>

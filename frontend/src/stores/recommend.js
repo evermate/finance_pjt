@@ -29,7 +29,7 @@ export const useRecommendStore = defineStore('recommend', () => {
         { params: { asset, top_n } }
       )
       recommendations.value = res.data
-      console.log('추천 결과:', recommendations.value)
+      // console.log('추천 결과:', recommendations.value)
     } catch (err) {
       error.value = err
       recommendations.value = []

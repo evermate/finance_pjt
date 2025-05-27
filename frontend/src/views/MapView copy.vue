@@ -65,14 +65,14 @@ onMounted(() => {
         level: 3
       })
       mapReady.value = true
-      console.log('✅ 지도 로딩 완료')
+      // console.log('✅ 지도 로딩 완료')
 
       // ✅ 여기서 위치 가져오기 실행!
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const lat = pos.coords.latitude
           const lng = pos.coords.longitude
-          console.log('📍 내 위치:', lat, lng)
+          // console.log('📍 내 위치:', lat, lng)
 
           const userLocation = new kakao.maps.LatLng(lat, lng)
 
@@ -111,12 +111,12 @@ const clearMarkers = () => {
 
 const searchBanks = () => {
   const query = `${selectedSido.value} ${selectedSigungu.value} ${selectedBank.value}`
-  console.log('🔍 검색 쿼리:', query)
+  // console.log('🔍 검색 쿼리:', query)
 
   axios.get(`${API_BASE_URL}/api/map/search-bank/`, { params: { query } })
     .then(res => {
       const data = res.data.documents
-      console.log('✅ 검색 결과:', data)
+      // console.log('✅ 검색 결과:', data)
 
       clearMarkers()
 
