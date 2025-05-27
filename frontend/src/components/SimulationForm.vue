@@ -133,11 +133,7 @@ const defaultStartAge = computed(() => {
   if (!bd) return 26
   const [y,m,d] = bd.split('-').map(Number)
   const today = new Date()
-  let age = today.getFullYear() - y
-  if (
-    today.getMonth()+1 < m ||
-    (today.getMonth()+1===m && today.getDate()<d)
-  ) age--
+  let age = today.getFullYear() - y + 1
   return age
 })
 
