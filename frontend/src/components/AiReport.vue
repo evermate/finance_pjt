@@ -18,7 +18,7 @@
           <p class="prod-card-desc">{{ rec.reason }}</p>
           <button class="prod-card-btn" :class="{ joined: isJoined(rec.fin_prdt_cd, rec.option_id) }"
             @click="toggleProduct(rec.fin_prdt_cd, rec.option_id, rec.fin_prdt_nm)">
-            {{ isJoined(rec.fin_prdt_cd, rec.option_id) ? '가입 완료' : '상품 가입' }}
+            {{ isJoined(rec.fin_prdt_cd, rec.option_id) ? '가입취소' : '가입하기기' }}
           </button>
 
         </div>

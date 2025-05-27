@@ -32,6 +32,7 @@
     </div>
   </div>
 
+  <ProductSlider :limit="2" title="주목할만한 금융상품" />
   <!-- ── 여기에 인포그래픽 섹션 추가 ── -->
   <InfographicSection />
 
@@ -83,6 +84,7 @@
 
 <script setup>
 // 기존 임포트들...
+import ProductSlider from '@/components/ProductSlider.vue'
 import InfographicSection from '@/components/Eda/InfographicSection.vue'
 </script>
 

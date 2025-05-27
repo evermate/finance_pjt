@@ -9,6 +9,7 @@ from products.views.recommendation import RecommendViewSet
 from .views.ai_recommendation import AIRecommendAPIView
 
 
+
 router = DefaultRouter()
 router.register(r'banks', BankViewSet, basename='bank')
 router.register(r'deposits', DepositProductViewSet, basename='deposit')
