@@ -1,9 +1,20 @@
 <template>
+  <!-- ✅ 상단 배너 추가 -->
+  <div class="banner-section">
+    <img src="/image/search2.jpg" alt="검색" class="banner-img" />
+    <div class="banner-text">
+      <h2>관심 종목 검색</h2>
+      <br>
+      <br>
+      <p>주식/경제 관련 유튜브 영상을 빠르게 찾아보세요</p>
+    </div>
+  </div>
   <section class="search-wrapper">
     <!-- 상단 검색 카드 -->
     <div class="search-card">
-      <h1 style="text-align: center;">📺 관심 종목 검색</h1>
-      <p style="text-align: center;">주식/경제 관련 유튜브 영상을 빠르게 찾아보세요</p>
+      <h1 style="text-align: center;">관심 종목 유튜브 검색</h1>
+      <br>
+      <!-- <p style="text-align: center;">주식/경제 관련 유튜브 영상을 빠르게 찾아보세요</p> -->
 
       <div class="search-bar">
         <input
@@ -313,5 +324,42 @@ function goToPage(page) {
 .video-card-link {
   text-decoration: none;
   color: inherit;
+}
+.banner-section {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 2.5rem;
+}
+
+.banner-img {
+  width: 100%;
+  height: 425%;
+  object-fit: cover;
+  object-position: bottom;
+  filter: brightness(0.6);
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.banner-text p {
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 </style>
