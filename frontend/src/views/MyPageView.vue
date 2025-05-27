@@ -49,8 +49,8 @@
           <label>월 수입대</label>
           <div class="info-box">{{ user.monthly_income_range || '미입력' }}</div>
 
-          <label>주거래 은행</label>
-          <div class="info-box">{{ user.main_bank?.kor_co_nm || '미입력' }}</div>
+          <!-- <label>주거래 은행</label>
+          <div class="info-box">{{ user.main_bank?.kor_co_nm || '미입력' }}</div> -->
         </div>
 
         <!-- <router-link to="/mypage/edit">
