@@ -1,10 +1,13 @@
 <template>
-  <div class="title-card">
-    <h1>🏦 주변 은행 찾기</h1>
-    <p>지역과 은행을 선택하고 가까운 지점을 확인해보세요.</p>
-  </div>
+  <!-- ✅ 상단 배너 추가 -->
+    <div class="banner-section">
+      <img src="/image/map.jpg" alt="시뮬레이션" class="banner-img" />
+      <div class="banner-text">
+        <h2>주변 은행 찾기</h2>
+        <p>지역과 은행을 선택하고 가까운 지점을 확인해보세요</p>
+      </div>
+    </div>
   <div class="map-page">
-    
     <!-- 좌측 필터 + 검색 결과 리스트 -->
     <div class="sidebar">
       <div class="filters">
@@ -457,5 +460,41 @@ function initMap() {
   .map-area {
     height: 500px;
   }
+}
+.banner-section {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.banner-img {
+  width: 100%;
+  height: 250%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.banner-text p {
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 </style>

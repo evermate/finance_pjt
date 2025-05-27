@@ -234,7 +234,7 @@ function toKoreanUnit(x) {
 .banner-section {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 320px;
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 2rem;

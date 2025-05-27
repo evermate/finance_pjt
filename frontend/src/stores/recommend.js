@@ -10,7 +10,7 @@ export const useRecommendStore = defineStore('recommend', () => {
   const error = ref(null)
 
   // ✅ AI 추천 상태 (추가)
-  const aiAsset = ref(0)
+  const aiAsset = ref(null)
   const aiRecs = ref([])
   const aiLoading = ref(false)
   const aiError = ref(null)
