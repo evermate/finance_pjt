@@ -69,7 +69,7 @@ export const useModalStore = defineStore('modal', () => {
     confirmText,
     cancelText,
     icon,
-    mode,            // ✅ export도 해줘야 .vue에서 modal.mode 로 접근 가능
+    mode,
     open,
     confirm,
     cancel,

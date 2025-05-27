@@ -1,6 +1,7 @@
 // router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAccountStore } from '@/stores/accounts'  
+import { useModalStore } from '@/stores/modal'
 
 import HomeView from '@/views/HomeView.vue'
 import SignUpView from '@/views/SignUp.vue'
@@ -19,13 +20,11 @@ import DepositDetailView from '@/views/product/DepositDetailView.vue'
 import VideoDetailView from '@/views/VideoDetailView.vue'
 import SimulationView from '@/views/SimulationView.vue'
 
-
-
 const routes = [
   { path: '/', name: 'home', component: HomeView },
   { path: '/signup', name: 'signup', component: SignUpView },
   { path: '/login', name: 'login', component: LoginView },
-  { path: '/mypage', name: 'mypage', component: MyPageView, meta: { requiresAuth: true , showProductsPanel: true} },
+  { path: '/mypage', name: 'mypage', component: MyPageView, meta: { requiresAuth: true, showProductsPanel: true } },
   { path: '/mypage/edit', name: 'mypage-edit', component: MyPageEdit },
   { path: '/recommend', name: 'recommend', component: RecommendView, meta: { requiresAuth: true } },
   { path: '/map', name: 'map', component: MapView },
@@ -36,16 +35,16 @@ const routes = [
   { path: '/community/write', name: 'community-write', component: CommunityFormView },
   { path: '/community/:id', name: 'community-detail', component: CommunityDetailView },
   { path: '/community/:id/edit', name: 'community-edit', component: CommunityFormView },
-  { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue')},
+  { path: '/profile/:username', name: 'user-profile', component: () => import('@/views/community/UserProfileView.vue') },
   { path: '/search', name: 'search', component: SearchView },
   { path: '/simulation', name: 'simulation', component: SimulationView },
-  { 
-  path: '/product/:type/:id', 
-  name: 'product-detail', 
-  component: DepositDetailView,
-  meta: { showProductsPanel: true },
-  props: true  // URL 파라미터를 props로 전달
-},
+  {
+    path: '/product/:type/:id',
+    name: 'product-detail',
+    component: DepositDetailView,
+    meta: { showProductsPanel: true },
+    props: true
+  },
   { path: '/video/:id', name: 'video-detail', component: VideoDetailView },
 ]
 
@@ -55,15 +54,20 @@ const router = createRouter({
 })
 
 // Navigation Guard
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const store = useAccountStore()
+  const modal = useModalStore()
   if (to.meta.requiresAuth && !store.user) {
-    alert('로그인이 필요합니다.')
+    await modal.alert({
+      title: '로그인이 필요합니다',
+      description: '이 기능은 로그인 후 이용하실 수 있습니다.',
+      icon: '🔒',
+      confirmText: '확인',
+    })
     next({ name: 'login', query: { redirect: to.fullPath } })
   } else {
     next()
   }
 })
-
 
 export default router

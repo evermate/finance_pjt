@@ -43,10 +43,14 @@
 
 <script setup>
 // (기존 스크립트 유지, 단 searchResults 추가)
-import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import { ref, onMounted } from 'vue'
 import { KAKAO_API_KEY, API_BASE_URL, KAKAO_MOBILITY_KEY } from '@/constants'
+import { useModalStore } from '@/stores/modal'
 import data from '@/assets/data'
+
+const modal = useModalStore()
+const alert = (msg) => modal.alert({ title: '알림', description: msg })
 
 const selectedSido = ref('')
 const selectedSigungu = ref('')
