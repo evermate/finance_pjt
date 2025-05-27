@@ -1,0 +1,1276 @@
+[
+  {
+    "model": "community.post",
+    "pk": 1,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 1,
+      "title": "Quidem alias id quo nesciunt.",
+      "content": "Eligendi modi reprehenderit quas consequatur labore molestias. A inventore ea eveniet accusamus porro.",
+      "link": "https://igimgim.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 325
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 2,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 1,
+      "title": "Aut doloremque quod incidunt magni incidunt deserunt.",
+      "content": "Ipsam sint vero mollitia est. Quo facilis doloremque quam fugit quis nemo.",
+      "link": "http://ju.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 366
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 3,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 1,
+      "title": "Tenetur magni rerum.",
+      "content": "Quod natus itaque animi aliquam ab magnam. Exercitationem illum laudantium assumenda molestias ipsum saepe. Autem deserunt voluptatem quas necessitatibus suscipit.",
+      "link": "http://yu.org/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 231
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 4,
+    "fields": {
+      "board_type": "FREE",
+      "author": 2,
+      "title": "Officia odit perspiciatis rem sunt fugit vero.",
+      "content": "Sapiente error laudantium aliquam consectetur tempora. Facilis quisquam ut adipisci earum.",
+      "link": "https://www.ju.com/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 103
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 5,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 2,
+      "title": "Et quibusdam numquam exercitationem.",
+      "content": "Numquam tempora quia commodi voluptatum tenetur.",
+      "link": "https://www.ju.kr/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 309
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 6,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 2,
+      "title": "Pariatur nulla modi et quisquam.",
+      "content": "Ducimus exercitationem nemo doloribus aperiam totam. Eligendi quae error ab necessitatibus.",
+      "link": "https://www.gweonryu.com/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 289
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 7,
+    "fields": {
+      "board_type": "FREE",
+      "author": 3,
+      "title": "Voluptas ducimus reiciendis ut mollitia animi.",
+      "content": "Commodi asperiores perspiciatis velit quaerat nisi esse dignissimos. Nam laudantium neque quibusdam.",
+      "link": "http://www.jusighoesa.org/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 90
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 8,
+    "fields": {
+      "board_type": "FREE",
+      "author": 3,
+      "title": "Iusto numquam nihil eum natus.",
+      "content": "Corrupti blanditiis quibusdam cupiditate. Dolorem in sunt rerum molestiae magnam quasi. Recusandae repellat iure error officia fuga.",
+      "link": "https://ijeon.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 494
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 9,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 3,
+      "title": "Iste repudiandae similique.",
+      "content": "Optio voluptatibus perspiciatis accusamus deserunt quo iste corrupti. Aut reprehenderit quas dicta eos. Nulla repellat molestias porro enim qui saepe corporis.",
+      "link": "https://ju.com/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 4
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 10,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 4,
+      "title": "Nihil asperiores quam magnam assumenda sequi ab.",
+      "content": "Tempore quidem ipsam accusantium natus consequuntur animi accusamus. Commodi perferendis error laboriosam itaque cumque. Nam id deserunt reprehenderit commodi. Autem id doloremque.",
+      "link": "https://www.jusighoesa.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 6
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 11,
+    "fields": {
+      "board_type": "FREE",
+      "author": 4,
+      "title": "Aperiam impedit laudantium eum.",
+      "content": "Temporibus vero ipsam est alias animi ipsam. Libero eaque blanditiis sed eos earum. Nihil itaque adipisci eligendi inventore eveniet. Fugiat eum consequatur asperiores itaque mollitia ratione.",
+      "link": "http://www.yu.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 483
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 12,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 5,
+      "title": "Tempore molestiae assumenda corporis.",
+      "content": "Quam fugit possimus quaerat. Numquam voluptates enim consequatur unde ad.",
+      "link": "http://www.ju.com/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 220
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 13,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 6,
+      "title": "Aut quam consequuntur nam alias cum vel.",
+      "content": "Sint quod molestiae hic nam. Harum ullam tempora dolore adipisci accusantium. Perferendis necessitatibus fugit amet consectetur. Praesentium corrupti corrupti sapiente explicabo dolore.",
+      "link": "https://www.yu.org/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 488
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 14,
+    "fields": {
+      "board_type": "FREE",
+      "author": 6,
+      "title": "Quae explicabo doloribus necessitatibus.",
+      "content": "Voluptatibus sequi magni aliquid maiores explicabo nostrum. Repudiandae nesciunt eligendi ut ad labore ea. Mollitia quod inventore sapiente dolorem.",
+      "link": "http://yuhanhoesa.kr/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 154
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 15,
+    "fields": {
+      "board_type": "FREE",
+      "author": 6,
+      "title": "Ea at quibusdam vitae perspiciatis error.",
+      "content": "Quo ut assumenda culpa nulla. Numquam debitis amet quisquam. Ipsum nihil adipisci iste earum aliquid et.",
+      "link": "https://yuhanhoesa.com/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 101
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 16,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 7,
+      "title": "Similique nobis eum ipsam ab.",
+      "content": "Totam minus blanditiis amet deserunt consequuntur deleniti. Animi explicabo illo ipsa mollitia. Voluptatibus porro esse at et dolore architecto amet. Ipsa fugit excepturi iste.",
+      "link": "https://www.gimgimgang.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 233
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 17,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 7,
+      "title": "Veniam at et.",
+      "content": "Ea rem et officiis deleniti nihil. Quisquam quas repudiandae animi repellat ullam quo. Omnis labore corporis.",
+      "link": "http://coegimheo.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 446
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 18,
+    "fields": {
+      "board_type": "FREE",
+      "author": 7,
+      "title": "Maxime neque placeat hic.",
+      "content": "Distinctio totam optio ratione laborum quae veritatis. Aliquam modi quia cumque at recusandae.",
+      "link": "https://ju.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 14
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 19,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 8,
+      "title": "Tempore illo cum veritatis ea reiciendis.",
+      "content": "Eveniet ducimus rerum consequuntur. Quod eius hic maiores.",
+      "link": "https://www.coegim.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 437
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 20,
+    "fields": {
+      "board_type": "FREE",
+      "author": 8,
+      "title": "Quisquam praesentium dolores aperiam asperiores odit.",
+      "content": "Optio magnam atque asperiores quaerat. Non perferendis odio minima eveniet quae dolorum accusamus.",
+      "link": "http://iseong.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 9
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 21,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 8,
+      "title": "Velit provident laboriosam minima.",
+      "content": "Quas maxime porro ut. Minus ut sed soluta officiis cum.",
+      "link": "http://www.yu.net/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 141
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 22,
+    "fields": {
+      "board_type": "FREE",
+      "author": 9,
+      "title": "At harum possimus quasi fuga doloremque sint.",
+      "content": "Fugit modi error earum veritatis nisi vitae. Neque commodi perferendis dolores vel quisquam iste. Nostrum molestiae praesentium nobis quia explicabo.",
+      "link": "http://coegimi.net/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 147
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 23,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 9,
+      "title": "Laboriosam rerum necessitatibus autem dolores.",
+      "content": "Quam incidunt cupiditate assumenda animi. Recusandae ea a blanditiis.",
+      "link": "https://www.jusighoesa.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 21
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 24,
+    "fields": {
+      "board_type": "FREE",
+      "author": 10,
+      "title": "Animi laborum quaerat rem quisquam aut.",
+      "content": "Ducimus reprehenderit natus suscipit maiores consectetur. Nemo natus nostrum nam earum amet.",
+      "link": "https://www.igang.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 470
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 25,
+    "fields": {
+      "board_type": "FREE",
+      "author": 10,
+      "title": "Ipsum provident optio eum suscipit dolorum dolor.",
+      "content": "Libero a rem. Corrupti sed dolor quaerat fuga.",
+      "link": "https://www.bagcoejang.net/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 92
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 26,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 11,
+      "title": "Quis officiis facilis cupiditate.",
+      "content": "Eaque nam id beatae. Doloribus eos alias ratione sequi dolor.",
+      "link": "https://yuhanhoesa.org/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 375
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 27,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 12,
+      "title": "Debitis iusto voluptas.",
+      "content": "Ut vel itaque ea voluptates consectetur a. Natus distinctio debitis voluptates esse sint.",
+      "link": "https://ju.com/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 25
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 28,
+    "fields": {
+      "board_type": "FREE",
+      "author": 12,
+      "title": "Minima a accusantium quis consequatur doloremque impedit temporibus.",
+      "content": "Molestias odio ullam nostrum quidem enim totam. Eveniet sunt repellendus cum asperiores eligendi. Temporibus incidunt libero similique deserunt unde et.",
+      "link": "http://gangimin.com/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 64
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 29,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 12,
+      "title": "Eaque facere doloremque impedit molestias possimus.",
+      "content": "Assumenda cum dolorem. Mollitia nihil autem totam est officiis itaque.",
+      "link": "http://yuhanhoesa.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 64
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 30,
+    "fields": {
+      "board_type": "FREE",
+      "author": 13,
+      "title": "Mollitia veniam amet sit.",
+      "content": "Optio corrupti architecto enim pariatur. Sunt cum unde explicabo porro voluptatem.",
+      "link": "https://baggiman.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 251
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 31,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 14,
+      "title": "Aut temporibus qui cupiditate.",
+      "content": "Quis nemo odit qui accusantium hic quae.",
+      "link": "http://www.yuhanhoesa.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 263
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 32,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 15,
+      "title": "Sit velit laborum vel voluptate.",
+      "content": "Ratione et deleniti qui ab alias sint possimus. Quam corrupti recusandae tempora ab aspernatur.",
+      "link": "https://iijeong.net/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 306
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 33,
+    "fields": {
+      "board_type": "FREE",
+      "author": 15,
+      "title": "Natus suscipit explicabo dolore.",
+      "content": "Maiores fugit odit unde reiciendis id dolore perspiciatis.",
+      "link": "http://www.yuhanhoesa.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 89
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 34,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 15,
+      "title": "In sapiente autem quos enim.",
+      "content": "Modi ipsam non ex magni dolor quae. Odio quasi consequuntur dolorum quibusdam corrupti.",
+      "link": "https://www.caii.org/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 409
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 35,
+    "fields": {
+      "board_type": "FREE",
+      "author": 16,
+      "title": "Saepe repellendus quidem magnam maxime delectus.",
+      "content": "Placeat ex placeat saepe suscipit adipisci doloribus. Ex illo praesentium corporis architecto expedita.",
+      "link": "http://www.namhanbae.org/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 245
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 36,
+    "fields": {
+      "board_type": "FREE",
+      "author": 17,
+      "title": "Cum voluptatem a debitis quo in.",
+      "content": "Cupiditate natus aperiam nihil placeat ducimus ipsa. Consequuntur aut repellendus ipsa blanditiis dolorem.",
+      "link": "http://iryugim.org/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:36",
+      "views": 427
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 37,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 17,
+      "title": "Tempora explicabo assumenda quis voluptatibus repellendus non animi.",
+      "content": "Debitis temporibus ad repellat distinctio. Aperiam repellat cum illo. Tempore expedita animi quia voluptas eveniet.",
+      "link": "https://jusighoesa.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 339
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 38,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 17,
+      "title": "Voluptate provident enim vitae debitis corporis at.",
+      "content": "Alias necessitatibus sed ut. Ullam et culpa quasi repellat. Distinctio ratione nesciunt numquam.",
+      "link": "https://gimigim.org/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 429
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 39,
+    "fields": {
+      "board_type": "FREE",
+      "author": 18,
+      "title": "Veniam velit voluptatum autem excepturi quidem molestiae.",
+      "content": "Labore mollitia magni nesciunt ullam non. Eum provident magni adipisci molestiae.",
+      "link": "https://www.gangi.org/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 9
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 40,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 18,
+      "title": "Quo temporibus consectetur totam.",
+      "content": "Culpa ea ad corrupti adipisci iste maxime cum. In saepe iusto deleniti vero amet provident. Quos qui cumque incidunt. Officiis perspiciatis ipsum consequuntur sit ducimus mollitia.",
+      "link": "https://gimmingang.org/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 39
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 41,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 19,
+      "title": "Et exercitationem necessitatibus a necessitatibus laboriosam.",
+      "content": "Esse id necessitatibus natus tenetur modi. Aperiam consectetur labore quod. Amet alias repellendus necessitatibus.",
+      "link": "https://www.yuhanhoesa.com/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 257
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 42,
+    "fields": {
+      "board_type": "FREE",
+      "author": 19,
+      "title": "Dolore sapiente molestiae illo quis culpa earum eius.",
+      "content": "Accusantium a et maiores eos aliquam. Sapiente iusto modi hic rem atque.",
+      "link": "http://www.igim.net/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 350
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 43,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 19,
+      "title": "Asperiores dolorem fugiat veniam officiis voluptates.",
+      "content": "Delectus sapiente quo voluptatum architecto quas illo inventore. Minima provident minus. Nam distinctio iusto assumenda sit sapiente minus.",
+      "link": "http://www.gangyun.com/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 293
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 44,
+    "fields": {
+      "board_type": "FREE",
+      "author": 20,
+      "title": "Provident itaque inventore quibusdam saepe temporibus.",
+      "content": "Fugit suscipit inventore. Laudantium dolores voluptatibus. Voluptas assumenda atque eveniet explicabo sunt.",
+      "link": "https://www.jusighoesa.org/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 155
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 45,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 20,
+      "title": "Quia natus ipsa magni voluptates repellendus optio esse.",
+      "content": "Illo labore molestiae accusantium sed explicabo aliquid. Esse temporibus minima velit.",
+      "link": "https://www.jusighoesa.org/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 107
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 46,
+    "fields": {
+      "board_type": "FREE",
+      "author": 20,
+      "title": "Voluptate quos nulla accusantium unde.",
+      "content": "Nemo inventore fuga sequi. Esse libero inventore dignissimos. Inventore unde omnis atque. Atque voluptates soluta magni necessitatibus perspiciatis.",
+      "link": "http://yu.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 109
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 47,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 21,
+      "title": "Eum recusandae veritatis tempora.",
+      "content": "Doloribus deleniti atque reprehenderit autem adipisci. Inventore consequatur accusantium sapiente dignissimos doloribus.",
+      "link": "https://gimjeon.org/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 7
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 48,
+    "fields": {
+      "board_type": "FREE",
+      "author": 22,
+      "title": "Necessitatibus error neque officia animi.",
+      "content": "Distinctio culpa tempora sed sint fugit reiciendis at. Hic sapiente ipsum molestiae voluptate veritatis.",
+      "link": "http://www.gimgim.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 215
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 49,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 22,
+      "title": "Illum explicabo itaque.",
+      "content": "Possimus consectetur architecto perspiciatis quo debitis. Pariatur quidem consequatur dolore sunt. Beatae reprehenderit minima vero debitis molestias.",
+      "link": "https://coebag.kr/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 48
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 50,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 22,
+      "title": "Fuga perferendis cum a magnam.",
+      "content": "Consectetur quam quaerat odio nisi. Sint iste libero deleniti facere minima.",
+      "link": "https://gimo.org/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 302
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 51,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 23,
+      "title": "Itaque odit modi amet cumque aspernatur soluta.",
+      "content": "Dolores sint maxime reiciendis aut illo dolorum. Eveniet dolore facere ab unde quas. Numquam reprehenderit cum delectus rerum fugiat.",
+      "link": "https://yu.net/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 350
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 52,
+    "fields": {
+      "board_type": "FREE",
+      "author": 23,
+      "title": "Laudantium officia ullam est quis facere aliquam itaque.",
+      "content": "Repudiandae magnam sapiente ex aspernatur vero sit laudantium. Delectus placeat animi consequatur repellat corrupti.",
+      "link": "https://ju.net/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 114
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 53,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 24,
+      "title": "Magnam quo nisi ab.",
+      "content": "Voluptates ipsa nostrum vitae. Reiciendis eveniet dolore amet a occaecati placeat.",
+      "link": "https://ibagbag.net/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 210
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 54,
+    "fields": {
+      "board_type": "FREE",
+      "author": 24,
+      "title": "Aliquam nemo laudantium quis iure.",
+      "content": "Maxime inventore quos ab nemo consequuntur minus laborum.",
+      "link": "https://jusighoesa.com/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 32
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 55,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 25,
+      "title": "Vitae veniam iusto at.",
+      "content": "Provident magnam odio tempora suscipit suscipit dolorum. Provident magni repellat eos doloribus veniam occaecati.",
+      "link": "https://coei.com/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 211
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 56,
+    "fields": {
+      "board_type": "FREE",
+      "author": 25,
+      "title": "Iste vitae aliquid sequi perspiciatis incidunt.",
+      "content": "Quia doloremque error quam optio dignissimos fugiat. Nostrum eos aspernatur harum ad. Reiciendis nam officiis distinctio.",
+      "link": "http://www.ju.kr/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 164
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 57,
+    "fields": {
+      "board_type": "FREE",
+      "author": 26,
+      "title": "Officia odio eum illum quisquam.",
+      "content": "Temporibus eos quas consectetur. Ipsum recusandae soluta quae velit fugit. Et officiis modi suscipit temporibus. Fuga nulla nesciunt quam cum earum.",
+      "link": "http://yu.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 74
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 58,
+    "fields": {
+      "board_type": "FREE",
+      "author": 26,
+      "title": "Quam aut quo laboriosam ipsam dicta quasi.",
+      "content": "Corrupti dolor inventore tenetur officia. Voluptate dolores quos hic. Praesentium ea a rem impedit illo qui. Aut qui doloremque veritatis quod.",
+      "link": "https://yuhanhoesa.com/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 303
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 59,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 26,
+      "title": "Beatae blanditiis consectetur quam.",
+      "content": "Placeat laudantium odit non eaque neque. Totam nemo molestiae atque. Laborum sequi veniam distinctio dolore blanditiis.",
+      "link": "http://www.coean.kr/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 371
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 60,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 27,
+      "title": "Magni nobis qui enim qui est.",
+      "content": "Maiores soluta quae quibusdam dolorum. Tempora voluptas perferendis officia voluptate commodi voluptatibus.",
+      "link": "http://www.igweongim.kr/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 399
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 61,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 27,
+      "title": "Sed voluptatibus animi fugit.",
+      "content": "Neque doloribus accusantium libero mollitia. Quo rem nostrum quaerat soluta deserunt magni. Hic repellendus fuga.",
+      "link": "https://www.gangian.kr/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 378
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 62,
+    "fields": {
+      "board_type": "FREE",
+      "author": 28,
+      "title": "Occaecati minima ea dolorem voluptas repellat nam.",
+      "content": "Ex quidem incidunt beatae quia placeat. Inventore nulla distinctio quam atque totam magnam. Sed labore aspernatur eius minus distinctio numquam culpa.",
+      "link": "https://www.ibaggim.net/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 72
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 63,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 28,
+      "title": "Quis odit incidunt porro sit alias.",
+      "content": "Reiciendis optio adipisci architecto dignissimos sint qui. Aliquid eos iure debitis officiis quo.",
+      "link": "http://seongryui.kr/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 177
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 64,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 29,
+      "title": "Quaerat eaque excepturi assumenda.",
+      "content": "Sequi dolore tenetur hic sed sint perferendis. Dolores molestias architecto occaecati molestiae itaque. Iure iure impedit ea provident soluta.",
+      "link": "https://www.gwaggim.com/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 147
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 65,
+    "fields": {
+      "board_type": "FREE",
+      "author": 29,
+      "title": "Tempore eius recusandae magni atque architecto.",
+      "content": "Eligendi facere non facere similique sit reiciendis. Inventore hic nobis doloribus voluptate aperiam. Ipsam dolores distinctio.",
+      "link": "http://janggimi.com/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 326
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 66,
+    "fields": {
+      "board_type": "FREE",
+      "author": 30,
+      "title": "Autem aspernatur laborum fugit corporis eligendi rerum.",
+      "content": "Porro expedita expedita dignissimos eaque atque deleniti. Dolores non delectus explicabo nihil quisquam. Placeat minus cum libero.",
+      "link": "https://www.gimgim.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 83
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 67,
+    "fields": {
+      "board_type": "FREE",
+      "author": 30,
+      "title": "Nemo soluta corporis perferendis quo quisquam laborum.",
+      "content": "Nemo praesentium fugit veniam fugit dolores deleniti quia.",
+      "link": "http://www.ju.com/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 469
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 68,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 30,
+      "title": "Architecto porro libero illo natus distinctio.",
+      "content": "Itaque qui reprehenderit minus incidunt tenetur. Quae quibusdam accusantium perspiciatis commodi ex ipsam aspernatur.",
+      "link": "https://yuhanhoesa.com/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 483
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 69,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 31,
+      "title": "Recusandae veritatis praesentium repudiandae inventore optio.",
+      "content": "Vel temporibus veniam molestias fugit eaque explicabo. Nisi error incidunt reiciendis corporis. Doloremque sunt repellendus ipsum quos reprehenderit omnis.",
+      "link": "http://igimgim.com/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 426
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 70,
+    "fields": {
+      "board_type": "FREE",
+      "author": 31,
+      "title": "Dolores perspiciatis at praesentium non.",
+      "content": "Explicabo voluptates atque esse quam quis. Totam officia similique in cumque.",
+      "link": "http://baegbaghan.org/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 43
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 71,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 31,
+      "title": "Ut eum et est quasi cupiditate.",
+      "content": "Vitae voluptate illum dolorum placeat quo. Sed laboriosam praesentium ipsum. Quam aliquid ex aliquam corrupti dignissimos.",
+      "link": "https://songimgim.net/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 118
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 72,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 32,
+      "title": "Atque beatae amet delectus.",
+      "content": "Placeat vel corrupti officiis. Consequuntur mollitia et ex. Voluptate eaque animi cumque.",
+      "link": "https://www.ju.kr/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 126
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 73,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 33,
+      "title": "Totam provident suscipit amet autem alias qui.",
+      "content": "Officiis ipsa exercitationem sapiente recusandae ducimus corporis dolores. Dolorum sunt blanditiis cum ratione occaecati. Officiis ullam nostrum eos animi.",
+      "link": "http://ju.kr/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 74
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 74,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 33,
+      "title": "Maxime optio vel commodi rem.",
+      "content": "Est laudantium quam aperiam. Neque id sed molestiae perferendis.",
+      "link": "https://jusighoesa.com/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 18
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 75,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 33,
+      "title": "Deserunt possimus earum at explicabo molestias aliquam recusandae.",
+      "content": "Ullam perspiciatis necessitatibus quam ea delectus vero. Beatae est excepturi velit.",
+      "link": "http://www.bagi.com/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 275
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 76,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 34,
+      "title": "Praesentium vel officiis occaecati reprehenderit.",
+      "content": "Nisi eius voluptatem necessitatibus. Facilis eius assumenda officia. Optio maxime placeat architecto quod ratione laborum ipsum.",
+      "link": "https://gimhani.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 214
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 77,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 35,
+      "title": "Molestias corporis voluptatum.",
+      "content": "Aspernatur magnam accusantium nihil. Nam amet officia facere fugit quam iure. Fugit corrupti voluptatem asperiores. Neque amet iusto provident sunt facere.",
+      "link": "http://www.yuhanhoesa.org/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 157
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 78,
+    "fields": {
+      "board_type": "FREE",
+      "author": 35,
+      "title": "Repellat animi id tempora ipsam.",
+      "content": "Ut numquam necessitatibus consequatur suscipit ex quisquam. Tenetur recusandae sunt.",
+      "link": "http://www.jusighoesa.kr/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 220
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 79,
+    "fields": {
+      "board_type": "FREE",
+      "author": 35,
+      "title": "Incidunt error voluptates itaque alias officiis in.",
+      "content": "Minima excepturi nobis ratione incidunt deserunt ipsum.",
+      "link": "http://www.sinigim.org/",
+      "rating": 3,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 197
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 80,
+    "fields": {
+      "board_type": "FREE",
+      "author": 36,
+      "title": "Tenetur odio perspiciatis maxime eius in.",
+      "content": "Natus qui veniam autem consequuntur nostrum consequatur. Rerum numquam ullam autem numquam alias illo aliquam. Iste quisquam sed doloribus eligendi.",
+      "link": "https://www.jusighoesa.net/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 196
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 81,
+    "fields": {
+      "board_type": "FREE",
+      "author": 36,
+      "title": "Animi quasi corrupti at illum quod placeat.",
+      "content": "Ex velit quasi vero exercitationem. Illum culpa eos cupiditate. Ullam consequuntur vel beatae voluptatem eveniet.",
+      "link": "http://www.gweonan.net/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 216
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 82,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 37,
+      "title": "Sequi deserunt omnis quidem reprehenderit labore dolorum.",
+      "content": "Dolor numquam perferendis assumenda quaerat facere. Tempora officia accusamus nobis modi.",
+      "link": "http://www.yuhanhoesa.org/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 259
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 83,
+    "fields": {
+      "board_type": "FREE",
+      "author": 37,
+      "title": "Ipsa suscipit amet.",
+      "content": "Praesentium error tempore doloribus maiores quidem. Eos maiores hic culpa animi.",
+      "link": "http://www.ju.com/",
+      "rating": 5,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 136
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 84,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 38,
+      "title": "Modi architecto eligendi voluptatibus sint distinctio dolor.",
+      "content": "Rerum recusandae aliquid quaerat. Error pariatur iusto officiis. Perspiciatis debitis deleniti reiciendis veniam. Delectus esse laudantium totam accusantium eum qui.",
+      "link": "http://www.baggimi.com/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 203
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 85,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 38,
+      "title": "Totam voluptas soluta recusandae ipsum.",
+      "content": "Eaque amet veniam vitae ex error doloremque. Aliquid odio illum accusamus inventore.",
+      "link": "http://www.hongbag.org/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 192
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 86,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 38,
+      "title": "Facere odit natus.",
+      "content": "Dolore ad nulla totam doloremque autem quaerat. Iure facilis possimus odio.",
+      "link": "http://yuhanhoesa.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 18
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 87,
+    "fields": {
+      "board_type": "NEWS",
+      "author": 39,
+      "title": "Expedita corporis dolor incidunt soluta animi ipsum in.",
+      "content": "Placeat impedit debitis. Illum ea in ipsa. Assumenda assumenda sed quas.",
+      "link": "http://ii.org/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 459
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 88,
+    "fields": {
+      "board_type": "FREE",
+      "author": 39,
+      "title": "Adipisci quas doloremque error natus hic.",
+      "content": "Consequuntur est qui dolorum similique. Voluptatibus eveniet dolor autem modi eaque dicta. Vitae repellat deserunt aspernatur tenetur placeat a similique.",
+      "link": "http://www.gimmungim.kr/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 180
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 89,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 40,
+      "title": "Temporibus excepturi repellat.",
+      "content": "Possimus impedit facere repudiandae iste. Reiciendis quae libero ut assumenda est ipsa.",
+      "link": "https://www.gimsimi.net/",
+      "rating": 2,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 53
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 90,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 40,
+      "title": "Quae veritatis veniam saepe molestiae aut.",
+      "content": "Nesciunt assumenda veniam suscipit in culpa. Sint non voluptatem nesciunt nostrum. Veniam at beatae blanditiis veniam.",
+      "link": "https://ju.kr/",
+      "rating": 4,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 240
+    }
+  },
+  {
+    "model": "community.post",
+    "pk": 91,
+    "fields": {
+      "board_type": "REVIEW",
+      "author": 40,
+      "title": "A porro quaerat saepe inventore voluptatibus dolores.",
+      "content": "Fugit tenetur corrupti. Voluptatem vel iste odio. Quidem harum illo accusantium earum.",
+      "link": "http://www.jusighoesa.org/",
+      "rating": 1,
+      "created_at": "2025-05-27T18:21:37",
+      "views": 141
+    }
+  }
+]
