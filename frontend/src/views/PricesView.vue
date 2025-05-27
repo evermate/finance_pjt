@@ -285,7 +285,7 @@ canvas {
 .banner-section {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 320px;
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -293,7 +293,7 @@ canvas {
 
 .banner-img {
   width: 100%;
-  height: 300%;
+  height: 350%;
   object-fit: cover;
   filter: brightness(0.6);
 }
