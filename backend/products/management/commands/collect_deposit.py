@@ -18,7 +18,7 @@ class Command(BaseCommand):
         ]
 
         for target in targets:
-            self.stdout.write(self.style.NOTICE(f"📥 {target['type']} 수집 시작..."))
+            self.stdout.write(self.style.NOTICE(f"{target['type']} 수집 시작..."))
             page = 1
             max_page = None
 
@@ -34,7 +34,7 @@ class Command(BaseCommand):
                     res.raise_for_status()
                     result = res.json().get('result', {})
                 except (requests.RequestException, ValueError, KeyError) as e:
-                    self.stderr.write(self.style.ERROR(f"❌ 요청 실패 (page {page}): {e}"))
+                    self.stderr.write(self.style.ERROR(f"요청 실패 (page {page}): {e}"))
                     break
 
                 base_list = result.get('baseList', [])
@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     max_page = result.get('max_page_no', 1)
 
                 if not base_list:
-                    self.stdout.write(self.style.WARNING(f"⚠️ 데이터 없음 (page {page})"))
+                    self.stdout.write(self.style.WARNING(f"데이터 없음 (page {page})"))
                     break
 
                 # 상품 저장
@@ -90,14 +90,14 @@ class Command(BaseCommand):
                             }
                         )
                     except DepositProduct.DoesNotExist:
-                        self.stderr.write(self.style.ERROR(f"❌ 옵션 저장 실패: 상품 코드 {option['fin_prdt_cd']} 없음"))
+                        self.stderr.write(self.style.ERROR(f"옵션 저장 실패: 상품 코드 {option['fin_prdt_cd']} 없음"))
 
                 if page >= max_page:
                     break
 
                 page += 1
-                time.sleep(0.3)  # 서버 보호용 지연
+                time.sleep(0.3)  
 
-            self.stdout.write(self.style.SUCCESS(f"✅ {target['type']} 수집 완료"))
+            self.stdout.write(self.style.SUCCESS(f"{target['type']} 수집 완료"))
 
-        self.stdout.write(self.style.SUCCESS('🎉 전체 수집 작업 완료'))
+        self.stdout.write(self.style.SUCCESS('전체 수집 작업 완료'))

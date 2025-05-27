@@ -111,10 +111,10 @@ const searchBanks = () => {
           let origin = null
           if (manualLatLng.value) {
             origin = manualLatLng.value
-            console.log('📍 수동 위치 사용:', origin.getLat(), origin.getLng())
+            // console.log('📍 수동 위치 사용:', origin.getLat(), origin.getLng())
           } else if (currentLocationMarker) {
             origin = currentLocationMarker.getPosition()
-            console.log('📍 현재 위치 사용:', origin.getLat(), origin.getLng())
+            // console.log('📍 현재 위치 사용:', origin.getLat(), origin.getLng())
           } else {
             alert('출발 위치가 설정되지 않았습니다.')
             return
@@ -276,7 +276,7 @@ onMounted(() => {
         // ✅ 성공 콜백
         pos => {
           const userLoc = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude)
-          console.log('✅ 현재 위치 가져오기 성공:', pos.coords)
+          // console.log('✅ 현재 위치 가져오기 성공:', pos.coords)
 
           kakaoMap.setCenter(userLoc)
 

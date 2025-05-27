@@ -10,7 +10,6 @@
     </div>
     <!-- 헤더 및 탭 -->
     <div class="compare-header">
-      <h1>{{ selectedType === 'saving' ? '정기적금' : '정기예금' }} 비교</h1>
       <div class="type-tabs">
         <button :class="{ active: selectedType === 'saving' }" @click="changeType('saving')">정기적금</button>
         <button :class="{ active: selectedType === 'deposit' }" @click="changeType('deposit')">정기예금</button>
@@ -260,9 +259,9 @@ const getCellClass = (idx) => {
 
 const selectedTermIndex = computed(() => termList.indexOf(selectedTerm.value))
 
-watch(joinedIds, (val) => {
-  console.log('🔄 joinedIds 변경됨:', val)
-})
+// watch(joinedIds, (val) => {
+//   console.log('🔄 joinedIds 변경됨:', val)
+// })
 </script>
 
 <style scoped>

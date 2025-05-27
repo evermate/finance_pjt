@@ -69,7 +69,7 @@ export const useAccountStore = defineStore('account', () => {
     try {
       const res = await axios.get(`${ACCOUNT_API_URL}/mypage/`)
       user.value = res.data
-      console.log('유저 정보:', user.value)
+      // console.log('유저 정보:', user.value)
     } catch (err) {
       console.error('유저 정보 불러오기 실패:', err)
     }
@@ -77,7 +77,7 @@ export const useAccountStore = defineStore('account', () => {
 
   // ✅ 4-1) 금융상품 가입 함수
   const joinProduct = async (productId, optionId, productName = '') => {
-    console.log('joinProduct called with:', productId, optionId)
+    // console.log('joinProduct called with:', productId, optionId)
 
     const confirmJoin = await modal.open({
       title: `${productName}`,

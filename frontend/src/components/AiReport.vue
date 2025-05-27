@@ -12,7 +12,11 @@
 
           <!-- 내용 영역 -->
           <div class="info-area">
-            <h3 class="product-name">{{ rec.fin_prdt_nm }}</h3>
+            <h3 class="product-name">
+              <RouterLink :to="`/product/saving/${rec.fin_prdt_cd}`" class="product-link">
+                {{ rec.fin_prdt_nm }}
+              </RouterLink>
+            </h3>
             <p class="product-submeta">{{ rec.bank.kor_co_nm }} · {{ rec.save_trm }}개월 · {{ rec.intr_rate }}%</p>
             <p class="product-desc">{{ rec.reason }}</p>
           </div>
@@ -92,8 +96,10 @@ const toggleProduct = async (productId, optionId, productName) => {
 .product-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 버튼을 아래로 밀기 */
-  height: 100%; /* outer-card 전체를 채움 */
+  justify-content: space-between;
+  /* 버튼을 아래로 밀기 */
+  height: 100%;
+  /* outer-card 전체를 채움 */
   background-color: #ffffff;
   border-radius: 1rem;
   overflow: hidden;
@@ -118,7 +124,8 @@ const toggleProduct = async (productId, optionId, productName) => {
 
 .info-area {
   padding: 1rem;
-  flex-grow: 1; /* 설명 영역이 남는 공간을 채우도록 */
+  flex-grow: 1;
+  /* 설명 영역이 남는 공간을 채우도록 */
 }
 
 .product-name {
@@ -165,4 +172,14 @@ const toggleProduct = async (productId, optionId, productName) => {
 .join-btn.joined:hover {
   background-color: #e63946;
 }
+
+.product-link {
+  color: #111827;
+  text-decoration: none;
+}
+.product-link:hover {
+  color: #2b66f6;
+  text-decoration: underline;
+}
+
 </style>

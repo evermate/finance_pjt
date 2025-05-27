@@ -256,4 +256,89 @@ watch(password2, (val) => {
   font-size: 0.85rem;
   margin-top: 0.2rem;
 }
+
+/* 추가 및 수정된 스타일 */
+.signup-container {
+  max-width: 360px;
+  margin: 60px auto;
+  padding: 2rem;
+  background-color: #f9fbfd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.signup-container h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.signup-form .form-group {
+  margin-bottom: 1.2rem;
+}
+
+.signup-form label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+}
+
+.input-with-button button {
+  padding: 0.55rem 0.9rem;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.input-with-button button:hover {
+  background-color: #ddd;
+}
+
+.birth-selects {
+  display: flex;
+  gap: 0.5rem;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #0066d9;
+}
+
+.error-msg {
+  color: #e03131;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.valid-msg {
+  color: #2f9e44;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
 </style>
