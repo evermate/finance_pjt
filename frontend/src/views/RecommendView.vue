@@ -21,8 +21,7 @@
             class="slider" />
 
           <!-- 숫자 입력창 -->
-          <input type="text" :value="formattedAsset" @input="updateAsset($event.target.value)" class="asset-display"
-            placeholder="자산 입력" />
+          <input type="text" v-model="inputAsset" @input="onInputAsset" class="asset-display" placeholder="자산 입력" />
 
           <button :disabled="recommendStore.loading">
             {{ recommendStore.loading ? '로딩 중...' : '일반 추천' }}
@@ -60,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRecommendStore } from '@/stores/recommend.js'
 import ProductCard from '@/components/ProductCard.vue'
 import AiReport from '@/components/AiReport.vue'
@@ -93,6 +92,28 @@ function onAiRecommend() {
 function onReset() {
   recommendStore.resetAll()
 }
+
+const inputAsset = ref(
+  typeof asset.value === 'number' && !isNaN(asset.value)
+    ? asset.value.toLocaleString('ko-KR')
+    : ''
+)
+
+function onInputAsset(e) {
+  const raw = e.target.value.replace(/[^\d]/g, '')
+  asset.value = Number(raw)
+  inputAsset.value = raw ? Number(raw).toLocaleString('ko-KR') : ''
+}
+
+watch(asset, (newVal) => {
+  if (!document.activeElement.classList.contains('asset-display')) {
+    inputAsset.value =
+      typeof newVal === 'number' && !isNaN(newVal)
+        ? newVal.toLocaleString('ko-KR')
+        : ''
+  }
+})
+
 </script>
 
 <style scoped>
