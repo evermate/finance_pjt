@@ -147,6 +147,7 @@ const toggleProduct = async (productId, optionId, productName) => {
   margin-top: 1rem;
   padding: 0.5rem;
   background-color: #2b66f6;
+}
   
 .product-desc {
   font-size: 0.9rem;
@@ -177,6 +178,7 @@ const toggleProduct = async (productId, optionId, productName) => {
 
 .prod-card-btn.joined:hover {
   background-color: #e63946;
+}
 
 .product-button:hover {
   background-color: #1d4ed8;
