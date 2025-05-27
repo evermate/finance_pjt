@@ -75,11 +75,14 @@ import { useAccountStore } from '@/stores/accounts'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { API_BASE_URL } from '@/constants'
+import { useToast } from 'vue-toastification'
 
 const router = useRouter()
 const userStore = useAccountStore()
 const token = userStore.token
 const user = userStore.user
+const toast = useToast()
+
 
 const form = ref({
   phone_number: '',
@@ -129,21 +132,15 @@ const submitForm = async () => {
         'Content-Type': 'multipart/form-data',
       }
     })
-    alert('수정 완료!')
+    await userStore.fetchUser()
 
-    await userStore.fetchUser()  // ✅ 최신 정보 fetch
-
-    // ✅ 새로고침 유도 방식 1: 강제 리로드
-    router.push({ name: 'mypage' }).then(() => router.go())
-
-    // ✅ 대안 방식 2: 쿼리 파라미터로 재마운트 유도 (선택사항)
-    // router.push({ name: 'mypage', query: { updated: Date.now() } })
-
+    router.push({ name: 'mypage', query: { updated: 'true' } })
   } catch (err) {
     console.error('수정 실패:', err)
-    alert('수정 실패')
+    toast.error('❌ 수정에 실패했습니다. 다시 시도해주세요.', { timeout: 2500 })
   }
 }
+
 </script>
 
 

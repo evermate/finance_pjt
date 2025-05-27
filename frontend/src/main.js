@@ -12,10 +12,22 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css'
 import LoadingSpinner from '@/components/LoadingSpinner.vue'
 
 const app = createApp(App)
 const pinia = createPinia()
+
+app.use(Toast, {
+  // 옵션 예시
+  position: 'top-right',
+  timeout: 2000,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  hideProgressBar: false,
+})
 
 app.component('LoadingSpinner', LoadingSpinner)
 pinia.use(piniaPluginPersistedstate)

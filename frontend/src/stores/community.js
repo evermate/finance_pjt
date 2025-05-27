@@ -10,50 +10,7 @@ export const useCommunityStore = defineStore('community', () => {
    * @param {string} boardType - 'REVIEW' | 'NEWS' | 'FREE'
    * @returns {Promise<Array>} 게시글 배열
    */
-  // async function fetchPosts(boardType) {
-  //   try {
-  //     const response = await axios.get(`/api/community/posts/?board_type=${boardType}`)
-  //     return response.data  // 배열 형태 기대
-  //   } catch (error) {
-  //     console.error('게시글 조회 실패:', error)
-  //     return []
-  //   }
-  // }
 
-//   async function fetchPosts(boardType) {
-//   try {
-//     const url = boardType === 'ALL'
-//       ? '/api/community/posts/'  // 전체 게시글 요청
-//       : `/api/community/posts/?board_type=${boardType}`
-
-//     const response = await axios.get(url)
-//     return response.data
-//   } catch (error) {
-//     console.error('게시글 조회 실패:', error)
-//     return []
-//   }
-// }
-  // async function fetchPosts(boardType = 'ALL', page = 1) {
-  //   try {
-  //     const params = { page }
-  //     if (boardType !== 'ALL') {
-  //       params.board_type = boardType
-  //     }
-
-  //     const response = await axios.get('/api/community/posts/', { params })
-  //     posts.value = response.data.results
-  //     pageInfo.value = {
-  //       count: response.data.count,
-  //       next: response.data.next,
-  //       previous: response.data.previous
-  //     }
-  //     return posts.value
-  //   } catch (error) {
-  //     console.error('게시글 조회 실패:', error)
-  //     posts.value = []
-  //     pageInfo.value = {}
-  //   }
-  // }
 
   async function fetchPosts(boardType = 'ALL', page = 1, search = '') {
     try {

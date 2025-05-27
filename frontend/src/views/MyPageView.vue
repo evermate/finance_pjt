@@ -85,6 +85,9 @@ import { useAccountStore } from '@/stores/accounts'
 import { API_BASE_URL } from '@/constants'
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useToast } from 'vue-toastification'
+
+
 import axios from 'axios'
 import JoinedProductsChart from '@/components/JoinedProductsChart.vue'
 
@@ -92,6 +95,8 @@ const route = useRoute()
 const router = useRouter()
 const userStore = useAccountStore()
 const user = userStore.user
+
+const toast = useToast()
 
 const showModal = ref(false)
 const password = ref('')
@@ -108,7 +113,13 @@ onMounted(() => {
   if (!user) {
     userStore.fetchUser()
   }
+
+  if (route.query.updated === 'true') {
+    toast.success('✅ 회원정보가 수정되었습니다.', { timeout: 2000 })
+    router.replace({ query: {} })  // 쿼리 지워서 깔끔하게
+  }
 })
+
 
 const verifyPassword = async () => {
   try {

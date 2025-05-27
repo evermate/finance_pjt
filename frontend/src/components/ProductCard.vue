@@ -12,7 +12,7 @@
     <!-- 가입 버튼 -->
     <button class="prod-btn" :class="{ joined: isJoined(product.fin_prdt_cd, product.option_id) }"
       @click="toggleProduct(product.fin_prdt_cd, product.option_id, product.fin_prdt_nm)">
-      {{ isJoined(product.fin_prdt_cd, product.option_id) ? '가입 완료' : '상품 가입' }}
+      {{ isJoined(product.fin_prdt_cd, product.option_id) ? '가입 취소' : '상품 가입' }}
     </button>
   </div>
 </template>
@@ -98,6 +98,11 @@ const toggleProduct = async (productId, optionId, productName) => {
 }
 
 .prod-btn.joined {
+  background-color: #ff0000b6;
+}
+
+.prod-btn.joined:hover {
+  background-color: #e63946;
   background-color: #cbd5e1;
   color: #374151;
 }

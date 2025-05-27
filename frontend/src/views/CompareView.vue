@@ -86,7 +86,7 @@
                   <!-- 가입 버튼 -->
                   <button @click="toggleProduct(product.fin_prdt_cd, product.fin_prdt_nm, product.options)"
                     :class="['join-btn', { joined: isJoined(product.fin_prdt_cd) }]">
-                    {{ isJoined(product.fin_prdt_cd) ? '가입취소' : '가입하기' }}
+                    {{ isJoined(product.fin_prdt_cd) ? '가입 취소' : '상품 가입' }}
                   </button>
 
                 </template>
@@ -595,7 +595,12 @@ watch(joinedIds, (val) => {
 }
 
 .join-btn.joined {
-  background-color: #ff0000b6;
+  background-color: #ff5858;
+  color: white;
+}
+
+.join-btn.joined:hover {
+  background-color: #e63946;
   color: white;
 }
 
@@ -644,7 +649,7 @@ watch(joinedIds, (val) => {
 .leave-btn {
   background: none;
   border: none;
-  color: #dc3545;
+  color: #000000;
   font-size: 1rem;
   cursor: pointer;
 }
