@@ -1,31 +1,31 @@
 <!-- AiReport.vue -->
 <template>
-  <section class="ai-report mb-8">
-    <h2 class="text-xl font-semibold mb-4">AI 분석 리포트</h2>
-    <div class="video-grid">
-      <div v-for="rec in recs" :key="rec.fin_prdt_cd" class="prod-card">
-        <!-- ✅ 은행 이름 기반 로고 적용 -->
-        <img :src="getBankLongIcon(rec.bank.kor_co_nm)" alt="은행 로고" class="prod-card-thumb" />
+  <section class="ai-report">
+    <h2 class="report-title">AI 분석 리포트</h2>
+    <div class="report-grid">
+      <div v-for="rec in recs" :key="rec.fin_prdt_cd" class="outer-card">
+        <div class="product-card">
+          <!-- 상단 로고 -->
+          <div class="logo-area">
+            <img :src="getBankLongIcon(rec.bank.kor_co_nm)" alt="은행 로고" class="bank-logo" />
+          </div>
 
-        <div class="prod-card-body">
-          <router-link class="prod-name-link" :to="`/product/${rec.product_type || 'saving'}/${rec.fin_prdt_cd}`"
-            :title="rec.fin_prdt_nm">
-            {{ rec.fin_prdt_nm }}
-          </router-link>
-          <p class="prod-card-meta">은행: {{ rec.bank.kor_co_nm }}</p>
-          <p class="prod-card-meta">기간: {{ rec.save_trm }}개월</p>
-          <p class="prod-card-meta">금리: {{ rec.intr_rate }}%</p>
-          <p class="prod-card-desc">{{ rec.reason }}</p>
-          <button class="prod-card-btn" :class="{ joined: isJoined(rec.fin_prdt_cd, rec.option_id) }"
+          <!-- 내용 영역 -->
+          <div class="info-area">
+            <h3 class="product-name">{{ rec.fin_prdt_nm }}</h3>
+            <p class="product-submeta">{{ rec.bank.kor_co_nm }} · {{ rec.save_trm }}개월 · {{ rec.intr_rate }}%</p>
+            <p class="product-desc">{{ rec.reason }}</p>
+          </div>
+
+          <!-- 버튼 -->
+          <button class="join-btn" :class="{ joined: isJoined(rec.fin_prdt_cd, rec.option_id) }"
             @click="toggleProduct(rec.fin_prdt_cd, rec.option_id, rec.fin_prdt_nm)">
             {{ isJoined(rec.fin_prdt_cd, rec.option_id) ? '가입 취소' : '상품 가입' }}
           </button>
-
         </div>
       </div>
     </div>
   </section>
-  <br>
 </template>
 
 <script setup>
@@ -42,10 +42,6 @@ const props = defineProps({
 
 const accountStore = useAccountStore()
 
-const joinedIds = computed(() =>
-  accountStore.user?.joined_products?.map(p => p.fin_prdt_cd) || []
-)
-
 const isJoined = (productId, optionId) => {
   return accountStore.user?.joined_products?.some(p =>
     p.option?.product === productId && p.option?.id === optionId
@@ -61,109 +57,108 @@ const toggleProduct = async (productId, optionId, productName) => {
 }
 </script>
 
-
 <style scoped>
-/* SearchView.vue 의 .video-grid 재사용 */
-.video-grid {
+.ai-report {
+  padding: 2rem 1rem;
+}
+
+.report-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+}
+
+.report-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
-/* 동영상 카드 스타일을 금융상품 카드로 재정의 */
-.prod-card {
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+.outer-card {
+  background-color: #ffffff;
   padding: 1rem;
-  /* ✅ 여백을 카드 자체에 줍니다 */
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
 }
 
-/* 카드 상단 썸네일(로고) */
-.prod-card-thumb {
-  width: 100%;
-  height: auto;
-  aspect-ratio: auto;
-  object-fit: contain;
-  background: #f7f7f7;
-  display: block;
-  margin: 0 auto;
-  max-height: 120px;
+.outer-card:hover {
+  transform: translateY(-3px);
 }
 
-/* 카드 내용 */
-.prod-card-body {
+.product-card {
   display: flex;
   flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.logo-area {
+  background-color: #f3f4f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.bank-logo {
+  max-height: 60px;
+  max-width: 80%;
+  object-fit: contain;
+}
+
+.info-area {
+  padding: 1rem;
   flex: 1;
 }
 
-.prod-card-title {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  line-height: 1.2;
-}
-
-.prod-card-meta {
-  font-size: 0.85rem;
-  color: #555;
+.product-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
   margin-bottom: 0.25rem;
 }
 
-.prod-card-desc {
-  font-size: 0.9rem;
-  color: #666;
-  margin-top: 0.75rem;
-  flex: 1;
-  overflow: hidden;
+.product-submeta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
 }
 
-.prod-card-btn {
-  margin-top: 1rem;
-  padding: 0.5rem;
-  background-color: #2b66f6;
+.product-desc {
+  font-size: 0.9rem;
+  color: #374151;
+  line-height: 1.45;
+}
+
+.join-btn {
+  margin: 1rem;
+  margin-top: auto;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.prod-card-btn:hover {
-  background-color: #1f4fd4;
+.join-btn:hover {
+  background-color: #1d4ed8;
 }
 
-.prod-card-btn.joined {
-  background-color: #ff5858;
+.join-btn.joined {
+  background-color: #9ca3af;
 }
 
-.prod-card-btn.joined:hover {
-  background-color: #e63946;
+.join-btn.joined:hover {
+  background-color: #6b7280;
 }
-
-.prod-name-link {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  color: #333;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: inline-block;
-  max-width: 100%;
-  cursor: pointer;
-}
-
-.prod-name-link:hover {
-  color: #007bff;
-  text-decoration: underline;
-}
-
 </style>
