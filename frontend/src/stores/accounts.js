@@ -4,10 +4,13 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
 import { useModalStore } from '@/stores/modal'
+import { useToast } from 'vue-toastification'
+
 
 export const useAccountStore = defineStore('account', () => {
   const ACCOUNT_API_URL = '/accounts'
   const router = useRouter()
+  const toast = useToast()
 
   // 1) state
   const token = ref(localStorage.getItem('authToken') || null)
@@ -21,13 +24,28 @@ export const useAccountStore = defineStore('account', () => {
       await axios.post(`${ACCOUNT_API_URL}/signup/`, {
         username, birth_date, email, password1, password2
       })
-      alert('회원가입이 완료되었습니다!')
+
+      toast.success('회원가입이 완료되었습니다!', { timeout: 2000 })
+
       router.push({ name: 'login' })
     } catch (err) {
       console.error('회원가입 실패:', err)
-      alert('회원가입에 실패했습니다. 다시 시도해주세요.')
+
+      const errors = err.response?.data
+      let message = '회원가입에 실패했습니다. 다시 시도해주세요.'
+
+      if (errors) {
+        const firstKey = Object.keys(errors)[0]
+        const firstMsg = Array.isArray(errors[firstKey]) ? errors[firstKey][0] : errors[firstKey]
+        message = firstMsg || message
+      }
+
+      toast.error(`❌ ${message}`, { timeout: 2500 })
+
+      throw err  // ✅ 프론트에서 catch 가능하게!
     }
   }
+
 
   // 3) 로그인
   const logIn = async ({ username, password }) => {
@@ -42,7 +60,7 @@ export const useAccountStore = defineStore('account', () => {
       router.push({ name: 'home' })
     } catch (err) {
       console.error('로그인 실패:', err)
-      alert('로그인에 실패했습니다. 아이디/비밀번호를 확인하세요.')
+      throw err  // ✅ 꼭 있어야 LoginView.vue에서 catch 가능
     }
   }
 
@@ -150,8 +168,15 @@ export const useAccountStore = defineStore('account', () => {
     user.value = null
     localStorage.removeItem('authToken')
     delete axios.defaults.headers.common['Authorization']
+
+    toast.info('로그아웃 되었습니다.', {
+      timeout: 2000,
+      position: 'top-right'
+    })
+
     router.push({ name: 'login' })
   }
+
 
   // 6) 토큰 동기화용 watch
   watch(token, (newVal) => {

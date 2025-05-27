@@ -66,10 +66,13 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCommunityStore } from '@/stores/community'
+import { useToast } from 'vue-toastification'
 
 const router = useRouter()
 const route = useRoute()
 const store = useCommunityStore()
+
+const toast = useToast()
 
 const isEdit = route.name === 'community-edit'
 const postId = route.params.id
@@ -106,12 +109,13 @@ async function submitPost() {
     : await store.createPost(form.value)
 
   if (success) {
-    alert(isEdit ? '수정 완료!' : '작성 완료!')
+    toast.success(isEdit ? '게시글이 수정되었습니다.' : '게시글이 작성되었습니다.', { timeout: 2000 })
     router.push('/community')
   } else {
-    alert('요청 실패. 다시 시도해 주세요.')
+    toast.error('요청에 실패했습니다. 다시 시도해주세요.', { timeout: 2500 })
   }
 }
+
 </script>
 
 <style scoped>

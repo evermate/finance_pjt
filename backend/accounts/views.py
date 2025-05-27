@@ -84,4 +84,11 @@ def leave_product(request):
         return Response({'message': '가입 취소 완료'})
     except JoinedProduct.DoesNotExist:
         return Response({'error': '가입 내역이 없습니다.'}, status=404)
+    
+    
+@api_view(['GET'])
+def check_username(request):
+    username = request.query_params.get('username', '')
+    exists = User.objects.filter(username=username).exists()
+    return Response({'available': not exists})
 

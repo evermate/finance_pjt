@@ -4,30 +4,20 @@
     <form @submit.prevent="onLogIn" class="login-form">
       <label for="username">아이디</label>
       <div class="form-input">
-        <input
-          id="username"
-          v-model="username"
-          placeholder="아이디"
-          type="text"
-        />
+        <input id="username" v-model="username" placeholder="아이디" type="text" />
       </div>
 
       <label for="password">비밀번호</label>
       <div class="form-input">
-        <input
-          id="password"
-          v-model="password"
-          placeholder="비밀번호"
-          type="password"
-        />
+        <input id="password" v-model="password" placeholder="비밀번호" type="password" />
       </div>
 
       <button type="submit" class="login-btn">로그인</button>
-   </form>
-      <hr class="custom-hr" />
-      <RouterLink to="/signup" class="register-btn">회원가입</RouterLink>
- 
-    
+    </form>
+    <hr class="custom-hr" />
+    <RouterLink to="/signup" class="register-btn">회원가입</RouterLink>
+
+
   </div>
 </template>
 
@@ -35,6 +25,8 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAccountStore } from '@/stores/accounts.js'
+import { useToast } from 'vue-toastification'
+
 
 const route = useRoute()
 const router = useRouter()
@@ -43,6 +35,8 @@ const accountStore = useAccountStore()
 const username = ref('')
 const password = ref('')
 
+const toast = useToast()
+
 const onLogIn = async () => {
   const userInfo = {
     username: username.value,
@@ -50,9 +44,10 @@ const onLogIn = async () => {
   }
   try {
     await accountStore.logIn(userInfo)
+    toast.success(`${username.value}님, 환영합니다!`)
     router.push(route.query.redirect || '/')
   } catch (err) {
-    alert('로그인 실패')
+    toast.error('로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.')
   }
 }
 </script>

@@ -68,6 +68,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { useCommunityStore } from '@/stores/community'
 import { useCommentStore } from '@/stores/comment'
 import { useAccountStore } from '@/stores/accounts'
+import { useModalStore } from '@/stores/modal'
+import { useToast } from 'vue-toastification'
 import CommentItem from '@/components/CommentItem.vue'
 import axios from 'axios'
 
@@ -76,6 +78,9 @@ const router = useRouter()
 const store = useCommunityStore()
 const accountStore = useAccountStore()
 const commentStore = useCommentStore()
+
+const modal = useModalStore()
+const toast = useToast()
 
 const post = ref(null)
 const newComment = ref('')
@@ -96,15 +101,25 @@ function formatDate(dateStr) {
 }
 
 async function deletePost() {
-  if (!confirm('정말 삭제하시겠습니까?')) return
+  const confirm = await modal.open({
+    title: '게시글 삭제',
+    description: '정말 이 게시글을 삭제하시겠습니까?',
+    confirmText: '삭제',
+    cancelText: '취소',
+  })
+
+  if (!confirm) return
+
   const success = await store.deletePost(post.value.id)
+
   if (success) {
-    alert('삭제되었습니다.')
+    toast.success('✅ 게시글이 삭제되었습니다.', { timeout: 2000 })
     router.push('/community')
   } else {
-    alert('삭제 실패')
+    toast.error('❌ 삭제에 실패했습니다. 다시 시도해주세요.', { timeout: 2500 })
   }
 }
+
 
 async function toggleLike() {
   const token = localStorage.getItem('authToken')
