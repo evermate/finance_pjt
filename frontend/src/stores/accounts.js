@@ -132,6 +132,7 @@ export const useAccountStore = defineStore('account', () => {
       description: '이 상품의 가입을 취소할까요?',
       confirmText: '가입 취소',
       cancelText: '계속 유지',
+      mode: 'danger',  // 위험한 작업이므로 모드 변경
     })
     if (!confirmLeave) return  // 사용자가 취소한 경우
 

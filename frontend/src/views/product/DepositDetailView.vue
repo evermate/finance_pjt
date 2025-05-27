@@ -28,6 +28,7 @@
             <th>기본금리</th>
             <th>최고금리</th>
             <th>이율유형</th>
+            <th>가입</th>
           </tr>
         </thead>
         <tbody>
@@ -36,16 +37,19 @@
             <td>{{ opt.intr_rate }}%</td>
             <td>{{ opt.intr_rate2 }}%</td>
             <td>{{ opt.intr_rate_type_nm }}</td>
+            <td>
+              <div class="action-wrapper">
+                <button class="join-btn" :class="{ joined: isOptionJoined(opt.id) }" @click="toggleOptionJoin(opt.id)"
+                  :disabled="!isLoggedIn">
+                  {{ isOptionJoined(opt.id) ? '가입 취소' : '상품 가입' }}
+                </button>
+                <span v-if="!isLoggedIn" class="tooltip">로그인이 필요합니다</span>
+              </div>
+            </td>
           </tr>
         </tbody>
-      </table>
-    </div>
 
-    <div class="action-wrapper">
-      <button class="join-btn" :class="{ joined: isJoined }" @click="toggleJoin" :disabled="!isLoggedIn">
-        {{ isJoined ? '가입완료' : '가입하기' }}
-      </button>
-      <span v-if="!isLoggedIn" class="tooltip">로그인이 필요합니다</span>
+      </table>
     </div>
   </div>
 
@@ -62,6 +66,7 @@ import axios from 'axios'
 
 const route = useRoute()
 const router = useRouter()
+
 const product = ref(null)
 const accountStore = useAccountStore()
 const isLoggedIn = computed(() => !!accountStore.user)
@@ -70,9 +75,12 @@ const typeLabel = computed(() =>
   route.params.type === 'saving' ? '정기적금' : '정기예금'
 )
 
-const isJoined = computed(() =>
-  accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === route.params.id)
-)
+const isOptionJoined = (optionId) =>
+  accountStore.user?.joined_products?.some(p => p.option?.id === optionId)
+
+// const isJoined = computed(() =>
+//   accountStore.user?.joined_products?.some(p => p.fin_prdt_cd === route.params.id)
+// )
 
 const summaryMap = computed(() => ({
   '공시 제출월': product.value?.dcls_strt_day,
@@ -102,24 +110,19 @@ watch(() => route.params.id, (newId, oldId) => {
   if (newId !== oldId) fetchProductDetail(newId)
 })
 
-const toggleJoin = async () => {
+const toggleOptionJoin = async (optionId) => {
   if (!isLoggedIn.value) {
     alert('로그인이 필요합니다.')
     return
   }
 
-  try {
-    const optionId = product.value.options[0]?.id
-    const productId = route.params.id
-    const productName = product.value.fin_prdt_nm
+  const productId = route.params.id
+  const productName = product.value.fin_prdt_nm
 
-    if (isJoined.value) {
-      await accountStore.leaveProduct(productId, optionId, productName)
-    } else {
-      await accountStore.joinProduct(productId, optionId, productName)
-    }
-  } catch (err) {
-    console.error('가입 상태 변경 실패:', err)
+  if (isOptionJoined(optionId)) {
+    await accountStore.leaveProduct(productId, optionId, productName)
+  } else {
+    await accountStore.joinProduct(productId, optionId, productName)
   }
 }
 
@@ -248,15 +251,19 @@ const formatValue = (label, value) => {
 }
 
 .join-btn {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
   background-color: #2b66f6;
   color: white;
-  padding: 0.6rem 1.4rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
+  margin: 0 auto;
+  /* ✅ 혹시 좌우 마진이 있으면 제거 */
+  display: inline-block;
+  /* ✅ 정확한 너비 적용 */
 }
 
 .join-btn:hover {
@@ -264,12 +271,22 @@ const formatValue = (label, value) => {
 }
 
 .join-btn.joined {
-  background-color: #adb5bd;
-  cursor: default;
+  background-color: #ff5858;
+}
+
+.join-btn.joined:hover {
+  background-color: #e63946;
 }
 
 .tooltip {
   font-size: 0.8rem;
   color: #868e96;
+}
+
+.options-table th:last-child,
+.options-table td:last-child {
+  width: 120px;
+  text-align: center;
+  vertical-align: middle;
 }
 </style>

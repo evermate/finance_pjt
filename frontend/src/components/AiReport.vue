@@ -18,7 +18,7 @@
           <p class="prod-card-desc">{{ rec.reason }}</p>
           <button class="prod-card-btn" :class="{ joined: isJoined(rec.fin_prdt_cd, rec.option_id) }"
             @click="toggleProduct(rec.fin_prdt_cd, rec.option_id, rec.fin_prdt_nm)">
-            {{ isJoined(rec.fin_prdt_cd, rec.option_id) ? '가입 완료' : '상품 가입' }}
+            {{ isJoined(rec.fin_prdt_cd, rec.option_id) ? '가입 취소' : '상품 가입' }}
           </button>
 
         </div>
@@ -125,7 +125,7 @@ const toggleProduct = async (productId, optionId, productName) => {
 .prod-card-btn {
   margin-top: 1rem;
   padding: 0.5rem;
-  background-color: #0074ff;
+  background-color: #2b66f6;
   color: white;
   border: none;
   border-radius: 4px;
@@ -135,15 +135,15 @@ const toggleProduct = async (productId, optionId, productName) => {
 }
 
 .prod-card-btn:hover {
-  background-color: #005ecc;
+  background-color: #1f4fd4;
 }
 
 .prod-card-btn.joined {
-  background-color: #aaa;
+  background-color: #ff5858;
 }
 
 .prod-card-btn.joined:hover {
-  background-color: #797979;
+  background-color: #e63946;
 }
 
 .prod-name-link {
