@@ -53,7 +53,7 @@ const cancel = () => modal.cancel()
   width: 90%;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
-  animation: fadeInZoom 0.3s ease-out;
+  /* animation: fadeInZoom 0.1s ease-out; */
   transition: transform 0.3s ease, opacity 0.3s ease;
   will-change: transform, opacity;
 }

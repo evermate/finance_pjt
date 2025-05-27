@@ -86,7 +86,7 @@
                   <!-- 가입 버튼 -->
                   <button @click="toggleProduct(product.fin_prdt_cd, product.fin_prdt_nm, product.options)"
                     :class="['join-btn', { joined: isJoined(product.fin_prdt_cd) }]">
-                    {{ isJoined(product.fin_prdt_cd) ? '가입완료' : '가입하기' }}
+                    {{ isJoined(product.fin_prdt_cd) ? '가입취소' : '가입하기' }}
                   </button>
 
                 </template>
@@ -595,7 +595,7 @@ watch(joinedIds, (val) => {
 }
 
 .join-btn.joined {
-  background-color: #adb5bd;
+  background-color: #ff0000b6;
   color: white;
 }
 
@@ -730,9 +730,9 @@ watch(joinedIds, (val) => {
 
 
 .bank-logo {
-  height: 1.6em;               /* 텍스트 높이에 맞춤 */
-  vertical-align: middle;   /* 텍스트 중앙 정렬 */
-  margin-right: 0.4em;       /* 텍스트와 간격 */
+  height: 1.6em;
+  vertical-align: middle;
+  margin-right: 0.4em;
   }
 
 .banner-section {
