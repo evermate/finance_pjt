@@ -1,9 +1,13 @@
 <template>
   <div class="page">
-    <section class="hero">
-      <h2>현물 상품 시세 비교</h2>
-      <p>금과 은의 시세를 날짜별로 확인해보세요.</p>
-    </section>
+    <!-- ✅ 상단 배너 추가 -->
+    <div class="banner-section">
+      <img src="/image/goldbar.jpg" alt="골드바" class="banner-img" />
+      <div class="banner-text">
+        <h2>현물 상품 시세 비교</h2>
+        <p>금과 은의 시세를 날짜별로 확인해보세요</p>
+      </div>
+    </div>
 
     <!-- 요약 시세 정보 -->
     <section class="summary">
@@ -277,5 +281,41 @@ canvas {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+.banner-section {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.banner-img {
+  width: 100%;
+  height: 300%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.banner-text p {
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 </style>
