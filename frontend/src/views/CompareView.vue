@@ -738,7 +738,7 @@ watch(joinedIds, (val) => {
 .banner-section {
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 400px;
   overflow: hidden;
   border-radius: 12px;
   margin-bottom: 2rem;

@@ -200,53 +200,98 @@ onMounted(() => {
 
 <style scoped>
 .simulation-form {
-  /* 전체 최대 폭 & 가운데 정렬 */
-  max-width: 800px;
+  max-width: 640px;
+  width: 100%;
   margin: 0 auto;
-  /* 2컬럼 그리드, 최소 260px, 자동 맞춤 */
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .simulation-form {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
+  gap: 0.4rem;
 }
+
 .form-group label {
-  margin-bottom: 0.25rem;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #374151;
 }
+
 .form-group input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
   font-size: 1rem;
+  background-color: #f9fafb;
+  color: #111827;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: right;
+}
+
+.form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  background-color: #ffffff;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .form-actions {
-  /* 마지막 버튼 블록은 2컬럼 모두 차지 */
   grid-column: 1 / -1;
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 .form-actions button {
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   background-color: #3b82f6;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
+
+.form-actions button:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+}
+
 .form-actions button:disabled {
   background-color: #93c5fd;
   cursor: not-allowed;
-}
-.form-actions button:not(:disabled):hover {
-  background-color: #2563eb;
+  box-shadow: none;
 }
 </style>
