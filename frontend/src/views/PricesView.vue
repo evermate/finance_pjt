@@ -9,16 +9,16 @@
       </div>
     </div>
 
-    <!-- 요약 시세 정보 -->
-    <section class="summary">
-      <h3>{{ selectedMetal === 'gold' ? '금' : '은' }} 가격</h3>
-      <p class="price">
-        ${{ latestPrice }}
-        <span class="date">({{ latestDate }})</span>
-      </p>
-    </section>
-
     <div class="container">
+      <section class="summary-card">
+        <div class="summary-box">
+          <h3>{{ selectedMetal === 'gold' ? '금' : '은' }} 가격</h3>
+          <p class="price" :style="priceColorStyle">
+            ${{ latestPrice }}
+            <span class="date">({{ latestDate }})</span>
+          </p>
+        </div>
+      </section>
       <div class="controls">
         <button @click="selectMetal('gold')" :class="['gold', { active: selectedMetal === 'gold' }]">금</button>
         <button @click="selectMetal('silver')" :class="['silver', { active: selectedMetal === 'silver' }]">은</button>
@@ -63,6 +63,10 @@ const today = new Date().toISOString().split('T')[0]
 const endDate = ref(today)
 const chartKey= ref(0)
 let chartInstance = null
+
+const priceColorStyle = computed(() => ({
+  color: selectedMetal.value === 'gold' ? '#DAA520' : '#6e7d88'
+}))
 
 const getFilteredData = (data) => {
   const start = new Date(startDate.value)
@@ -172,21 +176,33 @@ onMounted(drawChart)
   font-weight: 300;
 }
 
-.summary {
+.summary-card {
+  max-width: 960px;
+  margin: 2rem auto 1rem;
+  padding: 1.5rem 2rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   text-align: center;
-  margin-top: 2rem;
 }
 
-.summary .price {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2f80ed;
+.summary-box h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  color: #111;
 }
 
-.summary .date {
+.summary-box .price {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.summary-box .date {
   font-size: 1rem;
-  color: #666;
-  margin-left: 0.5rem;
+  font-weight: 400;
+  color: #888888;
+  margin-left: 0.6rem;
 }
 
 .container {

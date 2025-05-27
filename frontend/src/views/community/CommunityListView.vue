@@ -1,19 +1,22 @@
 <template>
-  <div class="community-container">
-    <h1 class="page-title">커뮤니티</h1>
-
-    <!-- 게시방 종류 선택 -->
-    <div class="board-type-select">
-      <button @click="selectBoard('ALL')" :class="{ active: boardType === 'ALL' }">전체</button>
-      <button @click="selectBoard('REVIEW')" :class="{ active: boardType === 'REVIEW' }">금융상품 리뷰</button>
-      <button @click="selectBoard('NEWS')" :class="{ active: boardType === 'NEWS' }">금융 뉴스</button>
-      <button @click="selectBoard('FREE')" :class="{ active: boardType === 'FREE' }">자유 게시판</button>
+  <!-- ✅ 상단 배너 추가 -->
+    <div class="banner-section">
+      <img src="/image/community.jpg" alt="커뮤니티" class="banner-img" />
+      <div class="banner-text">
+        <h2>함께 나누는 금융 이야기</h2>
+        <p>금융상품 리뷰부터 자유로운 정보 공유까지, 다양한 이야기를 들려주세요</p>
+      </div>
     </div>
-
-    <!-- 게시판 종류 선택 위에 검색창 추가 -->
-    <div class="search-bar">
-      <input v-model="searchKeyword" @keyup.enter="handleSearch" placeholder="검색어를 입력하세요" />
-      <button @click="handleSearch">검색</button>
+  <div class="community-container">
+    <!-- 상단: 게시판 필터 + 글쓰기 버튼 -->
+    <div class="top-actions">
+      <div class="board-type-select">
+        <button @click="selectBoard('ALL')" :class="{ active: boardType === 'ALL' }">전체</button>
+        <button @click="selectBoard('REVIEW')" :class="{ active: boardType === 'REVIEW' }">금융상품 리뷰</button>
+        <button @click="selectBoard('NEWS')" :class="{ active: boardType === 'NEWS' }">금융 뉴스</button>
+        <button @click="selectBoard('FREE')" :class="{ active: boardType === 'FREE' }">자유 게시판</button>
+      </div>
+      <button class="write-btn" @click="goWrite">글쓰기</button>
     </div>
 
     <!-- 게시글 목록 -->
@@ -46,27 +49,28 @@
       <p>게시글이 없습니다.</p>
     </div>
 
-    <!-- 페이지네이션 -->
-    <div class="pagination" v-if="totalPages > 1">
-      <button :disabled="page === 1" @click="changePage(1)">처음</button>
-      <button :disabled="page === 1" @click="changePage(page - 1)">이전</button>
+    <!-- 하단: 페이지네이션 + 검색창 -->
+    <div class="pagination-wrapper">
+      <div class="pagination" v-if="totalPages > 1">
+        <button :disabled="page === 1" @click="changePage(1)">처음</button>
+        <button :disabled="page === 1" @click="changePage(page - 1)">이전</button>
+        <button
+          v-for="p in totalPages"
+          :key="p"
+          @click="changePage(p)"
+          :class="{ active: p === page }"
+        >
+          {{ p }}
+        </button>
+        <button :disabled="page === totalPages" @click="changePage(page + 1)">다음</button>
+        <button :disabled="page === totalPages" @click="changePage(totalPages)">마지막</button>
+      </div>
 
-      <button
-        v-for="p in totalPages"
-        :key="p"
-        @click="changePage(p)"
-        :class="{ active: p === page }"
-      >
-        {{ p }}
-      </button>
-
-      <button :disabled="page === totalPages" @click="changePage(page + 1)">다음</button>
-      <button :disabled="page === totalPages" @click="changePage(totalPages)">마지막</button>
-    </div>
-
-    <!-- 글쓰기 -->
-    <div class="write-action">
-      <button class="write-btn" @click="goWrite">글쓰기</button>
+      <!-- 🔍 검색창 아래에 크게 -->
+      <div class="search-bar">
+        <input v-model="searchKeyword" @keyup.enter="handleSearch" placeholder="검색어를 입력하세요" />
+        <button @click="handleSearch">검색</button>
+      </div>
     </div>
   </div>
 </template>
@@ -85,7 +89,6 @@ const totalPages = ref(1)
 const totalCount = ref(0)
 const boardType = ref('ALL')
 const pageSize = 10
-
 const searchKeyword = ref('')
 
 async function handleSearch() {
@@ -120,12 +123,7 @@ function goDetail(id) {
 
 function formatDate(dateStr) {
   const date = new Date(dateStr)
-  return date.toLocaleDateString('ko-KR', {
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
+  return `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
 function changePage(p) {
@@ -133,17 +131,11 @@ function changePage(p) {
   fetchPosts()
 }
 
-// async function fetchPosts() {
-//   const { posts: fetchedPosts, count } = await store.fetchPosts(boardType.value, page.value)
-//   posts.value = fetchedPosts
-//   totalCount.value = count
-//   totalPages.value = Math.ceil(count / pageSize)
-// }
 async function fetchPosts() {
   const { posts: fetchedPosts, count } = await store.fetchPosts(
     boardType.value,
     page.value,
-    searchKeyword.value  // ✅ 검색 키워드 추가 전달
+    searchKeyword.value
   )
   posts.value = fetchedPosts
   totalCount.value = count
@@ -154,7 +146,6 @@ onMounted(() => {
   fetchPosts()
 })
 </script>
-
 
 <style scoped>
 .community-container {
@@ -171,10 +162,19 @@ onMounted(() => {
   margin-bottom: 1rem;
 }
 
+.top-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .board-type-select {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .board-type-select button {
@@ -185,18 +185,31 @@ onMounted(() => {
   cursor: pointer;
   font-size: 0.95rem;
   color: #333;
+  transition: all 0.2s ease-in-out;
 }
 
 .board-type-select button.active {
-  background: #1976d2;
+  background: linear-gradient(90deg, #1976d2, #42a5f5);
   color: white;
-  border-color: #1976d2;
-  font-weight: 600;
+  font-weight: 700;
+  border-color: transparent;
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
 }
 
-.board-type-select button:hover {
-  background: #e0ecff;
-  color: #000;
+.write-btn {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+}
+
+.write-btn:hover {
+  background-color: #125ea6;
 }
 
 .post-table-wrapper {
@@ -233,60 +246,47 @@ onMounted(() => {
 }
 
 .badge {
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.7rem;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: bold;
+  color: white;
 }
 
 .badge.review {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: #1976d2;
 }
-
 .badge.news {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: #2e7d32;
 }
-
 .badge.free {
-  background-color: #fff3e0;
-  color: #ef6c00;
-}
-
-.write-action {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-}
-
-.write-btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.95rem;
-  border-radius: 8px;
-  background-color: #ff7043;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.write-btn:hover {
-  background-color: #f4511e;
+  background-color: #ef6c00;
 }
 
 .empty {
   text-align: center;
   padding: 2rem;
   color: #999;
+  font-size: 1rem;
+  background-color: #f9fafc;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  margin-top: 1rem;
 }
 
-/* ✅ 페이지네이션 스타일 */
-.pagination {
+.pagination-wrapper {
   margin-top: 2rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.pagination {
+  display: flex;
   gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .pagination button {
@@ -297,7 +297,7 @@ onMounted(() => {
   border-radius: 6px;
   cursor: pointer;
   font-size: 0.9rem;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease-in-out;
 }
 
 .pagination button.active {
@@ -311,22 +311,19 @@ onMounted(() => {
   cursor: not-allowed;
 }
 
-/* 🔍 검색바 스타일 */
 .search-bar {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
 .search-bar input {
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  font-size: 0.95rem;
-  width: 220px;
-  transition: border-color 0.2s ease;
+  font-size: 1rem;
+  width: 300px;
 }
 
 .search-bar input:focus {
@@ -336,18 +333,69 @@ onMounted(() => {
 }
 
 .search-bar button {
-  background-color: #e0e0e0;
-  color: #333;
+  background-color: #455a64;  /* 차콜 그레이 */
+  color: white;
   border: none;
-  border-radius: 6px;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease-in-out;
 }
 
 .search-bar button:hover {
-  background-color: #d5d5d5;
+  background-color: #263238;
 }
 
+@media (max-width: 768px) {
+  .search-bar, .top-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-bar input {
+    width: 100%;
+  }
+
+  .pagination {
+    justify-content: center;
+  }
+}
+.banner-section {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 2.5rem;
+}
+
+.banner-img {
+  width: 100%;
+  height: 180%;
+  object-fit: cover;
+  object-position: bottom;
+  filter: brightness(0.6);
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.banner-text h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.banner-text p {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
 </style>

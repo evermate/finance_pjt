@@ -219,51 +219,22 @@ textarea:focus {
   background-color: #e0e0e0;
 }
 
-/* 작성 버튼 스타일 (기존 오렌지) */
 .submit-btn {
   background-color: #ffca28;
   color: #111;
   border: none;
+  padding: 0.8rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .submit-btn:hover {
   background-color: #ffc107;
 }
 
-/* 2번 후보
-.submit-btn {
-  background-color: #4a90e2;
-  color: white;
-}
-
-.submit-btn:hover {
-  background-color: #357ab8;
-}
-
-.cancel-btn {
-  background-color: #e3e9f1;
-  color: #333;
-}
-.cancel-btn:hover {
-  background-color: #d1dbe9;
-} */
-
-/* 3번 후보
-.submit-btn {
-  background-color: #ff6f3c;
-  color: white;
-}
-.submit-btn:hover {
-  background-color: #e65c27;
-}
-.cancel-btn {
-  background-color: #f3f4f6;
-  color: #333;
-}
-.cancel-btn:hover {
-  background-color: #e0e0e0;
-}
- */
 @media (prefers-color-scheme: dark) {
   .form-container {
     background-color: #1e1e1e;
