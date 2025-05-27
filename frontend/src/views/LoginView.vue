@@ -11,11 +11,13 @@
       <div class="form-input">
         <input id="password" v-model="password" placeholder="비밀번호" type="password" />
       </div>
+      <br>
 
       <button type="submit" class="login-btn">로그인</button>
+      <hr class="custom-hr" />
+      <RouterLink to="/signup" class="register-btn">회원가입</RouterLink>
     </form>
-    <hr class="custom-hr" />
-    <RouterLink to="/signup" class="register-btn">회원가입</RouterLink>
+    
 
 
   </div>
@@ -128,4 +130,41 @@ input {
   background-color: #ccc;
   margin: 1.5rem 0;
 }
+
+.login-btn,
+.register-btn {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  box-sizing: border-box; /* ✅ 중요: 내부 패딩 포함 너비 계산 */
+}
+
+.login-btn {
+  background-color: #0074ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #0066d9;
+}
+
+.register-btn {
+  display: block;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.register-btn:hover {
+  background-color: #f2f2f2;
+}
+
 </style>
