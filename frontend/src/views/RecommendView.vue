@@ -37,6 +37,7 @@
     <LoadingSpinner v-else-if="recommendStore.aiLoading" message="AI 추천을 생성 중입니다..." />
     <p v-else-if="recommendStore.aiError" class="error-msg">AI 추천 실패: {{ recommendStore.aiError.message }}</p>
 
+    <h5 class="report-title">&nbsp; 자산 기반 상품 추천</h5>
     <!-- 일반 추천 결과 -->
     <LoadingSpinner v-if="recommendStore.loading" class="mx-auto my-4" />
     <div v-if="recommendStore.recommendations.length && !recommendStore.loading" class="product-list">
@@ -224,4 +225,12 @@ function onReset() {
   font-size: 1.1rem;
   font-weight: 400;
 }
+
+.report-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #1e293b;
+}
+
 </style>

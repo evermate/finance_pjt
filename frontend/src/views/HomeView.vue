@@ -39,7 +39,7 @@
   <footer class="footer">
     <div class="container footer-grid">
       <div class="footer-left">
-        <img src="/image/image.png" alt="Logo" class="footer-logo" />
+        <img src="/image/MainLogo.png" alt="Logo" class="footer-logo" />
         <div class="sns-icons">
           <img src="/image/Icon.png" alt="icon" />
           <img src="/image/Logo Instagram.png" alt="instagram" />

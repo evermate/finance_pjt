@@ -37,6 +37,6 @@ const route = useRoute()
 }
 
 .main-container {
-  padding: 2rem;
+  padding: 2.5rem;
 }
 </style>

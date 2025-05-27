@@ -103,12 +103,7 @@ const toggleProduct = async (productId, optionId, productName) => {
 
 .prod-btn.joined:hover {
   background-color: #e63946;
-  background-color: #cbd5e1;
-  color: #374151;
-}
-
-.prod-btn.joined:hover {
-  background-color: #94a3b8;
+  color: white;
 }
 
 .prod-name-link {

@@ -1,40 +1,40 @@
 <template>
-  <header class="nav">
-    <div class="container nav-content">
+  <header class="nav fixed-nav">
+    <div class="nav-wrapper">
+      <!-- 좌측: 로고 -->
       <div class="nav-left">
-        <RouterLink :to="{ name: 'home' }">
-          <img src="/image/image.png" alt="Bank Logo" class="logo" />
+        <RouterLink :to="{ name: 'home' }" class="logo-link">
+          <img src="/image/MainLogo.png" alt="Bank Logo" class="logo" />
         </RouterLink>
       </div>
+
+      <!-- 중앙: 메뉴 -->
+      <nav class="nav-center">
+        <RouterLink :to="{ name: 'compare' }" class="menu-btn">예·적금 금리 비교</RouterLink>
+        <RouterLink :to="{ name: 'recommend' }" class="menu-btn">금융 상품 추천</RouterLink>
+        <RouterLink :to="{ name: 'simulation' }" class="menu-btn">은퇴 자산 시뮬레이션</RouterLink>
+        <RouterLink :to="{ name: 'map' }" class="menu-btn">은행 검색</RouterLink>
+        <RouterLink :to="{ name: 'prices' }" class="menu-btn">현물 상품 비교</RouterLink>
+        <RouterLink :to="{ name: 'search' }" class="menu-btn">관심 종목 검색</RouterLink>
+        <RouterLink :to="{ name: 'community' }" class="menu-btn">게시판</RouterLink>
+      </nav>
+
+      <!-- 우측: 유저 영역 -->
       <div class="nav-right">
-        <nav class="nav-menu">
-          <!-- <RouterLink :to="{ name: 'compare' }" class="menu-btn">예적금 금리 비교</RouterLink> -->
-          <!-- 예·적금 금리 비교 -->
-         <RouterLink :to="{ name: 'compare' }" class="menu-btn">예·적금 금리 비교</RouterLink>
-         <!-- 현물 상품(금/은) 시세 비교 -->
-         <RouterLink :to="{ name: 'prices' }" class="menu-btn">현물 상품 비교</RouterLink>
-         <!-- 금융 상품 추천 -->
-         <RouterLink :to="{ name: 'recommend' }" class="menu-btn">금융 상품 추천</RouterLink>
-         <!-- 은행 검색 (카카오 API) -->
-         <RouterLink :to="{ name: 'map' }" class="menu-btn">은행 검색</RouterLink>
-         <!-- 관심 종목(유튜브) 검색 -->
-         <RouterLink :to="{ name: 'search' }" class="menu-btn">관심 종목 검색</RouterLink>
-         <!-- 은퇴 자산 시뮬레이션 -->
-         <RouterLink :to="{ name: 'simulation' }" class="menu-btn">은퇴 자산 시뮬레이션</RouterLink>
-         <!-- 커뮤니티 -->
-         <RouterLink :to="{ name: 'community' }" class="menu-btn">게시판</RouterLink>
-        </nav>
         <RouterLink v-if="!user" :to="{ name: 'login' }" class="btn-outline">로그인</RouterLink>
         <RouterLink v-if="!user" :to="{ name: 'signup' }" class="btn">회원가입</RouterLink>
-        <RouterLink v-if="user" :to="{ name: 'mypage' }"><img src="/image/User.png" alt="User Logo" class="user-icon">
-          <span class="user-name"> {{ user.username }} 님</span></RouterLink>
-        <!-- <RouterLink v-if="user" :to="{ name: 'recommend' }">추천받기</RouterLink> -->
-        <button v-if="user" @click="logout" class="logout-button">Logout</button>
+
+        <div v-if="user" class="user-area">
+          <RouterLink :to="{ name: 'mypage' }" class="user-link">
+            <img src="/image/User.png" alt="User Icon" class="user-icon" />
+            <span class="user-name">{{ user.username }} 님</span>
+          </RouterLink>
+          <button @click="logout" class="logout-button">로그아웃</button>
+        </div>
       </div>
     </div>
   </header>
 </template>
-
 
 <script setup>
 import { useRouter } from 'vue-router'
@@ -43,7 +43,6 @@ import { computed } from 'vue'
 
 const userStore = useAccountStore()
 const router = useRouter()
-
 const user = computed(() => userStore.user)
 
 const logout = () => {
@@ -52,93 +51,100 @@ const logout = () => {
 }
 </script>
 
-
 <style scoped>
-.nav {
-  background-color: #ffffff;
-  border-bottom: 1px solid #ccc;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 1rem 0;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+/* 헤더 기본 */
+.fixed-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
 }
 
-.nav-content {
+.nav-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.75rem 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-.nav-left {
+/* 좌측: 로고 */
+.logo {
+  height: 40px;
+}
+.logo-link {
   display: flex;
   align-items: center;
 }
 
-.logo {
-  height: 30px;
-}
-
-.nav-menu {
+/* 중앙 메뉴 */
+.nav-center {
   display: flex;
   gap: 0.75rem;
-  margin-left: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .menu-btn {
-  background-color: #f3f3f3;
   padding: 6px 14px;
-  border-radius: 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  background-color: white;
+  color: #333;
   font-weight: 500;
   text-decoration: none;
-  color: #222;
-  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+}
+.menu-btn:hover {
+  background-color: #f4f7ff;
+  color: #1f4fd4;
 }
 
+/* 우측: 유저 */
 .nav-right {
   display: flex;
-  gap: 0.75rem;
   align-items: center;
+  gap: 0.75rem;
+}
+
+.btn, .btn-outline {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn {
-  padding: 6px 14px;
-  border-radius: 12px;
-  background-color: #111;
+  background-color: #2c3e50;
   color: white;
   border: none;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
+}
+.btn:hover {
+  background-color: #1f2f3f;
 }
 
 .btn-outline {
-  padding: 6px 14px;
-  border-radius: 12px;
-  background-color: #fff;
-  color: #111;
-  border: 1px solid #bbb;
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
+  background-color: white;
+  border: 1px solid #aaa;
+  color: #333;
+}
+.btn-outline:hover {
+  background-color: #f3f3f3;
 }
 
-.logout-button {
-  background: none;
-  border: none;
-  color: #2f80ed;
-  cursor: pointer;
-  font-size: 14px;
-  padding: 0;
+/* 유저 정보 */
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.logout-button:hover {
-  text-decoration: underline;
-}
 .user-link {
   display: flex;
   align-items: center;
@@ -153,6 +159,20 @@ const logout = () => {
 
 .user-name {
   font-weight: 500;
-  color: #333;
+  color: #222;
+  font-size: 14px;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+}
+.logout-button:hover {
+  text-decoration: underline;
+  color: red;
 }
 </style>

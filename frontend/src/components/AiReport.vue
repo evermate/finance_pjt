@@ -66,7 +66,7 @@ const toggleProduct = async (productId, optionId, productName) => {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  color: #1e293b;
+  color: #000000;
 }
 
 .report-grid {
@@ -76,6 +76,8 @@ const toggleProduct = async (productId, optionId, productName) => {
 }
 
 .outer-card {
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   padding: 1rem;
   border-radius: 1.25rem;
@@ -90,6 +92,8 @@ const toggleProduct = async (productId, optionId, productName) => {
 .product-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* 버튼을 아래로 밀기 */
+  height: 100%; /* outer-card 전체를 채움 */
   background-color: #ffffff;
   border-radius: 1rem;
   overflow: hidden;
@@ -107,14 +111,14 @@ const toggleProduct = async (productId, optionId, productName) => {
 }
 
 .bank-logo {
-  max-height: 60px;
-  max-width: 80%;
+  max-height: 100%;
+  max-width: 100%;
   object-fit: contain;
 }
 
 .info-area {
   padding: 1rem;
-  flex: 1;
+  flex-grow: 1; /* 설명 영역이 남는 공간을 채우도록 */
 }
 
 .product-name {
@@ -141,7 +145,7 @@ const toggleProduct = async (productId, optionId, productName) => {
   margin-top: auto;
   padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
-  background-color: #2563eb;
+  background-color: #2b66f6;
   color: white;
   border: none;
   border-radius: 0.75rem;
@@ -151,14 +155,14 @@ const toggleProduct = async (productId, optionId, productName) => {
 }
 
 .join-btn:hover {
-  background-color: #1d4ed8;
+  background-color: #1f4fd4;
 }
 
 .join-btn.joined {
-  background-color: #9ca3af;
+  background-color: #ff5858;
 }
 
 .join-btn.joined:hover {
-  background-color: #6b7280;
+  background-color: #e63946;
 }
 </style>
