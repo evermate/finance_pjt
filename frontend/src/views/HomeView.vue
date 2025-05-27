@@ -1,10 +1,8 @@
-<!-- src/views/HomeView.vue -->
 <template>
   <div class="hero-section">
     <div class="container">
       <h1>Elevate Your Financial Management</h1>
-      <h2>Bank</h2>
-      <!-- <RouterLink to="/compare" class="cta">지금 금리 비교 시작</RouterLink> -->
+      <!-- <h2>Reach</h2> -->
     </div>
   </div>
 
@@ -24,7 +22,7 @@
         <img src="/image/compass.png" alt="은행 검색" />
         <p>주변 은행 검색</p>
       </RouterLink>
-      <!-- 여기 자산 시뮬레이션 카드 추가 -->
+
       <RouterLink to="/simulation" class="card">
          <img src="/image/wealth_simulation.png" alt="자산 시뮬레이션" />
         <p>은퇴 자산 시뮬레이션</p>
@@ -32,10 +30,24 @@
     </div>
   </div>
 
-  <ProductSlider :limit="2" title="주목할만한 금융상품" />
-  <!-- ── 여기에 인포그래픽 섹션 추가 ── -->
-   <NewsBoard />
-  <!-- <InfographicSection /> -->
+  <!-- 주목할만한 금융상품 -->
+  <section class="highlight-products">
+    <div class="container">
+      <div class="news-section">
+        <ProductSlider :limit="2"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- 최신 금융 뉴스 -->
+  <section class="highlight-products">
+    <div class="container">
+      <!-- <h3>최신 금융 뉴스</h3> -->
+      <div class="news-section">
+        <NewsBoard />
+      </div>
+    </div>
+  </section>
 
   <footer class="footer">
     <div class="container footer-grid">
@@ -82,12 +94,9 @@
   </footer>
 </template>
 
-
 <script setup>
-// 기존 임포트들...
 import ProductSlider from '@/components/ProductSlider.vue'
-import NewsBoard         from '@/components/Eda/NewsBoard.vue'
-import InfographicSection from '@/components/Eda/InfographicSection.vue'
+import NewsBoard from '@/components/Eda/NewsBoard.vue'
 </script>
 
 <style scoped>
@@ -135,7 +144,7 @@ import InfographicSection from '@/components/Eda/InfographicSection.vue'
 
 .cards-wrapper {
   margin-top: -80px;
-  padding: 0 1rem 5rem;
+  /* padding: 0 1rem 5rem; */
   background-color: transparent;
   position: relative;
   z-index: 2;
@@ -150,9 +159,9 @@ import InfographicSection from '@/components/Eda/InfographicSection.vue'
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
-    justify-content: center;  /* 세로 중앙 정렬 */
-  align-items: center;      /* 가로 중앙 정렬 */
-  gap: 0.75rem;             /* 이미지와 텍스트 사이 간격 */
+  justify-content: center;  
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .card {
@@ -175,13 +184,80 @@ import InfographicSection from '@/components/Eda/InfographicSection.vue'
   width: 60px;
   height: 60px;
   margin-bottom: 0.5rem;
-  /* object-fit: contain; */
 }
 
 .card p {
   font-weight: bold;
   font-size: 1rem;
   margin: 0;
+}
+
+/* 주목할만한 금융상품 */
+.highlight-products {
+  /* padding: 3rem 1rem; */
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.highlight-products h3 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.product-slider {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.product-slider .card {
+  background-color: white;
+  color: black;
+  border-radius: 12px;
+  width: 220px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.product-slider .card:hover {
+  transform: translateY(-5px);
+}
+
+.product-slider .card img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+.product-slider .card p {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* 최신 금융 뉴스 */
+.news-section {
+  padding: 2rem 1rem;  /* padding을 다른 섹션과 일치시킴 */
+  background-color: #ffffff;
+  margin-top: 2rem;  /* margin-top 값을 필요에 맞게 조정 */
+  margin-bottom: 2rem;  /* margin-bottom 추가하여 아래 부분과 일관성 맞춤 */
+}
+
+.news-section h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.news-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .footer {
@@ -245,16 +321,18 @@ import InfographicSection from '@/components/Eda/InfographicSection.vue'
 }
 
 @media screen and (max-width: 768px) {
-  .cards {
+  .product-slider {
     flex-direction: column;
     align-items: center;
   }
+
+  .news-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .footer-grid {
     flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-  }
-  .footer-left {
     align-items: center;
   }
 }

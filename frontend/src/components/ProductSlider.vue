@@ -1,7 +1,6 @@
-<!-- src/components/Sliding_Window/ProductSlider.vue -->
 <template>
   <section class="prod-slider-section" v-if="items.length">
-    <h2 class="slider-title">{{ title }}</h2>
+    <h2 style="text-align: left;">{{ title }}</h2>
 
     <!-- 여기에 호버 이벤트 추가 -->
     <div
@@ -32,7 +31,6 @@
               <span>기간: {{ item.save_trm }}개월</span>
               <span>금리: {{ item.intr_rate }}%</span>
             </div>
-            <!-- 가입 버튼 제거 -->
           </div>
         </div>
       </div>
@@ -46,7 +44,7 @@ import axios from 'axios'
 import { getBankLongIcon } from '@/utils/bankIconMap'
 
 const props = defineProps({
-  title:         { type: String, default: '추천 금융상품' },
+  title:         { type: String, default: '주목할 만한 금융 상품' },
   limit:         { type: Number, default: 2 },
   visibleCount:  { type: Number, default: 5 },
   interval:      { type: Number, default: 2000 }
@@ -71,7 +69,7 @@ onBeforeUnmount(() => {
   clearInterval(slideTimer)
 })
 
-/** 자동 슬라이드 시작 (기존 startAutoSlide) */
+/** 자동 슬라이드 시작 */
 function startAutoSlide() {
   clearInterval(slideTimer)
   const container = containerRef.value
@@ -104,66 +102,88 @@ function resumeSlide() {
 
 <style scoped>
 .prod-slider-section {
-  padding: 2rem 1rem;
+  padding: 2rem 1rem;  /* padding을 줄여서 크기 일치 */
+  background-color: #f0f6fd;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem; /* margin을 동일하게 설정 */
+  height: auto; /* 높이를 자동으로 설정하여 유동적으로 크기 맞춤 */
 }
-.slider-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
+
 .slider-viewport {
-  /* overflow 숨기고, hover 이벤트 감지할 wrapper */
   overflow: hidden;
 }
+
 .slider-container {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   overflow-x: auto;
+  padding-bottom: 1rem;
   scroll-snap-type: x mandatory;
-  padding-bottom: 0.5rem;
 }
+
 .slider-container::-webkit-scrollbar {
-  height: 6px;
+  height: 8px;
 }
+
 .slider-container::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.2);
-  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
 }
 
 .slider-card {
   flex: 0 0 240px;
   scroll-snap-align: start;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.slider-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
 .prod-card-thumb {
   width: 100%;
   height: 120px;
   object-fit: contain;
-  background: #f9f9f9;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
 }
+
 .prod-card-body {
-  padding: 0.75rem;
-  flex: 1;
+  padding: 1rem;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
+
 .prod-name-link {
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 0.5rem;
   color: #1f2937;
   text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s;
 }
+
+.prod-name-link:hover {
+  color: #2f80ed;
+}
+
 .prod-card-meta {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: #6b7280;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  justify-content: flex-start;
+  margin-top: auto;
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <section class="news-board">
-    <h2 class="board-title">최신 금융 뉴스</h2>
+    <h2 style="text-align: left;">최신 금융 뉴스</h2>
+
     <!-- 탭 -->
     <div class="tabs">
       <button v-for="tab in tabs" :key="tab.value === null ? 'all' : tab.value"
@@ -10,9 +11,9 @@
     </div>
 
     <!-- 검색 (옵션) -->
-    <div class="search">
-      <input v-model="searchQuery" placeholder="검색어를 입력하세요" />
-      <button @click="onSearch">검색</button>
+    <div class="search-bar">
+      <input v-model="searchKeyword" @keyup.enter="handleSearch" placeholder="검색어를 입력하세요" />
+      <button @click="handleSearch">검색</button>
     </div>
 
     <!-- 게시판 테이블 -->
@@ -49,6 +50,7 @@
 
     <!-- ── 여기에 상세 모달 컴포넌트 넣어 주기 ── -->
     <NewsDetailModal :visible="showDetail" :post="currentPost" @close="showDetail = false" />
+
   </section>
 </template>
 
@@ -74,6 +76,7 @@ const currentPost = ref({})
 
 // 예시 데이터 (실제 API 연동하셔도 됩니다)
 // src/components/NewsBoard.vue
+
 
 // 탭 선택
 function selectTab(val) {
@@ -118,29 +121,33 @@ function openDetail(post) {
 
 <style scoped>
 .news-board {
-  margin: 2rem 1rem;
+  padding: 2rem 1rem;  /* padding을 줄여서 크기 일치 */
+  background-color: #f0f6fd;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem; /* margin을 동일하게 설정 */
+  /* width: 2120; */
 }
 
-.board-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-/* 탭 스타일 */
 .tabs {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
 }
 
 .tab {
-  padding: 0.4rem 0.8rem;
+  padding: 0.6rem 1rem;
   border: 1px solid #ccc;
-  background: #fafafa;
-  border-radius: 4px;
+  background: #fff;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+  background-color: #f0f0f0;
 }
 
 .tab.active {
@@ -149,18 +156,23 @@ function openDetail(post) {
   border-color: #2f80ed;
 }
 
-/* 검색창 */
-.search {
+.search-bar {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
+  justify-content: right;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
+
 
 .search input {
   padding: 0.4rem 0.6rem;
+}
+.search-bar input {
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
-  width: 200px;
+  font-size: 1rem;
+  width: 300px;
 }
 
 .search button {
@@ -169,30 +181,51 @@ function openDetail(post) {
   border-left: none;
   border-radius: 0 4px 4px 0;
   background: #2f80ed;
-  color: white;
-  cursor: pointer;
+}
+.search-bar input:focus {
+  outline: none;
+  border-color: #1e88e5;
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.1);
 }
 
-/* 테이블 */
+.search-bar button {
+  background-color: #455a64;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-bar button:hover {
+  background-color: #263238;
+}
+
 .board-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 1rem;
+  margin-top: 1.5rem;
 }
+
 
 .board-table th,
 .board-table td {
   padding: 0.75rem 0.5rem;
+}
+.board-table th, .board-table td {
+  padding: 0.75rem 1rem;
   text-align: left;
   border-bottom: 1px solid #eee;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .board-table th {
-  font-weight: 600;
+  font-weight: 700;
+  color: #333;
 }
 
-/* 제목 셀 안의 배지 + 링크 */
 .title-cell {
   display: flex;
   align-items: center;
@@ -202,28 +235,19 @@ function openDetail(post) {
 .badge {
   padding: 0.2rem 0.5rem;
   border-radius: 3px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: white;
 }
 
-.badge.review {
-  background: #3b82f6;
-}
 
-/* 파랑 */
-.badge.news {
-  background: #10b981;
-}
+.badge.review { background: #3b82f6; } /* 파랑 */
+.badge.news   { background: #10b981; } /* 초록 */
+.badge.free   { background: #6b7280; } /* 회색 */
 
-/* 초록 */
-.badge.free {
-  background: #6b7280;
-}
-
-/* 회색 */
 .title-cell a {
   color: #333;
   text-decoration: none;
+  font-weight: 600;
 }
 
 .title-cell a:hover {
@@ -243,4 +267,5 @@ function openDetail(post) {
   border-radius: 4px;
   cursor: pointer;
 }
+
 </style>
