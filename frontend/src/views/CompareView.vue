@@ -733,6 +733,7 @@ watch(joinedIds, (val) => {
   height: 1.6em;               /* 텍스트 높이에 맞춤 */
   vertical-align: middle;   /* 텍스트 중앙 정렬 */
   margin-right: 0.4em;       /* 텍스트와 간격 */
+  }
 
 .banner-section {
   position: relative;
