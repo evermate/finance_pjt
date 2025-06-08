@@ -242,220 +242,31 @@ npm run dev
 ## X. 파일 구조
 
 ```
-final_pjt
-├─ backend
-│  ├─ accounts
-│  │  ├─ admin.py
-│  │  ├─ apps.py
-│  │  ├─ migrations
-│  │  ├─ models.py
-│  │  ├─ serializers.py
-│  │  ├─ tests.py
-│  │  ├─ urls.py
-│  │  ├─ views.py
-│  ├─ api
-│  │  ├─ admin.py
-│  │  ├─ apps.py
-│  │  ├─ migrations
-│  │  ├─ models.py
-│  │  ├─ tests.py
-│  │  ├─ urls.py
-│  │  ├─ views
-│  │  │  ├─ map_search.py
-│  │  │  ├─ video_detail.py
-│  ├─ backend
-│  │  ├─ asgi.py
-│  │  ├─ settings.py
-│  │  ├─ urls.py
-│  │  ├─ wsgi.py
-│  ├─ community
-│  │  ├─ admin.py
-│  │  ├─ apps.py
-│  │  ├─ migrations
-│  │  ├─ models.py
-│  │  ├─ serializers.py
-│  │  ├─ tests.py
-│  │  ├─ urls.py
-│  │  ├─ views.py
-│  ├─ fixtures
-│  │  ├─ comments_fixture.json
-│  │  ├─ joined_products_fixture.json
-│  │  ├─ posts_fixture.json
-│  │  ├─ post_likes_fixture.json
-│  │  └─ users_fixture.json
-│  ├─ manage.py
-│  ├─ products
-│  │  ├─ admin.py
-│  │  ├─ apps.py
-│  │  ├─ management
-│  │  │  ├─ commands
-│  │  │  │  ├─ collect_deposit.py
-│  │  │  │  ├─ generate_fixtures.py
-│  │  │  │  ├─ init_dummy.py
-│  │  │  │  ├─ load_fixtures.py
-│  │  ├─ migrations
-│  │  ├─ models.py
-│  │  ├─ serializers.py
-│  │  ├─ tests.py
-│  │  ├─ urls.py
-│  │  ├─ views
-│  │  │  ├─ ai_recommendation.py
-│  │  │  ├─ main.py
-│  │  │  ├─ recommendation.py
-│  ├─ requirements.txt
-│  └─ simulation
-│     ├─ admin.py
-│     ├─ apps.py
-│     ├─ migrations
-│     ├─ models.py
-│     ├─ serializers.py
-│     ├─ tests.py
-│     ├─ urls.py
-│     ├─ utils.py
-│     ├─ views.py
-├─ docs
-│  └─ erd.png
-├─ frontend
-│  ├─ .editorconfig
-│  ├─ .prettierrc.json
-│  ├─ eslint.config.js
-│  ├─ image
-│  │  ├─ community.jpg
-│  │  ├─ compare_pic.png
-│  │  ├─ compare_pic2.jpg
-│  │  ├─ compare_pic3.jpg
-│  │  ├─ Compass.png
-│  │  ├─ Database.png
-│  │  ├─ goldbar.jpg
-│  │  ├─ LinkedIn.png
-│  │  ├─ Logo Instagram.png
-│  │  ├─ Logo YouTube.png
-│  │  ├─ MainLogo.png
-│  │  ├─ MainLogo1.png
-│  │  ├─ map.jpg
-│  │  ├─ marker_selected_custom.png
-│  │  ├─ no-data.jpg
-│  │  ├─ notebook.jpg
-│  │  ├─ recommend.jpg
-│  │  ├─ Search.png
-│  │  ├─ search2.jpg
-│  │  ├─ simulation.jpg
-│  │  ├─ User.png
-│  │  ├─ wealth_simulation.png
-│  │  └─ weighing-scale.png
-│  ├─ index.html
-│  ├─ jsconfig.json
-│  ├─ package-lock.json
-│  ├─ package.json
-│  ├─ public
-│  │  ├─ bank-icons
-│  │  │  ├─ default.png
-│  │  │  ├─ gookmin.png
-│  │  │  ├─ gwangju_jungbook.png
-│  │  │  ├─ gyungnam_busan.png
-│  │  │  ├─ hana.png
-│  │  │  ├─ ibk_giup.png
-│  │  │  ├─ imbank.png
-│  │  │  ├─ kakao.png
-│  │  │  ├─ kbank.png
-│  │  │  ├─ kdb_sanup.png
-│  │  │  ├─ nonghyup.png
-│  │  │  ├─ scjeil.png
-│  │  │  ├─ shinhan_jeju.png
-│  │  │  ├─ soohyup.png
-│  │  │  ├─ toss.png
-│  │  │  └─ woori.png
-│  │  ├─ bank-icons-long
-│  │  │  ├─ default.png
-│  │  │  ├─ long_busanbank.png
-│  │  │  ├─ long_gookmin.png
-│  │  │  ├─ long_gwangju.png
-│  │  │  ├─ long_gyungnam.png
-│  │  │  ├─ long_hana.png
-│  │  │  ├─ long_ibk_giup.png
-│  │  │  ├─ long_imbank.png
-│  │  │  ├─ long_jeju.png
-│  │  │  ├─ long_jungbook.png
-│  │  │  ├─ long_kakao.png
-│  │  │  ├─ long_kbank.png
-│  │  │  ├─ long_kdb_sanup.png
-│  │  │  ├─ long_nonghyup.png
-│  │  │  ├─ long_scjeil.png
-│  │  │  ├─ long_shinhan.png
-│  │  │  ├─ long_soohyup.png
-│  │  │  ├─ long_toss.png
-│  │  │  └─ long_woori.png
-│  │  ├─ dummy
-│  │  │  └─ news
-│  │  │     ├─ chaegwuan.jpg
-│  │  │     ├─ LGUplus_AI.jpg
-│  │  │     ├─ noin_hire.jpg
-│  │  │     ├─ openai.jpg
-│  │  │     └─ samsung_bespoke.jpg
-│  │  └─ favicon.ico
-│  ├─ README.md
-│  ├─ src
-│  │  ├─ App.vue
-│  │  ├─ assets
-│  │  │  ├─ data.js
-│  │  │  ├─ loading1.png
-│  │  │  └─ loading2.png
-│  │  ├─ components
-│  │  │  ├─ AiReport.vue
-│  │  │  ├─ CommentItem.vue
-│  │  │  ├─ ConfirmModal.vue
-│  │  │  ├─ Eda
-│  │  │  │  ├─ InfographicSection.vue
-│  │  │  │  ├─ MiniChart.vue
-│  │  │  │  ├─ NewsBoard.vue
-│  │  │  │  └─ NewsDetailModal.vue
-│  │  │  ├─ HeaderNav.vue
-│  │  │  ├─ JoinedProductsChart.vue
-│  │  │  ├─ LoadingSpinner.vue
-│  │  │  ├─ MyProductsPanel.vue
-│  │  │  ├─ ProductCard.vue
-│  │  │  ├─ ProductSlider.vue
-│  │  │  ├─ SimulationChart.vue
-│  │  │  └─ SimulationForm.vue
-│  │  ├─ constants.js
-│  │  ├─ data
-│  │  │  ├─ dummy
-│  │  │  │  └─ news.js
-│  │  │  └─ infographicData.js
-│  │  ├─ excel
-│  │  │  ├─ Gold_prices.json
-│  │  │  └─ Silver_prices.json
-│  │  ├─ main.js
-│  │  ├─ stores
-│  │  │  ├─ accounts.js
-│  │  │  ├─ comment.js
-│  │  │  ├─ community.js
-│  │  │  ├─ modal.js
-│  │  │  ├─ recommend.js
-│  │  │  └─ simulation.js
-│  │  ├─ utils
-│  │  └─ views
-│  │     ├─ community
-│  │     │  ├─ CommunityDetailView.vue
-│  │     │  ├─ CommunityFormView.vue
-│  │     │  ├─ CommunityListView.vue
-│  │     │  └─ UserProfileView.vue
-│  │     ├─ CompareView.vue
-│  │     ├─ HomeView.vue
-│  │     ├─ LoginView.vue
-│  │     ├─ MapView copy.vue
-│  │     ├─ MapView.vue
-│  │     ├─ MyPageEdit.vue
-│  │     ├─ MyPageView.vue
-│  │     ├─ PricesView.vue
-│  │     ├─ product
-│  │     │  └─ DepositDetailView.vue
-│  │     ├─ RecommendView.vue
-│  │     ├─ SearchView.vue
-│  │     ├─ SignUp.vue
-│  │     ├─ SimulationView.vue
-│  │     └─ VideoDetailView.vue
-│  └─ vite.config.js
-└─ README.md
+final_pjt/
+├── backend/
+│   ├── accounts/               # 유저 인증 및 금융상품 가입
+│   ├── api/                    # 기타 API (지도, 영상)
+│   ├── community/              # 게시판 기능
+│   ├── products/               # 금융상품 관련 모델 및 추천 로직
+│   ├── simulation/             # 자산 시뮬레이션 기능
+│   ├── fixtures/               # 더미 데이터 JSON
+│   ├── manage.py
+│   └── backend/                # Django 설정
+│       ├── settings.py
+│       └── urls.py
+├── frontend/
+│   ├── public/                 # 이미지 및 아이콘 자산
+│   ├── src/
+│   │   ├── components/         # UI 컴포넌트
+│   │   ├── views/              # 주요 페이지 컴포넌트
+│   │   ├── stores/             # Pinia 상태 관리
+│   │   ├── assets/             # 이미지 및 데이터 파일
+│   │   └── main.js             
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+├── docs/
+│   └── erd.png
+└── README.md
 
 ```
