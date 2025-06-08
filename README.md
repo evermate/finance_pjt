@@ -202,42 +202,19 @@ chore: requirements.txt 업데이트
 
 ## IX. 사용 흐름
 
-1. 프로젝트를 클론합니다.
+1. 레포지토리를 클론하고 `.env.example` 파일을 참고하여 `.env` 파일을 설정합니다.
 
-```bash
-git clone https://github.com/your-team/final_pjt.git
-cd final_pjt
-```
+2. 백엔드
+- 가상환경을 구성하고 의존성을 설치합니다.
+- `python manage.py migrate`로 DB 스키마를 반영하고,
+- `python manage.py collect_deposit`으로 예·적금 데이터를 수집한 뒤,
+- 개발 서버를 실행합니다.
 
-2. `.env.example` 파일을 참고하여 `.env` 파일을 설정합니다.
+3. 프론트엔드
+- 의존성을 설치하고 개발 서버를 실행합니다.
 
-3. 백엔드 환경 설정 및 실행
+> 백엔드와 프론트엔드 서버는 각각 독립적으로 실행됩니다.
 
-```bash
-cd backend
-python -m venv venv
-source venv/bin/activate  # (Windows는 venv\Scripts\activate)
-pip install -r requirements.txt
-
-# 데이터베이스 마이그레이션
-python manage.py migrate
-
-# 예적금 상품 데이터 수집
-python manage.py collect_deposit
-
-# 더미 데이터 적재
-python manage.py load_fixtures
-```
-
-4. 프론트엔드 환경 설정 및 실행
-
-```bash
-cd ../frontend
-npm install
-npm run dev
-```
-
-5. 설정이 완료되면 프론트엔드 및 백엔드 서버를 각각 실행합니다.
 
 ## X. 파일 구조
 
